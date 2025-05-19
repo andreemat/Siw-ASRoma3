@@ -1,6 +1,6 @@
 package siw.uniroma3.asroma3.service;
 import siw.uniroma3.asroma3.model.Cliente;
-import siw.uniroma3.asroma3.repository.ClienteRepisitory;
+import siw.uniroma3.asroma3.repository.ClienteRepository;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteService {
 	@Autowired
-	private ClienteRepisitory clienteRepository;
+	private ClienteRepository clienteRepository;
 	
 	public Cliente getClienteByid(Long id) {
 		return this.clienteRepository.findById(id).orElse(null);
