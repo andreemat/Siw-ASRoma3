@@ -1,3 +1,4 @@
+
 package siw.uniroma3.asroma3.model;
 
 import java.util.Objects;
@@ -65,3 +66,5 @@ public class Gestore {
 	
 
 }
+
+

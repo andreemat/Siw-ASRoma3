@@ -16,8 +16,6 @@ public class Sport {
 	private Long id;
 	private String nome;
 	
-
-
 	@OneToMany(mappedBy="sport")
 	private List<Squadra> squadre;
 	
