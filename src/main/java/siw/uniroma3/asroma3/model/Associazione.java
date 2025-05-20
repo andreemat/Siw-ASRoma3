@@ -16,10 +16,6 @@ public class Associazione {
 	private String nome;
 	private String indirizzo;
 	
-	
-	@OneToMany(mappedBy = "associazione")
-	private List<Gestore> gestori;
-	
 	@OneToMany(mappedBy = "associazione")
     private List<Sport> sportList;
 
@@ -54,14 +50,6 @@ public class Associazione {
 	}
 
 
-	public List<Gestore> getGestori() {
-		return gestori;
-	}
-
-
-	public void setGestori(List<Gestore> gestori) {
-		this.gestori = gestori;
-	}
 
 
 	@Override

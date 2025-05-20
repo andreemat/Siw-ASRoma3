@@ -26,7 +26,7 @@ public class Prenotazione {
 	private Campo campo;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Cliente cliente;
+	private User cliente;
 	public Long getId() {
 		return Id;
 	}
@@ -52,10 +52,10 @@ public class Prenotazione {
 		this.oraFine = oraFine;
 	}
 	
-	public Cliente getCliente() {
+	public User getCliente() {
 		return cliente;
 	}
-	public void setCliente(Cliente cliente) {
+	public void setCliente(User cliente) {
 		this.cliente = cliente;
 	}
 	public Sport getSport() {

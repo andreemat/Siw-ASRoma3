@@ -1,5 +1,5 @@
 package siw.uniroma3.asroma3.service;
-import siw.uniroma3.asroma3.model.Cliente;
+import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.repository.ClienteRepository;
 
 import java.util.List;
@@ -12,12 +12,12 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
-	public Cliente getClienteByid(Long id) {
+	public User getClienteByid(Long id) {
 		return this.clienteRepository.findById(id).orElse(null);
 	}
 	
-	public List<Cliente> getAllClienti(){
-		return (List<Cliente>)this.clienteRepository.findAll();
+	public List<User> getAllClienti(){
+		return (List<User>)this.clienteRepository.findAll();
 	}
 	
 	public void deleteClienteById (Long id) {
