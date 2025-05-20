@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>ASRoma3 - Home</title>
+	</head>
+	<body>
+		<h1>Benvenuto nel portale dell' ASRoma3</h1>
+		
+		<ul>
+			<li><a th:ref="@(/gestore/dashboard)"login Gestore>Login Gestori</a></li>
+			<li><a th:ref="@{/prenotazione/nuova}">Prenota un campo</a></li>
+		</ul>
+	</body>
+</html>
