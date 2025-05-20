@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -18,6 +19,10 @@ public class Sport {
 	
 	@OneToMany(mappedBy="sport")
 	private List<Squadra> squadre;
+	
+	@ManyToOne
+	private Associazione associazione;
+
 	
 	public Sport() {
 	}
