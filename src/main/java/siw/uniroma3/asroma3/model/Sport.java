@@ -18,7 +18,7 @@ public class Sport {
 	private String nome;
 	
 	@OneToMany(mappedBy="sport")
-	private List<Squadra> squadre;
+	private List<Campo> campi;
 	
 	@ManyToOne
 	private Associazione associazione;
@@ -43,12 +43,22 @@ public class Sport {
 		this.nome = nome;
 	}
 
-	public List<Squadra> getSquadre() {
-		return squadre;
+	
+
+	public List<Campo> getCampi() {
+		return campi;
 	}
 
-	public void setSquadre(List<Squadra> squadre) {
-		this.squadre = squadre;
+	public void setCampi(List<Campo> campi) {
+		this.campi = campi;
+	}
+
+	public Associazione getAssociazione() {
+		return associazione;
+	}
+
+	public void setAssociazione(Associazione associazione) {
+		this.associazione = associazione;
 	}
 
 	@Override

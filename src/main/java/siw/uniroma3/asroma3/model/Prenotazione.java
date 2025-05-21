@@ -20,8 +20,7 @@ public class Prenotazione {
 	private LocalDate data;
 	private LocalTime oraInizio;
 	private LocalTime oraFine;
-	@ManyToOne
-	private Sport sport;
+	
 	@ManyToOne
 	private Campo campo;
 	
@@ -58,18 +57,14 @@ public class Prenotazione {
 	public void setCliente(User cliente) {
 		this.cliente = cliente;
 	}
-	public Sport getSport() {
-		return sport;
-	}
-	public void setSport(Sport sport) {
-		this.sport = sport;
-	}
+	
 	public Campo getCampo() {
 		return campo;
 	}
 	public void setCampo(Campo campo) {
 		this.campo = campo;
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(campo, data, oraFine, oraInizio);

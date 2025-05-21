@@ -1,5 +1,6 @@
 package siw.uniroma3.asroma3.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -7,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Campo {
@@ -14,9 +16,14 @@ public class Campo {
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String nome;
+	private Integer capienza;
+	
 	@ManyToOne
 	private Sport sport;
-	private Integer capienza;
+	
+	@OneToMany(mappedBy="campo")
+	private List<Prenotazione> prenotazioni;
+	
 	public Long getId() {
 		return id;
 	}
