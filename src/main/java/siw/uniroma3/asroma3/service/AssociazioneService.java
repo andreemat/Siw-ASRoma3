@@ -11,15 +11,15 @@ import siw.uniroma3.asroma3.repository.AssociazioneRepository;
 public class AssociazioneService {
 	@Autowired AssociazioneRepository associazioneRepository;
 
-	public Associazione getPrenotazineByid(Long id) {
+	public Associazione getAssociazione(Long id) {
 		return this.associazioneRepository.findById(id).orElse(null);
 	}
 	
-	public List<Associazione> getAllPrenotazioni(){
+	public List<Associazione> getAllAssociazioni(){
 		return (List<Associazione>)this.associazioneRepository.findAll();
 	}
 	
-	public void deletePrenotazioneById (Long id) {
+	public void deleteAssociazione (Long id) {
 		this.associazioneRepository.deleteById(id);
 	}
 

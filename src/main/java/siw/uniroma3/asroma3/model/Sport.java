@@ -7,10 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-@Entity
+@Entity(name="sport")
 public class Sport {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,8 +21,8 @@ public class Sport {
 	@OneToMany(mappedBy="sport")
 	private List<Campo> campi;
 	
-	@ManyToOne
-	private Associazione associazione;
+	@ManyToMany(mappedBy ="sportList")
+	private List<Associazione> associazioni;
 
 	
 	public Sport() {
@@ -53,12 +54,14 @@ public class Sport {
 		this.campi = campi;
 	}
 
-	public Associazione getAssociazione() {
-		return associazione;
+	
+
+	public List<Associazione> getAssociazioni() {
+		return associazioni;
 	}
 
-	public void setAssociazione(Associazione associazione) {
-		this.associazione = associazione;
+	public void setAssociazioni(List<Associazione> associazioni) {
+		this.associazioni = associazioni;
 	}
 
 	@Override

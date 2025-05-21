@@ -14,7 +14,7 @@
 		   <h2>Associazioni disponibili</h2>
 		   <ul>
 		       <li th:each="associazione : ${associazioni}">
-		           <a th:href="@{'/associazione/' + ${associazione.id} + '/sport'}"
+		           <a th:href="@{'/associazione/' + ${associazione.id}}"
 		              th:text="${associazione.nome}"></a>
 		       </li>
 		   </ul>
