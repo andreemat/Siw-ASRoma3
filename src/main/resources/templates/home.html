@@ -7,9 +7,16 @@
 	<body>
 		<h1>Benvenuto nel portale dell' ASRoma3</h1>
 		
-		<ul>
-			<li><a th:ref="@(/gestore/dashboard)"login Gestore>Login Gestori</a></li>
-			<li><a th:ref="@{/prenotazione/nuova}">Prenota un campo</a></li>
-		</ul>
+		<nav>
+		       <a th:href="@{/login}">Login</a> <!-- puoi fare /login o /admin/login in base a come gestirai -->
+		   </nav>
+
+		   <h2>Associazioni disponibili</h2>
+		   <ul>
+		       <li th:each="associazione : ${associazioni}">
+		           <a th:href="@{'/associazione/' + ${associazione.id} + '/sport'}"
+		              th:text="${associazione.nome}"></a>
+		       </li>
+		   </ul>
 	</body>
 </html>
