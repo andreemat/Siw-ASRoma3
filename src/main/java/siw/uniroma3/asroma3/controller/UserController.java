@@ -1,5 +1,5 @@
 package siw.uniroma3.asroma3.controller;
 
-public class AllenatoreController {
+public class UserController {
 
 }
