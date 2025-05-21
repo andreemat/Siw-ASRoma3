@@ -23,4 +23,5 @@ public class PrenotazioneService {
 		this.prenotazioneRepository.deleteById(id);
 	}
 	
+	
 }

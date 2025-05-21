@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -16,7 +17,9 @@ public class Associazione {
 	private String nome;
 	private String indirizzo;
 	
-	@OneToMany(mappedBy = "associazione")
+	
+	
+	@ManyToMany
     private List<Sport> sportList;
 
 	public Associazione() {
@@ -53,7 +56,12 @@ public class Associazione {
 
 
 
-
+	public List<Sport> getSportList() {
+		return sportList;
+	}
+	public void setSportList(List<Sport> sportList) {
+		this.sportList = sportList;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, indirizzo, nome);
