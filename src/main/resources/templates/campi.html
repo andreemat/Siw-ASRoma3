@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Campi - [[$[sport.name]]</title>	
+	<link rel="stylesheet" th:href="@{/style.css}" />	
+</head>
+<body>
+	
+	<h1th:text="'Sport: '+${sport.nome}">Nome Sport</h1>
+	
+	<h2>Campi disponibili:</h2>
+	
+	<ul>
+		<li th:each="campo : ${campi}">
+			<strong th:text="${campo.nome}">Nome Campo</strong><br/>
+			 Capienza: <span th:text="${campo.capienza}">Numero</span><br/>
+			       
+			<hr/>
+		</li>
+	</ul>
+</body>
+</html>
