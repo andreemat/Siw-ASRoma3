@@ -1,4 +1,5 @@
 package siw.uniroma3.asroma3.model;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import jakarta.persistence.Entity;
@@ -12,14 +13,15 @@ public class Associazione {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
 	private String nome;
 	private String indirizzo;
 	
 	@OneToMany(mappedBy = "associazione")
     private List<Sport> sportList;
 
-
+	public Associazione() {
+		this.sportList= new LinkedList<Sport>();
+	}
 	public Long getId() {
 		return id;
 	}

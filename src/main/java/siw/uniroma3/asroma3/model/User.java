@@ -16,6 +16,9 @@ public class User {
 	private String cognome;
 	private String password;
 	private int eta;
+	public User() {
+		
+	}
 	public Long getId() {
 		return id;
 	}

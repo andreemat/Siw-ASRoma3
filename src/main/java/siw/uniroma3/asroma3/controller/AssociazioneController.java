@@ -12,11 +12,7 @@ public class AssociazioneController {
 	@Autowired
 	private AssociazioneRepository associazioneRepository;
 	
-	@GetMapping("/")
-    public String mostraHome(Model model) {
-        model.addAttribute("associazioni", associazioneRepository.findAll());
-        return "home"; 
-	}
+	
 	
 	
 	
