@@ -12,7 +12,7 @@ public class Allenatore {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String nome;
+	private String nome;//ciao
 	private String cognome;
 	private Date dataDiNascita;
 	@OneToOne
