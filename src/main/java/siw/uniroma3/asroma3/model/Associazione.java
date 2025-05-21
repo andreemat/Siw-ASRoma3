@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Associazione {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String nome;
 	private String indirizzo;
