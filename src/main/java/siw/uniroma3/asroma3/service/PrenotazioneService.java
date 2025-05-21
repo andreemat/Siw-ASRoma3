@@ -11,7 +11,7 @@ import siw.uniroma3.asroma3.repository.PrenotazioneRepository;
 public class PrenotazioneService {
 	@Autowired PrenotazioneRepository prenotazioneRepository;
 
-	public Prenotazione getPrenotazineByid(Long id) {
+	public Prenotazione getPrenotazioneByid(Long id) {
 		return this.prenotazioneRepository.findById(id).orElse(null);
 	}
 	
