@@ -12,7 +12,7 @@ import siw.uniroma3.asroma3.repository.SportRepository;
 public class SportService {
 	@Autowired SportRepository sportRepository;
 	
-	public Sport getPrenotazineByid(Long id) {
+	public Sport getSportByid(Long id) {
 		return this.sportRepository.findById(id).orElse(null);
 	}
 	public List<Sport> getAllPrenotazioni(){
