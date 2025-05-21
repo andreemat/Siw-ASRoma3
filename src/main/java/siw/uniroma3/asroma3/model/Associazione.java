@@ -21,6 +21,9 @@ public class Associazione {
 	
 	@ManyToMany
     private List<Sport> sportList;
+	
+	@OneToMany(mappedBy="associazione")
+    private List<Campo> campi;
 
 	public Associazione() {
 		this.sportList= new LinkedList<Sport>();

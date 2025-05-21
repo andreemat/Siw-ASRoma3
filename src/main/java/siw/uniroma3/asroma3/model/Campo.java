@@ -21,6 +21,9 @@ public class Campo {
 	@ManyToOne
 	private Sport sport;
 	
+	@ManyToOne
+	private Associazione associazione;
+	
 	@OneToMany(mappedBy="campo")
 	private List<Prenotazione> prenotazioni;
 	
