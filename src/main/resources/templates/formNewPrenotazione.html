@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prenota un campo</title>
+  <link rel="stylesheet" th:href="@{/stile.css(version=2)}" />
+</head>
+<body>
+  <h1 th:text="'Effettua prenotazione per il campo: ' + ${campo.nome}">Nome mancante</h1>
+
+  <!-- FASE 1: scelta della data -->
+  <div th:if="${prenotazione.data == null}">
+    <form
+      th:action="@{/associazione/{idA}/sport/{idS}/campo/{idC}(
+        idA=${associazione.id},
+        idS=${sport.id},
+        idC=${campo.id}
+      )}"
+      th:object="${prenotazione}"
+      method="post">
+
+      <h3>Seleziona il giorno</h3>
+      <label>
+        Data:
+        <input type="date" th:field="*{data}" />
+      </label>
+      <button type="submit">Conferma giorno</button>
+    </form>
+  </div>
+
+  <!-- FASE 2: scelta dell'orario -->
+  <div th:if="${prenotazione.data != null}">
+    <form
+      th:action="@{/associazione/{idA}/sport/{idS}/campo/{idC}(
+        idA=${associazione.id},
+        idS=${sport.id},
+        idC=${campo.id}
+      )}"
+      th:object="${prenotazione}"
+      method="post">
+
+      <h3>Seleziona l'orario</h3>
+      <label>
+        Orario:
+        <input type="time" th:field="*{oraInizio}" />
+      </label>
+      <button type="submit">Conferma orario</button>
+    </form>
+  </div>
+</body>
+</html>

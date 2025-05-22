@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import siw.uniroma3.asroma3.model.Sport;
 import siw.uniroma3.asroma3.repository.CampoRepository;
+import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CampoService;
 import siw.uniroma3.asroma3.service.SportService;
 
@@ -20,6 +21,9 @@ public class SportController {
 	@Autowired
 	private CampoService campoService;
 	
+	@Autowired
+	private AssociazioneService associazioneService;
+	
 	@GetMapping("associazione/{idA}/sport/{idS}")
 	public String mostraSport(@PathVariable("idA") Long idA,@PathVariable("idS")Long idS, Model model) {
 		Sport sport=sportService.getSportByid(idS);
@@ -29,6 +33,7 @@ public class SportController {
 		
 		model.addAttribute("sport",sport);
 		model.addAttribute("campi",campoService.getAllByAssociazioneESport(idA, idS));
+		model.addAttribute("associazione",associazioneService.getAssociazione(idA));
 		return "campi.html";
 		
 	}
