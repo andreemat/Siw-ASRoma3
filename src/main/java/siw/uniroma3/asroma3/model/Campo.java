@@ -67,6 +67,12 @@ public class Campo {
 		return Objects.equals(capienza, other.capienza) && Objects.equals(nome, other.nome)
 				&& Objects.equals(sport, other.sport);
 	}
-	
+	public Associazione getAssociazione() {
+		// TODO Auto-generated method stub
+		return this.associazione;
+	}
+	public void setAssociazione(Associazione associazione) {
+		this.associazione=associazione;
+	}
 }
 
