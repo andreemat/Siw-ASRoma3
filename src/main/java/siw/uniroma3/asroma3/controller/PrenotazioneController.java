@@ -37,11 +37,12 @@ public class PrenotazioneController {
 	}
 	
 	@PostMapping("/prenota/campo/{idC}")
-	public String formNewPrenotazione(@PathVariable("idA") Long idA, @PathVariable("idS") Long idS,@ModelAttribute("prenotazione")Prenotazione prenotazione,@PathVariable("idC") Long idC,Model model) {
-		model.addAttribute("associazione",associazioneService.getAssociazione(idA));
-		model.addAttribute("sport",sportService.getSportByid(idS));
+	public String formNewPrenotazione(@ModelAttribute("prenotazione")Prenotazione prenotazione,@PathVariable("idC") Long idC,Model model) {
+		Campo campo = campoService.getCampo(idC);
+		model.addAttribute("associazione",campo.getAssociazione());
+		model.addAttribute("sport",campo.getSport());
+		model.addAttribute("campo", campo);
 		model.addAttribute("prenotazione",prenotazione);
-		model.addAttribute("campo", campoService.getCampo(idC));
 		return "formNewPrenotazione.html"; 
 	}
 

@@ -11,9 +11,7 @@
   <!-- FASE 1: scelta della data -->
   <div th:if="${prenotazione.data == null}">
     <form
-      th:action="@{/associazione/{idA}/sport/{idS}/campo/{idC}(
-        idA=${associazione.id},
-        idS=${sport.id},
+      th:action="@{/prenota/campo/{idC}(
         idC=${campo.id}
       )}"
       th:object="${prenotazione}"
@@ -31,11 +29,11 @@
   <!-- FASE 2: scelta dell'orario -->
   <div th:if="${prenotazione.data != null}">
     <form
-      th:action="@{/associazione/{idA}/sport/{idS}/campo/{idC}(
+      th:action="@{/prenota/campo/{idC}(
         idA=${associazione.id},
         idS=${sport.id},
         idC=${campo.id}
-      )}"
+     	)}"
       th:object="${prenotazione}"
       method="post">
 
