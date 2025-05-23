@@ -11,7 +11,11 @@
 
     <h2>Campi disponibili:</h2>
 
-    <ul>
+    <!-- Se la lista è vuota -->
+    <p th:if="${#lists.isEmpty(campi)}">❌ Non ci sono campi disponibili per questo sport.</p>
+
+    <!-- Se ci sono campi -->
+    <ul th:if="${!#lists.isEmpty(campi)}">
         <li th:each="campo : ${campi}">
             <strong th:text="${campo.nome}">Nome Campo</strong><br/>
             Capienza: <span th:text="${campo.capienza}">Numero</span><br/>
@@ -20,6 +24,7 @@
         </li>
     </ul>
 
+    <a th:href="@{/}" style="display:inline-block; margin-top:20px;">⬅️ Torna alla Home</a>
 
 </body>
 </html>
