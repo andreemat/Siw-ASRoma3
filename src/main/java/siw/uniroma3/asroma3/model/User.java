@@ -63,6 +63,10 @@ public class User {
 	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
 		this.prenotazioni = prenotazioni;
 	}
+	
+	public void addPrenotazione(Prenotazione prenotazione) {
+		this.prenotazioni.add(prenotazione);
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(surname, name, password);

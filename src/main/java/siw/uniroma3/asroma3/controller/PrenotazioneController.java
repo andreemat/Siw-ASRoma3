@@ -9,6 +9,8 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,11 +76,15 @@ public class PrenotazioneController {
 	    prenotazione.setOraInizio(LocalTime.parse(prima));
 	    prenotazione.setOraFine(LocalTime.parse(ultima));
 	    prenotazione.setCampo(campo);
-
-	    // Salva prenotazione
+	    UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    User user = userService.getUserByUsername(userDetails.getUsername());
+	    prenotazione.setCliente(user);
+	    user.addPrenotazione(prenotazione);
 	    prenotazioneService.save(prenotazione);
+	    
+	    
 
-	    return "redirect:/conferma";
+	    return "redirect:/utente/prenotazioni";
 	}
 
 
@@ -87,8 +93,9 @@ public class PrenotazioneController {
 
 
 @GetMapping("/utente/prenotazioni")
-public String getPrenotazioniUtente(Model model,Principal principal) {
-	User user=this.userService.getUserByUsername(principal.getName());
+public String getPrenotazioniUtente(Model model) {
+	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	User user=this.userService.getUserByUsername(userDetails.getUsername());
 	List<Prenotazione> prenotazioni=this.prenotazioneService.getPrenotazioneByCliente(user);
 	model.addAttribute("prenotazioni",prenotazioni);
 	return "prenotazioniUtente.html";
