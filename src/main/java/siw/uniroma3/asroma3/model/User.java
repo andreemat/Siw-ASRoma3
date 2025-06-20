@@ -16,9 +16,10 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String nome;
-	private String cognome;
+	private String name;
+	private String surname;
 	private String password;
+	private String email;
 	private int eta;
 	@OneToMany(mappedBy= "cliente")
 	private List<Prenotazione> prenotazioni;
@@ -31,17 +32,17 @@ public class User {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String nome) {
+		this.name = nome;
 	}
-	public String getCognome() {
-		return cognome;
+	public String getSurname() {
+		return surname;
 	}
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
+	public void setSurname(String cognome) {
+		this.surname = cognome;
 	}
 	public String getPassword() {
 		return password;
@@ -49,9 +50,22 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
+	}
+	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+		this.prenotazioni = prenotazioni;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(cognome, nome, password);
+		return Objects.hash(surname, name, password);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -62,7 +76,7 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(cognome, other.cognome) && Objects.equals(nome, other.nome)
+		return Objects.equals(surname, other.surname) && Objects.equals(name, other.name)
 				&& Objects.equals(password, other.password);
 	}
 	public int getEta() {

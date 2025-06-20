@@ -23,4 +23,8 @@ public class UserService {
 	public void deleteClienteById (Long id) {
 		this.clienteRepository.deleteById(id);
 	}
+	
+	public void saveUser(User user) {
+		this.clienteRepository.save(user);
+	}
 }
