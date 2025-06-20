@@ -15,7 +15,7 @@
     <ul th:each="prenotazione : ${prenotazioni}">
         <li>
             Campo: <span th:text="${prenotazione.campo.nome}"></span><br/>
-            Data: <span th:text="${prenotazione.dataPrenotazione}"></span><br/>
+            Data: <span th:text="${prenotazione.data}"></span><br/>
             Orario: <span th:text="${prenotazione.oraInizio}"></span> - 
                     <span th:text="${prenotazione.oraFine}"></span><br/>
             <hr/>
