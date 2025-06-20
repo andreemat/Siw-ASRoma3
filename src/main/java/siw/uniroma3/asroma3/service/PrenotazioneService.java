@@ -53,5 +53,10 @@ public class PrenotazioneService {
 		return this.prenotazioneRepository.findByCliente(cliente);
 	}
 
+	public void save(Prenotazione prenotazione) {
+		this.prenotazioneRepository.save(prenotazione);
+		
+	}
+
 
 }
