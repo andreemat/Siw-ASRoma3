@@ -49,45 +49,47 @@ public class PrenotazioneController {
 		model.addAttribute("sport",campo.getSport());
 		model.addAttribute("prenotazione",new Prenotazione());
 		model.addAttribute("campo", campo);
-		return "formNewPrenotazione.html"; 
+		return "formDataPrenotazione.html"; 
 		
 	}
-	@PostMapping("/prenota/campo/{idC}")
-	public String formNewPrenotazione(@ModelAttribute("prenotazione") Prenotazione prenotazione,
-	                                  @PathVariable("idC") Long idC,
-	                                  @RequestParam(value = "orariSelezionati", required = false) List<String> orariSelezionati,
-	                                  Model model) {
-	    Campo campo = campoService.getCampo(idC);
-	    model.addAttribute("associazione", campo.getAssociazione());
-	    model.addAttribute("sport", campo.getSport());
-	    model.addAttribute("campo", campo);
+    @PostMapping("/prenota/campo/{idC}/giorno")
+    public String selezionaGiorno(@ModelAttribute("prenotazione") Prenotazione prenotazione,
+                                  @PathVariable("idC") Long idC,
+                                  Model model) {
+        Campo campo = campoService.getCampo(idC);
+        model.addAttribute("campo", campo);
+        model.addAttribute("associazione", campo.getAssociazione());
+        model.addAttribute("sport", campo.getSport());
+        model.addAttribute("prenotazione", prenotazione);
+        model.addAttribute("slots", prenotazioneService.getSlot(campo, prenotazione.getData()));
+        return "formOrariPrenotazione.html";
+    }
 
-	    // Se orari non ancora selezionati → mostra orari disponibili
-	    if (orariSelezionati == null || orariSelezionati.isEmpty()) {
-	        model.addAttribute("prenotazione", prenotazione);
-	        model.addAttribute("slots", prenotazioneService.getSlot(campo, prenotazione.getData()));
-	        return "formNewPrenotazione.html";
-	    }
+    // SECONDO STEP: Conferma prenotazione
+    @PostMapping("/prenota/campo/{idC}/conferma")
+    public String confermaPrenotazione(@ModelAttribute("prenotazione") Prenotazione prenotazione,
+                                       @PathVariable("idC") Long idC,
+                                       @RequestParam("orariSelezionati") List<String> orariSelezionati) {
 
-	    // Ordina orari (formato: "09:00-10:00")
-	    orariSelezionati.sort(Comparator.naturalOrder());
+        Campo campo = campoService.getCampo(idC);
 
-	    String prima = orariSelezionati.get(0).split("-")[0];
-	    String ultima = orariSelezionati.get(orariSelezionati.size() - 1).split("-")[1];
+        orariSelezionati.sort(Comparator.naturalOrder());
+        String inizio = orariSelezionati.get(0).split("-")[0];
+        String fine = orariSelezionati.get(orariSelezionati.size() - 1).split("-")[1];
 
-	    prenotazione.setOraInizio(LocalTime.parse(prima));
-	    prenotazione.setOraFine(LocalTime.parse(ultima));
-	    prenotazione.setCampo(campo);
-	    UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
-	    prenotazione.setCliente(user);
-	    user.addPrenotazione(prenotazione);
-	    prenotazioneService.save(prenotazione);
-	    
-	    
+        prenotazione.setOraInizio(LocalTime.parse(inizio));
+        prenotazione.setOraFine(LocalTime.parse(fine));
+        prenotazione.setCampo(campo);
 
-	    return "redirect:/utente/prenotazioni";
-	}
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+        prenotazione.setCliente(user);
+        user.addPrenotazione(prenotazione);
+
+        prenotazioneService.save(prenotazione);
+
+        return "redirect:/utente/prenotazioni";
+    }
 
 
 
@@ -98,7 +100,7 @@ public class PrenotazioneController {
 public String getPrenotazioniUtente(Model model) {
 	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	User user=credentialsService.getCredentials(userDetails.getUsername()).getUser();
-	List<Prenotazione> prenotazioni=this.prenotazioneService.getPrenotazioneByCliente(user);
+	List<Prenotazione> prenotazioni=user.getPrenotazioni();
 	model.addAttribute("prenotazioni",prenotazioni);
 	return "prenotazioniUtente.html";
 	

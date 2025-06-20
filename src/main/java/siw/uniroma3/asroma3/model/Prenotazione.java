@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Entity;
@@ -17,6 +19,7 @@ public class Prenotazione {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data;
 	private LocalTime oraInizio;
 	private LocalTime oraFine;

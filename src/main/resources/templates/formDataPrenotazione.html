@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seleziona giorno</title>
+</head>
+<body>
+    <h3>Seleziona il giorno</h3>
+    <form th:action="@{/prenota/campo/{idC}/giorno(idC=${campo.id})}" 
+          th:object="${prenotazione}" method="post">
+        <label>
+            Data:
+            <input type="date" th:field="*{data}" required />
+        </label>
+        <button type="submit">Conferma giorno</button>
+    </form>
+</body>
+</html>

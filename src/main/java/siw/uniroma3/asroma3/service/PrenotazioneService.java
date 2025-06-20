@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Prenotazione;
 import siw.uniroma3.asroma3.model.SlotDisponibili;
@@ -52,7 +53,7 @@ public class PrenotazioneService {
 	public List<Prenotazione> getPrenotazioneByCliente(User cliente){
 		return this.prenotazioneRepository.findByCliente(cliente);
 	}
-
+	@Transactional
 	public void save(Prenotazione prenotazione) {
 		this.prenotazioneRepository.save(prenotazione);
 		

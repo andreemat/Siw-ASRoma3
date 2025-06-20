@@ -30,8 +30,6 @@
   <div th:if="${prenotazione.data != null}">
     <form
       th:action="@{/prenota/campo/{idC}(
-        idA=${associazione.id},
-        idS=${sport.id},
         idC=${campo.id}
      	)}"
       th:object="${prenotazione}"

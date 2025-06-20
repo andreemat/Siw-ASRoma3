@@ -66,6 +66,7 @@ public class User {
 	
 	public void addPrenotazione(Prenotazione prenotazione) {
 		this.prenotazioni.add(prenotazione);
+		prenotazione.setCliente(this);
 	}
 	@Override
 	public int hashCode() {
