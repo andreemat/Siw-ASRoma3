@@ -24,6 +24,7 @@ import siw.uniroma3.asroma3.model.Prenotazione;
 import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CampoService;
+import siw.uniroma3.asroma3.service.CredentialsService;
 import siw.uniroma3.asroma3.service.PrenotazioneService;
 import siw.uniroma3.asroma3.service.SportService;
 import siw.uniroma3.asroma3.service.UserService;
@@ -35,6 +36,7 @@ public class PrenotazioneController {
 	@Autowired CampoService campoService;
 	@Autowired private AssociazioneService associazioneService;
 	@Autowired private PrenotazioneService prenotazioneService;
+	@Autowired private CredentialsService credentialsService;
 	@Autowired private SportService sportService;
 	@Autowired private UserService userService;
 	private Campo campo;
@@ -77,7 +79,7 @@ public class PrenotazioneController {
 	    prenotazione.setOraFine(LocalTime.parse(ultima));
 	    prenotazione.setCampo(campo);
 	    UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    User user = userService.getUserByUsername(userDetails.getUsername());
+	    User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 	    prenotazione.setCliente(user);
 	    user.addPrenotazione(prenotazione);
 	    prenotazioneService.save(prenotazione);
@@ -95,7 +97,7 @@ public class PrenotazioneController {
 @GetMapping("/utente/prenotazioni")
 public String getPrenotazioniUtente(Model model) {
 	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	User user=this.userService.getUserByUsername(userDetails.getUsername());
+	User user=credentialsService.getCredentials(userDetails.getUsername()).getUser();
 	List<Prenotazione> prenotazioni=this.prenotazioneService.getPrenotazioneByCliente(user);
 	model.addAttribute("prenotazioni",prenotazioni);
 	return "prenotazioniUtente.html";
