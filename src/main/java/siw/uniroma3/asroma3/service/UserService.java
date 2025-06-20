@@ -29,7 +29,7 @@ public class UserService {
 		this.clienteRepository.save(user);
 }
 	public User getUserByUsername(String nome) {
-		return this.clienteRepository.findByNome(nome);
+		return this.clienteRepository.findByName(nome);
 
 	}
 }
