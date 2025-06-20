@@ -38,10 +38,16 @@
       method="post">
 
       <h3>Seleziona l'orario</h3>
-      <label>
-        Orario:
-        <input type="time" th:field="*{oraInizio}" />
-      </label>
+	  <ul style="list-style: none; padding: 0;">
+	      <li th:each="slot : ${slots}">
+			<label>
+			    <input type="checkbox" name="orariSelezionati"
+			           th:value="${slot.oraInizio} + '-' + ${slot.oraFine}"
+			           class="orario-checkbox">
+			    <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span>
+			</label>
+	      </li>
+	  </ul>
       <button type="submit">Conferma orario</button>
     </form>
   </div>

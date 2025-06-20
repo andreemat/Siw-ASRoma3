@@ -24,7 +24,7 @@ public class Prenotazione {
 	@ManyToOne
 	private Campo campo;
 	
-	@ManyToOne()
+	@ManyToOne
 	private User cliente;
 	public Long getId() {
 		return Id;

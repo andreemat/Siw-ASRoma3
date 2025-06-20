@@ -48,5 +48,10 @@ public class PrenotazioneService {
 		this.prenotazioneRepository.deleteById(id);
 	}
 
+	public void save(Prenotazione prenotazione) {
+		this.prenotazioneRepository.save(prenotazione);
+		
+	}
+
 
 }
