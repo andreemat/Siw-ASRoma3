@@ -23,4 +23,8 @@ public class UserService {
 	public void deleteClienteById (Long id) {
 		this.clienteRepository.deleteById(id);
 	}
+	
+	public User getUserByUsername(String nome) {
+		return this.clienteRepository.findByNome(nome);
+	}
 }
