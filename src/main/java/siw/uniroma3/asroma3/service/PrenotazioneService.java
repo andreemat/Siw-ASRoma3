@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Prenotazione;
 import siw.uniroma3.asroma3.model.SlotDisponibili;
+import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.repository.PrenotazioneRepository;
 
 @Service
@@ -46,6 +47,10 @@ public class PrenotazioneService {
 
 	public void deletePrenotazioneById (Long id) {
 		this.prenotazioneRepository.deleteById(id);
+	}
+	
+	public List<Prenotazione> getPrenotazioneByCliente(User cliente){
+		return this.prenotazioneRepository.findByCliente(cliente);
 	}
 
 

@@ -24,7 +24,12 @@ public class UserService {
 		this.clienteRepository.deleteById(id);
 	}
 	
+
 	public void saveUser(User user) {
 		this.clienteRepository.save(user);
+}
+	public User getUserByUsername(String nome) {
+		return this.clienteRepository.findByNome(nome);
+
 	}
 }

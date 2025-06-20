@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Le mie prenotazioni</title>
+</head>
+<body>
+
+    <h1>Le tue prenotazioni</h1>
+
+    <div th:if="${prenotazioni.isEmpty()}">
+        <p>Non hai prenotazioni al momento.</p>
+    </div>
+
+    <ul th:each="prenotazione : ${prenotazioni}">
+        <li>
+            Campo: <span th:text="${prenotazione.campo.nome}"></span><br/>
+            Data: <span th:text="${prenotazione.dataPrenotazione}"></span><br/>
+            Orario: <span th:text="${prenotazione.oraInizio}"></span> - 
+                    <span th:text="${prenotazione.oraFine}"></span><br/>
+            <hr/>
+        </li>
+    </ul>
+
+    <a href="/home">Torna alla home</a>
+
+</body>
+</html>
