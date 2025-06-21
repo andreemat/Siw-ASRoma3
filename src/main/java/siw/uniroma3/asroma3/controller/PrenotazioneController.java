@@ -105,4 +105,37 @@ public String getPrenotazioniUtente(Model model) {
 	return "prenotazioniUtente.html";
 	
 }
+
+
+
+
+
+
+
+@GetMapping("/utente/prenotazioni/cancella/{idP}")
+public String cancellaPrenotazione(Model model,@PathVariable("idP") Long idP) {
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User currentUser = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+
+    Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
+
+    if (prenotazione != null && prenotazione.getCliente().getId().equals(currentUser.getId())) {
+        prenotazioneService.deletePrenotazioneById(idP);
+    }
+
+    model.addAttribute("prenotazioni", currentUser.getPrenotazioni());
+    return "prenotazioniUtente.html";
+}
+
+
+
+
+
+
+
+
+
+
+
+
 }
