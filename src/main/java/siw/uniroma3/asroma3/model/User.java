@@ -1,5 +1,6 @@
 package siw.uniroma3.asroma3.model;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,8 +23,8 @@ public class User {
 	private String password;
 	private String email;
 	private int eta;
-	@OneToOne(mappedBy = "adminAssociazione")
-	private Associazione associazione;
+	@OneToMany(mappedBy = "adminAssociazione")
+	private List<Associazione> associazioni;
 	@OneToMany(mappedBy= "cliente")
 	private List<Prenotazione> prenotazioni;
 	public User() {
@@ -72,13 +73,16 @@ public class User {
 		prenotazione.setCliente(this);
 	}
 	
-	
-
-	public Associazione getAssociazione() {
-		return associazione;
+	public List<Associazione> getAssociazioni() {
+		return associazioni;
 	}
-	public void setAssociazione(Associazione associazione) {
-		this.associazione = associazione;
+	public void setAssociazioni(List<Associazione> associazioni) {
+		this.associazioni = associazioni;
+	}
+	public void addAssociazione(Associazione associazione) {
+		if (this.associazioni==null)
+			this.associazioni= new LinkedList<Associazione> ();
+		this.associazioni.add(associazione);
 	}
 	@Override
 	public int hashCode() {

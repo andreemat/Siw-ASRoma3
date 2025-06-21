@@ -67,9 +67,8 @@ public class AssociazioneController {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 		associazione.setAdminAssociazione(user);
-		user.setAssociazione(associazione);
-		associazioneService.saveAssociazione(associazione);
-		userService.saveUser(user);
+		this.associazioneService.addAdminAssociazione(associazione, user);
+		this.associazioneService.saveAssociazione(associazione);
 		return "redirect:/";
 	}
 

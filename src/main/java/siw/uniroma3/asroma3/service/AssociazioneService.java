@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import siw.uniroma3.asroma3.model.Associazione;
+import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.repository.AssociazioneRepository;
 
 
@@ -24,6 +25,9 @@ public class AssociazioneService {
 	}
 	public void saveAssociazione(Associazione associazione) {
 		this.associazioneRepository.save(associazione);
+	}
+	public void addAdminAssociazione(Associazione associazione, User user) {
+		this.associazioneRepository.addAdminAssociazione(associazione.getId(), user.getId());
 	}
 
 }
