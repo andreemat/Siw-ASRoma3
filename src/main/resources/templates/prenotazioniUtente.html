@@ -18,11 +18,12 @@
             Data: <span th:text="${prenotazione.data}"></span><br/>
             Orario: <span th:text="${prenotazione.oraInizio}"></span> - 
                     <span th:text="${prenotazione.oraFine}"></span><br/>
+					<a th:href="@{/utente/prenotazioni/cancella/{idP}(idP=${prenotazione.Id})}">Cancella</a>
             <hr/>
         </li>
     </ul>
 
-    <a href="/home">Torna alla home</a>
+    <a href="/">Torna alla home</a>
 
 </body>
 </html>

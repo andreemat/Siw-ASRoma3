@@ -1,29 +1,21 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6"> <!-- Controlla se usi springsecurity5 o springsecurity6 -->
+
+
+
 	<head>
 		<meta charset="UTF-8">
 		<title>ASRoma3 - Home</title>
 	</head>
 	<body>
+		<div th:replace="fragments/navbar :: navbar"></div>
+
 		<h1>Benvenuto nel portale dell' ASRoma3</h1>
 		
-		<nav>
-		       <!-- Questi link sono condizionati usando th:if e l'oggetto userDetails -->
-		       <!-- Mostra Login se userDetails è nullo (utente non autenticato/anonimo) -->
-		       <span th:if="${userDetails == null}">
-		           <a th:href="@{/login}">Login</a>
-		       </span>
-		       <!-- Mostra Logout e nome utente se userDetails non è nullo (utente autenticato) -->
-		       <span th:if="${userDetails != null}">
-                   <a th:href="@{/logout}">Logout</a>
-                   (Utente: <span th:text="${userDetails.username}"></span>)
-		       </span>
-		</nav>
-        
-		<nav>
-		    <a th:href="@{/register}">Registrati</a>
-		</nav>
+		
+     
         
 		<!-- Blocco condizionale per gli Amministratori -->
 		<!-- Ritorno all'uso di sec:authorize per la verifica dei ruoli, è più robusto e leggibile -->
@@ -31,6 +23,7 @@
 		    <p>You are an administrator!</p>
 		    <a th:href="@{/registra-associazione}">registra associazione</a>
 		</div>
+
 
 		<h2>Associazioni disponibili</h2>
 		<ul>
