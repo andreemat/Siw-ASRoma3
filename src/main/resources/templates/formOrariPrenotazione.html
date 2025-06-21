@@ -6,19 +6,29 @@
 <body>
     <h3>Seleziona gli orari disponibili per il giorno: <span th:text="*{data}"></span></h3>
 
-    <form th:action="@{/prenota/campo/{idC}/conferma(idC=${campo.id})}" 
+    <form th:action="@{/prenota/campo/{idC}/conferma(idC=${campo.id})}"
           th:object="${prenotazione}" method="post">
 
         <input type="hidden" th:field="*{data}" />
 
-		<li th:each="slot : ${slots}">
-		<label>
-		    <input type="checkbox" name="orariSelezionati"
-		           th:value="${slot.oraInizio} + '-' + ${slot.oraFine}"
-		           class="orario-checkbox">
-		    <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span>
-		</label>
-		</li>
+        <!-- Correct: li elements should always be inside a ul or ol -->
+        <ul>
+            <li th:each="slot : ${slots}">
+                <label>
+                    <!-- Correct: Use ${} for expressions and ensure 'disponibile' is consistent -->
+                    <span th:if="${slot.disponibile}">
+                        <input type="checkbox" name="orariSelezionati"
+                               th:value="${slot.oraInizio} + '-' + ${slot.oraFine}"
+                               class="orario-checkbox">
+                        <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span>
+                    </span>
+                    <!-- Correct: Use ${} for expressions -->
+                    <span th:unless="${slot.disponibile}" style="color: grey;">
+                        <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span> (Non disponibile)
+                    </span>
+                </label>
+            </li>
+        </ul>
 
         <button type="submit">Prenota</button>
     </form>
