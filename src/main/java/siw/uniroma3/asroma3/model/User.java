@@ -68,9 +68,11 @@ public class User {
 		this.prenotazioni.add(prenotazione);
 		prenotazione.setCliente(this);
 	}
+	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(surname, name, password);
+		return Objects.hash(name, password, surname);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -81,8 +83,8 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(surname, other.surname) && Objects.equals(name, other.name)
-				&& Objects.equals(password, other.password);
+		return Objects.equals(name, other.name) && Objects.equals(password, other.password)
+				&& Objects.equals(surname, other.surname);
 	}
 	public int getEta() {
 		return eta;
