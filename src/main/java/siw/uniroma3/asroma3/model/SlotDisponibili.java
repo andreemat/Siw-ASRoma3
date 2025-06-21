@@ -26,7 +26,7 @@ public class SlotDisponibili {
 	public void setOraFine(LocalTime oraFine) {
 		this.oraFine = oraFine;
 	}
-	public boolean isDisponibile() {
+	public boolean getDisponibile() {
 		return disponibile;
 	}
 	public void setDisponibile(boolean disponibile) {

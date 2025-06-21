@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +22,8 @@ public class User {
 	private String password;
 	private String email;
 	private int eta;
+	@OneToOne(mappedBy = "adminAssociazione")
+	private Associazione associazione;
 	@OneToMany(mappedBy= "cliente")
 	private List<Prenotazione> prenotazioni;
 	public User() {

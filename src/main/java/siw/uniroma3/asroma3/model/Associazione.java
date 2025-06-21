@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Associazione {
@@ -17,7 +18,8 @@ public class Associazione {
 	private String nome;
 	private String indirizzo;
 	
-	
+	@OneToOne
+	User adminAssociazione;
 	
 	@ManyToMany
     private List<Sport> sportList;
