@@ -67,12 +67,26 @@ public class Associazione {
 	public void setSportList(List<Sport> sportList) {
 		this.sportList = sportList;
 	}
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, indirizzo, nome);
 	}
 
 
+	public User getAdminAssociazione() {
+		return adminAssociazione;
+	}
+	public void setAdminAssociazione(User adminAssociazione) {
+		this.adminAssociazione = adminAssociazione;
+	}
+	public List<Campo> getCampi() {
+		return campi;
+	}
+	public void setCampi(List<Campo> campi) {
+		this.campi = campi;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

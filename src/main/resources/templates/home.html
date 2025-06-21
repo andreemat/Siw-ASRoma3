@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xlmns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6"> <!-- Controlla se usi springsecurity5 o springsecurity6 -->
 	<head>
 		<meta charset="UTF-8">
 		<title>ASRoma3 - Home</title>
@@ -8,18 +9,35 @@
 		<h1>Benvenuto nel portale dell' ASRoma3</h1>
 		
 		<nav>
-		       <a th:href="@{/login}">Login</a> <!-- puoi fare /login o /admin/login in base a come gestirai -->
-		   </nav>
-		   <nav>
-		   		    <a th:href="@{/register}">Registrati</a> <!-- puoi fare /login o /admin/login in base a come gestirai -->
-		   		   </nav>
+		       <!-- Questi link sono condizionati usando th:if e l'oggetto userDetails -->
+		       <!-- Mostra Login se userDetails è nullo (utente non autenticato/anonimo) -->
+		       <span th:if="${userDetails == null}">
+		           <a th:href="@{/login}">Login</a>
+		       </span>
+		       <!-- Mostra Logout e nome utente se userDetails non è nullo (utente autenticato) -->
+		       <span th:if="${userDetails != null}">
+                   <a th:href="@{/logout}">Logout</a>
+                   (Utente: <span th:text="${userDetails.username}"></span>)
+		       </span>
+		</nav>
+        
+		<nav>
+		    <a th:href="@{/register}">Registrati</a>
+		</nav>
+        
+		<!-- Blocco condizionale per gli Amministratori -->
+		<!-- Ritorno all'uso di sec:authorize per la verifica dei ruoli, è più robusto e leggibile -->
+		<div sec:authorize="hasRole('ADMIN')">
+		    <p>You are an administrator!</p>
+		    <a th:href="@{/registra-associazione}">registra associazione</a>
+		</div>
 
-		   <h2>Associazioni disponibili</h2>
-		   <ul>
-		       <li th:each="associazione : ${associazioni}">
-		           <a th:href="@{'/associazione/' + ${associazione.id}}"
-		              th:text="${associazione.nome}"></a>
-		       </li>
-		   </ul>
+		<h2>Associazioni disponibili</h2>
+		<ul>
+		    <li th:each="associazione : ${associazioni}">
+		        <a th:href="@{'/associazione/' + ${associazione.id}}"
+		           th:text="${associazione.nome}"></a>
+		    </li>
+		</ul>
 	</body>
 </html>

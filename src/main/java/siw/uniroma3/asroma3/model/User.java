@@ -72,7 +72,14 @@ public class User {
 		prenotazione.setCliente(this);
 	}
 	
+	
 
+	public Associazione getAssociazione() {
+		return associazione;
+	}
+	public void setAssociazione(Associazione associazione) {
+		this.associazione = associazione;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, password, surname);

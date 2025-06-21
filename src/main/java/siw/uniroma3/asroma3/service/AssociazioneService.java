@@ -22,5 +22,8 @@ public class AssociazioneService {
 	public void deleteAssociazione (Long id) {
 		this.associazioneRepository.deleteById(id);
 	}
+	public void saveAssociazione(Associazione associazione) {
+		this.associazioneRepository.save(associazione);
+	}
 
 }
