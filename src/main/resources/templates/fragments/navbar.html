@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
 <body>
 <nav th:fragment="navbar" style="display: flex; justify-content: flex-end; padding: 10px; border-bottom: 1px solid #ccc; gap: 10px;">
 
@@ -11,7 +11,9 @@
 
 	<!-- Se utente autenticato -->
 	<span th:if="${userDetails != null}">
+		
 	    <span>Benvenuto, <b th:text="${userDetails.username}"></b>!</span> |
+		<a sec:authorize="hasRole('ADMIN')">You are an administrator!</a> |
 	    <a th:href="@{/utente/prenotazioni}">Le mie prenotazioni</a> |
 	    <a th:href="@{/logout}">Logout</a>
 	</span>
