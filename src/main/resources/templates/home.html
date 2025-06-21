@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html xlmns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>ASRoma3 - Home</title>
 	</head>
 	<body>
+		<div th:replace="fragments/navbar :: navbar"></div>
+
 		<h1>Benvenuto nel portale dell' ASRoma3</h1>
 		
-		<nav>
-		       <a th:href="@{/login}">Login</a> <!-- puoi fare /login o /admin/login in base a come gestirai -->
-		   </nav>
-		   <nav>
-		   		    <a th:href="@{/register}">Registrati</a> <!-- puoi fare /login o /admin/login in base a come gestirai -->
-		   		   </nav>
+	
 
 		   <h2>Associazioni disponibili</h2>
 		   <ul>

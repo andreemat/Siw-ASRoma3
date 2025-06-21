@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="navbar" style="display: flex; justify-content: flex-end; padding: 10px; border-bottom: 1px solid #ccc; gap: 10px;">
+
+	<!-- Se utente NON autenticato -->
+	<span th:if="${userDetails == null}">
+	    <a th:href="@{/login}">Login</a> |
+	    <a th:href="@{/register}">Registrati</a>
+	</span>
+
+	<!-- Se utente autenticato -->
+	<span th:if="${userDetails != null}">
+	    <span>Benvenuto, <b th:text="${userDetails.username}"></b>!</span> |
+	    <a th:href="@{/utente/prenotazioni}">Le mie prenotazioni</a> |
+	    <a th:href="@{/logout}">Logout</a>
+	</span>
+
+
+</nav>
+</body>
+</html>
+
