@@ -29,11 +29,7 @@ public class AssociazioneController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/")
-	public String mostraHome(Model model) {
-		model.addAttribute("associazioni", associazioneService.getAllAssociazioni());
-		return "home"; // carica home.html
-	}
+	
 
 	@GetMapping("/associazione/{id}")
 
@@ -45,14 +41,14 @@ public class AssociazioneController {
 		return "associazione.html";
 	}
 
-	@GetMapping("/registra-associazione")
+	@GetMapping("/admin/registra-associazione")
 	public String registraAssociazione(Model model) {
 		
 		model.addAttribute("associazione",new Associazione());
 		return "formAssociazione.html";
 	}
 
-	@PostMapping("/registra-associazione")
+	@PostMapping("/admin/registra-associazione")
 	public String registraAssociazione(
 			@Valid @ModelAttribute("associazione") Associazione associazione,
 			BindingResult bindingResult,
