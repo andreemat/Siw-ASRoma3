@@ -76,7 +76,7 @@ public class AuthController {
 				return "admin/homeAdmin.html";
 			}
 			else {
-			
+				model.addAttribute("associazioni", associazioneService.getAllAssociazioni());
 				return "home.html";}
 		}
 			
