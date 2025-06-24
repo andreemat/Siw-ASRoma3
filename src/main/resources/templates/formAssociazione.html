@@ -12,32 +12,21 @@
 
         <form th:action="@{/admin/registra-associazione}" th:object="${associazione}" method="post">
 
-            <!-- Field for Nome -->
             <div class="form-group">
                 <label for="nome">Nome Associazione:</label>
                 <input type="text" id="nome" th:field="*{nome}" placeholder="Nome dell'associazione" required>
                 <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span>
             </div>
 
-            <!-- Field for Indirizzo -->
             <div class="form-group">
                 <label for="indirizzo">Indirizzo:</label>
                 <input type="text" id="indirizzo" th:field="*{indirizzo}" placeholder="Indirizzo completo" required>
                 <span th:if="${#fields.hasErrors('indirizzo')}" th:errors="*{indirizzo}" class="error-message"></span>
             </div>
 
-            <!-- Field for AdminAssociazione (assuming ID of existing User) -->
-            <!-- NOTE: For a real application, you might use a dropdown to select an existing user
-                 or a complex sub-form to register a new user simultaneously.
-                 Here, we assume you're passing an ID for an existing admin. -->
-         
 
-            <!--
-            // sportList and campi are typically managed separately or after initial association creation.
-            // For example, you might add sports and fields through separate forms or administrative panels
-            // after the basic association is registered. Including them here would significantly
-            // complicate the form, often requiring dynamic JavaScript for list management.
-            -->
+
+           
 
             <button type="submit">Registra Associazione</button>
         </form>

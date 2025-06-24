@@ -26,5 +26,7 @@ public class CampoService {
 	public List<Campo> getAllByAssociazioneESport(Long idA,Long idS) {
 		return this.campoRepository.findBySportIdAndAssociazioneId(idS, idA);
 	}
-	
+	public void saveCampo(Campo campo) {
+		this.campoRepository.save(campo);
+	}
 }
