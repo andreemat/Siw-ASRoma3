@@ -30,4 +30,6 @@ public class AssociazioneService {
 		this.associazioneRepository.addAdminAssociazione(associazione.getId(), user.getId());
 	}
 
+	
+
 }

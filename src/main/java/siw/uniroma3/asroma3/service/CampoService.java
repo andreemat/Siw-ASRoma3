@@ -27,4 +27,8 @@ public class CampoService {
 		return this.campoRepository.findBySportIdAndAssociazioneId(idS, idA);
 	}
 	
+	public void saveCampo(Campo campo) {
+		this.campoRepository.save(campo);
+	}
+	
 }

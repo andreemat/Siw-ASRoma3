@@ -24,5 +24,9 @@ public class SportService {
 		this.sportRepository.deleteById(id);
 	}
 	
+	public void saveSport(Sport sport) {
+		this.sportRepository.save(sport);
+	}
+	
 	
 }
