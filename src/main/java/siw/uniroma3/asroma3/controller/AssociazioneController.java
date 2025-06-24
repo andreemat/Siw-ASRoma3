@@ -45,7 +45,7 @@ public class AssociazioneController {
 	public String registraAssociazione(Model model) {
 		
 		model.addAttribute("associazione",new Associazione());
-		return "formAssociazione.html";
+		return "/admin/formAssociazione.html";
 	}
 
 	@PostMapping("/admin/registra-associazione")
@@ -57,7 +57,7 @@ public class AssociazioneController {
 		if (bindingResult.hasErrors()) {
 			System.out.println("Errori di validazione sul form di registrazione associazione:");
 			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
-			return "registraAssociazioneForm";
+			return "admin/registraAssociazioneForm";
 		}
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,6 +66,15 @@ public class AssociazioneController {
 		this.associazioneService.addAdminAssociazione(associazione, user);
 		this.associazioneService.saveAssociazione(associazione);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/admin/associazione/{idA}")
+	public String associazioneAdmin(@PathVariable("idA") Long id,Model model) {
+		Associazione associazione = this.associazioneService.getAssociazione(id);
+
+		model.addAttribute("sports", associazione.getSportList());
+		model.addAttribute("associazione", associazione);
+		return "admin/associazioneAdmin";
 	}
 
 

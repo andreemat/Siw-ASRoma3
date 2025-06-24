@@ -17,6 +17,7 @@ public class Sport {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String nome;
+	private String urlImage; //path
 	
 	@OneToMany(mappedBy="sport")
 	private List<Campo> campi;
@@ -62,6 +63,16 @@ public class Sport {
 
 	public void setAssociazioni(List<Associazione> associazioni) {
 		this.associazioni = associazioni;
+	}
+	
+	
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 
 	@Override

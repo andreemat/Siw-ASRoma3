@@ -31,6 +31,7 @@ public class Campo {
 	private LocalTime oraApertura;
 	private LocalTime oraChiusura;
 	private Set<DayOfWeek> giorniDisponibili ;
+	private String urlImage; //path
 	
 	@ManyToOne
 	private Sport sport;
@@ -95,6 +96,20 @@ public class Campo {
 	
 	public void addGiorno(String giorno) {
 		giorniDisponibili.add(DayOfWeek.valueOf(giorno));
+	}
+	
+	
+	public Set<DayOfWeek> getGiorniDisponibili() {
+		return giorniDisponibili;
+	}
+	public void setGiorniDisponibili(Set<DayOfWeek> giorniDisponibili) {
+		this.giorniDisponibili = giorniDisponibili;
+	}
+	public String getUrlImage() {
+		return urlImage;
+	}
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 	@Override
 	public int hashCode() {

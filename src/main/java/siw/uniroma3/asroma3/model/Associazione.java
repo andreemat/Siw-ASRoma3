@@ -19,6 +19,7 @@ public class Associazione {
 	private Long id;
 	private String nome;
 	private String indirizzo;
+	private String urlImage; //path
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
@@ -72,6 +73,14 @@ public class Associazione {
 	}
 	
 	
+	
+	
+	public String getUrlImage() {
+		return urlImage;
+	}
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, indirizzo, nome);
