@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6"> <!-- Controlla se usi springsecurity5 o springsecurity6 -->
+
+
+
+	<head>
+		<meta charset="UTF-8">
+		<title>ASRoma3 - formImage</title>
+	</head>
+	<body>
+		<form th:action="@{/admin/upload/{type}/{id}(type=${type},id=${id})}" method="post" enctype="multipart/form-data">
+		    <div>
+		        <label for="file">Seleziona immagine da caricare per [[${type}]]:</label>
+		        <input type="file" id="file" name="file" accept="image/*" required>
+		    </div>
+
+		    <div>
+		        <button type="submit">Carica immagine</button>
+		    </div>
+		</form>
+	</body>
+</html>

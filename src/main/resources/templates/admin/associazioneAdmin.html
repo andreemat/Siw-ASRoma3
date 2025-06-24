@@ -8,15 +8,21 @@
 
 <body>
 	
-
+	<div>
+		<a th:href="@{/admin/upload/associazione/{id}(id=${associazione.id})}">Aggiungi immagine per Associazione</a>
+	</div>
 	<div><a href="/"><img src="/logo-siw.png" width="10%" /></a></div>
-	<h1>	<a th:text="${associazione.nome} ">Nome mancante</a></h1>
+	<h1>	<a th:text="${associazione.nome} ">Nome mancante</a></h1> 
+	<div>
+		<img th:src="@{${associazione.urlImage}}" alt="Logo Associazione" />
+	</div>
 	<h2>	Lista Sport</h2>
 	<div th:if="${sports.isEmpty()}">Non ci sono sport nel sistema per questa associazione</div>
 	<ul>
 		<li th:each="sport : ${sports}">
-			<a th:href="@{/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
+			<a th:href="@{/admin/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
 			               th:text="${sport.nome}">Link</a>
+			
 			
 		</li>
 	</ul>
