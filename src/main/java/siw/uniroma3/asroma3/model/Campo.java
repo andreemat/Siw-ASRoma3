@@ -13,10 +13,12 @@ import java.util.EnumSet;
 import java.time.DayOfWeek;
 import java.util.TreeSet;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -31,7 +33,9 @@ public class Campo {
 	private LocalTime oraApertura;
 	private LocalTime oraChiusura;
 	private Set<DayOfWeek> giorniDisponibili ;
-	private String urlImage; //path
+	
+	@Column(columnDefinition = "bytea",nullable=true)
+	private byte[] immagine;
 	
 	@ManyToOne
 	private Sport sport;
@@ -105,11 +109,14 @@ public class Campo {
 	public void setGiorniDisponibili(Set<DayOfWeek> giorniDisponibili) {
 		this.giorniDisponibili = giorniDisponibili;
 	}
-	public String getUrlImage() {
-		return urlImage;
+	
+	
+	
+	public byte[] getImmagine() {
+		return immagine;
 	}
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
+	public void setImmagine(byte[] immagine) {
+		this.immagine = immagine;
 	}
 	@Override
 	public int hashCode() {

@@ -2,11 +2,14 @@ package siw.uniroma3.asroma3.model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -19,7 +22,9 @@ public class Associazione {
 	private Long id;
 	private String nome;
 	private String indirizzo;
-	private String urlImage; //path
+	
+	@Column(columnDefinition = "bytea",nullable=true)
+	private byte[] immagine; //path
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
@@ -74,12 +79,11 @@ public class Associazione {
 	
 	
 	
-	
-	public String getUrlImage() {
-		return urlImage;
+	public byte[] getImmagine() {
+		return immagine;
 	}
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
+	public void setImmagine(byte[] immagine) {
+		this.immagine = immagine;
 	}
 	@Override
 	public int hashCode() {

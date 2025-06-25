@@ -1,5 +1,7 @@
 package siw.uniroma3.asroma3.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import siw.uniroma3.asroma3.model.Associazione;
@@ -44,6 +48,7 @@ public class AssociazioneController {
 	@GetMapping("/admin/registra-associazione")
 	public String registraAssociazione(Model model) {
 		
+		
 		model.addAttribute("associazione",new Associazione());
 		return "/admin/formAssociazione.html";
 	}
@@ -52,13 +57,17 @@ public class AssociazioneController {
 	public String registraAssociazione(
 			@Valid @ModelAttribute("associazione") Associazione associazione,
 			BindingResult bindingResult,
-			Model model) {
+			Model model, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
 
 		if (bindingResult.hasErrors()) {
 			System.out.println("Errori di validazione sul form di registrazione associazione:");
 			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
 			return "admin/registraAssociazioneForm";
 		}
+		if (file != null && !file.isEmpty()) {
+	        // Salva i byte del file dentro l'entità
+	        associazione.setImmagine(file.getBytes());
+	    }
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();

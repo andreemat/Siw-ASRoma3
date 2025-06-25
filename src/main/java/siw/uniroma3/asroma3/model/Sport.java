@@ -3,10 +3,12 @@ package siw.uniroma3.asroma3.model;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -17,7 +19,9 @@ public class Sport {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String nome;
-	private String urlImage; //path
+	
+	@Column(columnDefinition = "bytea",nullable=true)
+	private byte[] immagine;
 	
 	@OneToMany(mappedBy="sport")
 	private List<Campo> campi;
@@ -67,12 +71,16 @@ public class Sport {
 	
 	
 
-	public String getUrlImage() {
-		return urlImage;
+	
+
+	
+
+	public byte[] getImmagine() {
+		return immagine;
 	}
 
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
+	public void setImmagine(byte[] immagine) {
+		this.immagine = immagine;
 	}
 
 	@Override
