@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
+import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Prenotazione;
+import siw.uniroma3.asroma3.model.Sport;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CampoService;
 import siw.uniroma3.asroma3.service.SportService;
@@ -22,24 +24,52 @@ public class CampoController {
 	SportService sportService;
 	@Autowired
 	CampoService campoService;
+	@Autowired
+	AssociazioneService associazioneService;
 	
 	
-	@GetMapping("/admin/registra-campo")
-	public String registraCampo(Model model) {
+	@GetMapping("/admin/associazione/{id}/registra-campo")
+	public String registraCampo(@PathVariable ("id") Long id ,Model model) {
 		model.addAttribute("sports",sportService.getAllSport());
 		model.addAttribute("campo", new Campo());
+		model.addAttribute("id",id);
 		return "admin/formCampo.html";
 	}
 	
-	@PostMapping("/admin/registra-campo")
-	public String salvaCampo(@Valid @ModelAttribute Campo campo, BindingResult bindingResult, Model model) {
+	@PostMapping("/admin/associazione/{id}/registra-campo")
+	public String salvaCampo(@Valid @ModelAttribute Campo campo, @PathVariable ("id") Long id,BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			System.out.println("Errori di validazione sul form di registrazione associazione:");
 			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
-			return "formCampo.html";
+			return "admin/formCampo.html";
 		}
-		campoService.saveCampo(campo);
+		if (campo.getId() != null && campo.getId() != 0) {
+			System.err.println("AVVISO: L'ID del Campo non è null. Hibernate eseguirà un UPDATE invece di un INSERT!");
+			campo.setId(null);
+		}
+		Associazione associazione= associazioneService.getAssociazione(id);
+		Sport sport = campo.getSport();
+		associazione.addSport(sport);
+		associazione.addCampo(campo);
+		campo.setAssociazione(associazione);
+		this.campoService.saveCampo(campo);
+		this.associazioneService.saveAssociazione(associazione);
+		
 		return "redirect:/";
+	}
+	
+	@GetMapping("/associazione/{idA}/sport/{idS}")
+	public String mostraCampi(@PathVariable("idA") Long idA,@PathVariable("idS")Long idS, Model model) {
+		Sport sport=sportService.getSportByid(idS);
+		if(sport==null) {
+			return "redirect:/";
+		}
+		
+		model.addAttribute("sport",sport);
+		model.addAttribute("campi",campoService.getAllByAssociazioneESport(idA, idS));
+		model.addAttribute("associazione",associazioneService.getAssociazione(idA));
+		return "campi.html";
+		
 	}
 
 }

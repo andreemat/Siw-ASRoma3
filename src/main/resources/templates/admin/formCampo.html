@@ -9,28 +9,50 @@
 
     <h1>Crea il Tuo Campo</h1>
 
-
-    <form th:object="${campo}" th:action="@{/admin/registra-campo}" th:method="post">
-        <label for="name">Nome del Campo:</label>
+    <form th:object="${campo}" th:action="@{/admin/associazione/{id}/registra-campo(id=${id})}" th:method="post">
+        <label for="nome">Nome del Campo:</label>
         <input type="text" id="nome" th:field="*{nome}" required>
         <br><br>
-		<label for="durataSlot">Durata Slot (minuti):</label>
-		        <input type="number" id="durataSlot" th:field="*{durataSlot}" min="1" required>
-		<br><br>
-		<label for="oraApertura">Ora di Apertura:</label>
-				<input type="time" id="oraApertura" th:field="*{oraApertura}" required>
-				<br><br>
-		<label for="oraChiusura">Ora di Chiusura:</label>
-		 		<input type="time" id="oraChiusura" th:field="*{oraChiusura}" required>
-				<br><br>
+
+        <label for="durataSlot">Durata Slot (minuti):</label>
+        <input type="number" id="durataSlot" th:field="*{durataSlot}" min="1" required>
+        <br><br>
+
+        <label for="capienza">Capienza:</label>
+        <input type="number" id="capienza" th:field="*{capienza}" min="1" required>
+        <br><br>
+
+        <label for="oraApertura">Ora di Apertura:</label>
+        <input type="time" id="oraApertura" th:field="*{oraApertura}" required>
+        <br><br>
+
+        <label for="oraChiusura">Ora di Chiusura:</label>
+        <input type="time" id="oraChiusura" th:field="*{oraChiusura}" required>
+        <br><br>
+
+        <label>Giorni Disponibili:</label><br>
+        <input type="checkbox" id="lunedi" name="giorniDisponibili" value="MONDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('MONDAY'))}"> Lunedì<br>
+        <input type="checkbox" id="martedi" name="giorniDisponibili" value="TUESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('TUESDAY'))}"> Martedì<br>
+        <input type="checkbox" id="mercoledi" name="giorniDisponibili" value="WEDNESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('WEDNESDAY'))}"> Mercoledì<br>
+        <input type="checkbox" id="giovedi" name="giorniDisponibili" value="THURSDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('THURSDAY'))}"> Giovedì<br>
+        <input type="checkbox" id="venerdi" name="giorniDisponibili" value="FRIDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('FRIDAY'))}"> Venerdì<br>
+        <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SATURDAY'))}"> Sabato<br>
+        <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SUNDAY'))}"> Domenica<br>
+        <br>
+
+        <label for="urlImage">URL Immagine:</label>
+        <input type="text" id="urlImage" th:field="*{urlImage}">
+        <br><br>
+
         <label for="sport-select">Seleziona uno sport:</label>
-	        <select id="sport-select" th:field="*{sport}">
-	            <option value="">-- Seleziona uno sport --</option>
-	            <option th:each="sportIter : ${sports}"
-	                    th:value="${sportIter.id}"
-	                    th:text="${sportIter.nome}">Sport Nome</option>
+        <select id="sport-select" th:field="*{sport}" required>
+            <option value="">-- Seleziona uno sport --</option>
+            <option th:each="sportIter : ${sports}"
+                    th:value="${sportIter.id}"
+                    th:text="${sportIter.nome}">Sport Nome</option>
         </select>
         <br><br>
+
         <button type="submit">Crea Campo</button>
     </form>
 

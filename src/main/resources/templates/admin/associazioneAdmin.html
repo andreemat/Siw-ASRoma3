@@ -20,12 +20,13 @@
 	<div th:if="${sports.isEmpty()}">Non ci sono sport nel sistema per questa associazione</div>
 	<ul>
 		<li th:each="sport : ${sports}">
-			<a th:href="@{/admin/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
+			<a th:href="@{/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
 			               th:text="${sport.nome}">Link</a>
 			
 			
 		</li>
 	</ul>
+	<div><a th:href="@{/admin/associazione/{id}/registra-campo(id=${associazione.id})}" >Aggiungi un campo</a></div>
 </body>
 </html>
 

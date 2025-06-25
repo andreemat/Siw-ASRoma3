@@ -45,6 +45,10 @@ public class Campo {
 	public Long getId() {
 		return id;
 	}
+	public Campo() {
+		this.id = null;
+		
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -111,9 +115,11 @@ public class Campo {
 	public void setUrlImage(String urlImage) {
 		this.urlImage = urlImage;
 	}
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(capienza, nome, sport);
+		return Objects.hash(associazione, capienza, durataSlot, giorniDisponibili, nome, oraApertura, oraChiusura,
+				prenotazioni, sport, urlImage);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -124,11 +130,14 @@ public class Campo {
 		if (getClass() != obj.getClass())
 			return false;
 		Campo other = (Campo) obj;
-		return Objects.equals(capienza, other.capienza) && Objects.equals(nome, other.nome)
-				&& Objects.equals(sport, other.sport);
+		return Objects.equals(associazione, other.associazione) && Objects.equals(capienza, other.capienza)
+				&& Objects.equals(durataSlot, other.durataSlot)
+				&& Objects.equals(giorniDisponibili, other.giorniDisponibili) && Objects.equals(nome, other.nome)
+				&& Objects.equals(oraApertura, other.oraApertura) && Objects.equals(oraChiusura, other.oraChiusura)
+				&& Objects.equals(prenotazioni, other.prenotazioni) && Objects.equals(sport, other.sport)
+				&& Objects.equals(urlImage, other.urlImage);
 	}
 	public Associazione getAssociazione() {
-		// TODO Auto-generated method stub
 		return this.associazione;
 	}
 	public void setAssociazione(Associazione associazione) {

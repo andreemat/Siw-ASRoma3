@@ -24,19 +24,7 @@ public class SportController {
 	@Autowired
 	private AssociazioneService associazioneService;
 	
-	@GetMapping("/associazione/{idA}/sport/{idS}")
-	public String mostraSport(@PathVariable("idA") Long idA,@PathVariable("idS")Long idS, Model model) {
-		Sport sport=sportService.getSportByid(idS);
-		if(sport==null) {
-			return "redirect:/";
-		}
-		
-		model.addAttribute("sport",sport);
-		model.addAttribute("campi",campoService.getAllByAssociazioneESport(idA, idS));
-		model.addAttribute("associazione",associazioneService.getAssociazione(idA));
-		return "campi.html";
-		
-	}
+	
 	
 	
 
