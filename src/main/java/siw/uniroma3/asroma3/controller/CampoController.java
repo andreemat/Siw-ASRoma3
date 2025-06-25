@@ -28,16 +28,16 @@ public class CampoController {
 	AssociazioneService associazioneService;
 	
 	
-	@GetMapping("/admin/associazione/{id}/registra-campo")
-	public String registraCampo(@PathVariable ("id") Long id ,Model model) {
+	@GetMapping("/admin/associazione/{idA}/registra-campo")
+	public String registraCampo(@PathVariable ("idA") Long idA ,Model model) {
 		model.addAttribute("sports",sportService.getAllSport());
 		model.addAttribute("campo", new Campo());
-		model.addAttribute("id",id);
+		model.addAttribute("idA",idA);
 		return "admin/formCampo.html";
 	}
 	
-	@PostMapping("/admin/associazione/{id}/registra-campo")
-	public String salvaCampo(@Valid @ModelAttribute Campo campo, @PathVariable ("id") Long id,BindingResult bindingResult, Model model) {
+	@PostMapping("/admin/associazione/{idA}/registra-campo")
+	public String salvaCampo(@Valid @ModelAttribute Campo campo, @PathVariable ("idA") Long idA,BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			System.out.println("Errori di validazione sul form di registrazione associazione:");
 			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
@@ -45,9 +45,9 @@ public class CampoController {
 		}
 		if (campo.getId() != null && campo.getId() != 0) {
 			System.err.println("AVVISO: L'ID del Campo non è null. Hibernate eseguirà un UPDATE invece di un INSERT!");
-			campo.setId(null);
+			
 		}
-		Associazione associazione= associazioneService.getAssociazione(id);
+		Associazione associazione= associazioneService.getAssociazione(idA);
 		Sport sport = campo.getSport();
 		associazione.addSport(sport);
 		associazione.addCampo(campo);

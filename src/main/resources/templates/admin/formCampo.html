@@ -9,7 +9,7 @@
 
     <h1>Crea il Tuo Campo</h1>
 
-    <form th:object="${campo}" th:action="@{/admin/associazione/{id}/registra-campo(id=${id})}" th:method="post">
+    <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}" th:method="post">
         <label for="nome">Nome del Campo:</label>
         <input type="text" id="nome" th:field="*{nome}" required>
         <br><br>
@@ -40,9 +40,7 @@
         <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SUNDAY'))}"> Domenica<br>
         <br>
 
-        <label for="urlImage">URL Immagine:</label>
-        <input type="text" id="urlImage" th:field="*{urlImage}">
-        <br><br>
+    
 
         <label for="sport-select">Seleziona uno sport:</label>
         <select id="sport-select" th:field="*{sport}" required>
