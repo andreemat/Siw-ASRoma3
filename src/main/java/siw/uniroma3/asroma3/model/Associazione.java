@@ -35,6 +35,7 @@ public class Associazione {
 	
 	@OneToMany(mappedBy="associazione")
     private List<Campo> campi;
+	
 
 	public Associazione() {
 		this.sportList= new LinkedList<Sport>();
@@ -102,6 +103,15 @@ public class Associazione {
 	}
 	public void setCampi(List<Campo> campi) {
 		this.campi = campi;
+	}
+	
+	public void addSport(Sport sport) {
+		if (!this.sportList.contains(sport))
+			this.sportList.add(sport);
+	}
+	public void addCampo(Campo campo) {
+		if (!this.campi.contains(campo))
+			this.campi.add(campo);
 	}
 	@Override
 	public boolean equals(Object obj) {
