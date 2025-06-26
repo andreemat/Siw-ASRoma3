@@ -50,7 +50,7 @@ public class AssociazioneController {
 		
 		
 		model.addAttribute("associazione",new Associazione());
-		return "/admin/formAssociazione.html";
+		return "admin/formAssociazione.html";
 	}
 
 	@PostMapping("/admin/registra-associazione")
