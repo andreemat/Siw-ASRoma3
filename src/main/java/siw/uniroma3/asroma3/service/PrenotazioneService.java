@@ -59,6 +59,11 @@ public class PrenotazioneService {
 		
 	}
 	
+	public List<Prenotazione> getAllPrenotazioneByAssociazione(Long idAssociazione,LocalDate data,Long idCampo,Long idSport){
+		return this.prenotazioneRepository.findPrenotazioniFiltratePerAssociazione(idAssociazione, data,idCampo,idSport);
+	}
+	
+	
 
 
 }
