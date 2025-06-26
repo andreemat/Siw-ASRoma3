@@ -1,6 +1,7 @@
 package siw.uniroma3.asroma3.controller;
 
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
 
@@ -9,6 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Prenotazione;
 import siw.uniroma3.asroma3.model.User;
@@ -129,6 +132,46 @@ public String cancellaPrenotazione(Model model,@PathVariable("idP") Long idP) {
     return "prenotazioniUtente.html";
 }
 
+
+
+@GetMapping("/admin/associazione/{idA}/prenotazioni/{idP}")
+public String visualizzaDettaglioPrenotazione(@PathVariable("idA")Long idA,@PathVariable("idP") Long idP,Model model) {
+	model.addAttribute("prenotazione",prenotazioneService.getPrenotazioneByid(idP));
+	model.addAttribute("associazione", associazioneService.getAssociazione(idA));
+	return "admin/DettaglioPrenotazioneAdmin.html";
+	
+	
+	
+}
+
+
+@GetMapping("/admin/associazione/{idA}/prenotazioni")
+public String visualizzaPrenotazioni(@PathVariable("idA") Long idA,@RequestParam(name = "dataFiltro", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
+        @RequestParam(name = "campoIdFiltro", required = false) Long campoIdFiltro,   @RequestParam(name = "sportIdFiltro", required = false) Long sportIdFiltro, Model model) {
+	   Associazione associazione = associazioneService.getAssociazione(idA);
+       if (associazione == null) {
+           // Gestisci associazione non trovata
+           return "redirect:/errore";
+       }
+
+       // 2. Chiama il service per ottenere le prenotazioni filtrate
+       List<Prenotazione> prenotazioni = prenotazioneService.getAllPrenotazioneByAssociazione(
+               idA, dataFiltro, campoIdFiltro,sportIdFiltro);
+
+       // 3. Passa tutti i dati necessari alla vista
+       model.addAttribute("associazione", associazione);
+       model.addAttribute("prenotazioni", prenotazioni);
+       model.addAttribute("campiDellAssociazione", associazione.getCampi()); // Per la dropdown del filtro
+       model.addAttribute("sportDellAssociazione", associazione.getSportList()); // Per la dropdown del filtro
+
+
+       // 4. Passa anche i valori dei filtri attuali, così il form può mostrarli
+       model.addAttribute("dataFiltroAttuale", dataFiltro);
+       model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
+       model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
+
+       return "admin/prenotazioniAssociazione"; // O il path corretto del tuo template
+}
 
 
 

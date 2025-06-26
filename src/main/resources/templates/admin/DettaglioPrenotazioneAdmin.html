@@ -1,0 +1,92 @@
+      
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio Prenotazione</title>
+    <!-- Aggiungi qui CSS se vuoi -->
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        .container { max-width: 800px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        h1, h2 { color: #333; border-bottom: 2px solid #f2f2f2; padding-bottom: 10px; }
+        .details-grid { display: grid; grid-template-columns: 180px 1fr; gap: 10px 20px; margin-top: 20px; }
+        .details-grid dt { font-weight: bold; text-align: right; color: #555; }
+        .actions { margin-top: 30px; }
+        .actions button, .actions a { padding: 10px 15px; border-radius: 5px; text-decoration: none; border: none; cursor: pointer; }
+        .btn-delete { background-color: #dc3545; color: white; }
+        .btn-back { background-color: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Titolo principale con riferimento all'associazione -->
+        <h1>Dettaglio Prenotazione</h1>
+        <h4><a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" th:text="'per ' + ${associazione.nome}"></a></h4>
+
+        <!-- Sezione Dettagli Prenotazione -->
+        <h2>Riepilogo Prenotazione</h2>
+        <div class="details-grid">
+            <dt>ID Prenotazione:</dt>
+            <dd th:text="${prenotazione.id}">---</dd>
+
+            <dt>Data:</dt>
+            <dd th:text="${#temporals.format(prenotazione.data, 'EEEE, dd MMMM yyyy')}">---</dd>
+
+            <dt>Orario:</dt>
+            <dd th:text="${#temporals.format(prenotazione.oraInizio, 'HH:mm')} + ' - ' + ${#temporals.format(prenotazione.oraFine, 'HH:mm')}">---</dd>
+            
+            <!-- (Opzionale) Stato della prenotazione, se lo aggiungerai in futuro -->
+            <!-- 
+            <dt>Stato:</dt>
+            <dd>CONFERMATA</dd> 
+            -->
+        </div>
+
+        <!-- Sezione Dettagli Cliente -->
+        <h2>Dettagli Cliente</h2>
+        <div class="details-grid">
+            <dt>Username:</dt>
+            <dd th:text="${prenotazione.cliente?.credentials?.username}">Non disponibile</dd>
+
+            <dt>Nome Completo:</dt>
+            <dd th:text="${prenotazione.cliente?.name} + ' ' + ${prenotazione.cliente?.surname}">Non disponibile</dd>
+
+            <dt>Email:</dt>
+            <dd th:text="${prenotazione.cliente?.email}">Non disponibile</dd>
+            
+            <dt>Età:</dt>
+            <dd th:text="${prenotazione.cliente?.eta}">Non disponibile</dd>
+        </div>
+
+        <!-- Sezione Dettagli Campo -->
+        <h2>Dettagli Campo</h2>
+        <div classs="details-grid">
+            <dt>Nome Campo:</dt>
+            <dd th:text="${prenotazione.campo?.nome}">Non disponibile</dd>
+
+            <dt>Sport:</dt>
+            <dd th:text="${prenotazione.campo?.sport?.nome}">Non disponibile</dd>
+
+            <dt>Capienza:</dt>
+            <dd th:text="${prenotazione.campo?.capienza}">Non disponibile</dd>
+        </div>
+        
+        <!-- Sezione Azioni -->
+        <div class="actions">
+            <!-- Form per la cancellazione (più sicuro usare POST) -->
+            <form th:action="@{/admin/associazione/{idA}/prenotazioni/{idP}/cancella(idA=${associazione.id}, idP=${prenotazione.id})}" method="post" style="display:inline;">
+                <!-- Potresti aggiungere un alert di conferma con JavaScript -->
+                <button type="submit" class="btn-delete" onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione? L\'azione è irreversibile.');">
+                    Cancella Prenotazione
+                </button>
+            </form>
+
+            <a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" class="btn-back">
+                Torna a tutte le prenotazioni
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+
+    

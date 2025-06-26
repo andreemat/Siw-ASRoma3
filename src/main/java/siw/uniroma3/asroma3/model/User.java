@@ -27,6 +27,11 @@ public class User {
 	private List<Associazione> associazioni;
 	@OneToMany(mappedBy= "cliente")
 	private List<Prenotazione> prenotazioni;
+	
+	
+	@OneToOne(mappedBy="user")
+	Credentials credentials;
+	
 	public User() {
 		
 	}
@@ -55,6 +60,14 @@ public class User {
 		this.password = password;
 	}
 	
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
 	public String getEmail() {
 		return email;
 	}
