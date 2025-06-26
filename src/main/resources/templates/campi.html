@@ -19,10 +19,13 @@
         <li th:each="campo : ${campi}">
             <strong th:text="${campo.nome}">Nome Campo</strong><br/>
             Capienza: <span th:text="${campo.capienza}">Numero</span><br/>
-            <!-- In futuro: bottone per prenotare -->
+            
 			<a th:href="@{/prenota/campo/{idC}(idC=${campo.id})}">
 			    Prenota
 			</a>
+			<a th:href="@{/associazione/{idA}/sport/{idS}/campo/{idC}(idC=${campo.id},idA=${associazione.id},idS=${sport.id})}">
+			            Visualizza
+			        </a>
             <hr/>
         </li>
     </ul>

@@ -79,5 +79,18 @@ public class CampoController {
 		return "campi.html";
 		
 	}
+	
+	@GetMapping("/associazione/{idA}/sport/{idS}/campo/{idC}")
+	public String mostraCampo(@PathVariable("idA") Long idA,
+            @PathVariable("idS") Long idS,@PathVariable("idC") Long id,Model model) {
+		Campo campo=campoService.getCampo(id);
+		if(campo==null) {
+			return "redirect:/";
+		}
+		model.addAttribute("campo", campo);
+		model.addAttribute("sport", campo.getSport());
+	    model.addAttribute("associazione", campo.getAssociazione());
+		return "campo";
+	}
 
 }
