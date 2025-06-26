@@ -9,7 +9,9 @@
 
     <h1>Crea il Tuo Campo</h1>
 
-    <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}" th:method="post">
+    <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}" 
+		 th:method="post"
+		 enctype="multipart/form-data">
         <label for="nome">Nome del Campo:</label>
         <input type="text" id="nome" th:field="*{nome}" required>
         <br><br>
@@ -39,7 +41,10 @@
         <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SATURDAY'))}"> Sabato<br>
         <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SUNDAY'))}"> Domenica<br>
         <br>
-
+		<div class="form-group">
+		            <label for="immagineFile">Immagine Associazione:</label>
+		            <input type="file" id="file" name="file" accept="image/*">
+		 </div>
     
 
         <label for="sport-select">Seleziona uno sport:</label>
