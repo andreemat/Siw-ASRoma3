@@ -20,7 +20,6 @@ public class User {
 	private Long id;
 	private String name;
 	private String surname;
-	private String password;
 	private String email;
 	private int eta;
 	@OneToMany(mappedBy = "adminAssociazione")
@@ -52,12 +51,6 @@ public class User {
 	}
 	public void setSurname(String cognome) {
 		this.surname = cognome;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	
 
@@ -99,7 +92,7 @@ public class User {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, password, surname);
+		return Objects.hash(name,surname);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -110,8 +103,7 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(name, other.name) && Objects.equals(password, other.password)
-				&& Objects.equals(surname, other.surname);
+		return Objects.equals(name, other.name)&& Objects.equals(surname, other.surname);
 	}
 	public int getEta() {
 		return eta;

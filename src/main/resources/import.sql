@@ -16,3 +16,11 @@ insert into campo (capienza,associazione_id,id,sport_id,nome,durata_slot,ora_ape
 INSERT INTO associazione_sport_list (associazioni_id, sport_list_id) VALUES (-1,1);
 
 
+
+
+
+INSERT INTO users (id, name, surname, email, eta) VALUES (100, 'Mario', 'Rossi', 'admin@example.com', 40);
+INSERT INTO credentials (id, username, password, role, user_id) VALUES (200, 'adm', '$2a$12$s3QTUipQcQAOXN0aZ0scie6KFTZ9ISeU6nnIUmeeXwgrL4AsnJ4.u', 'ROLE_ADMIN', 100);
+INSERT INTO users (id, name, surname, email, eta) VALUES (101, 'Giulia', 'Bianchi', 'user@example.com', 28);
+INSERT INTO credentials (id, username, password, role, user_id) VALUES (201, 'ute', '$2a$12$x/pn.th/advauZHiRKICZer7ObgOzLpyOwZdZ4GrrOaaGKgS4yeee', 'ROLE_USER', 101);
+
