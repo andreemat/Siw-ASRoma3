@@ -170,7 +170,7 @@ public String visualizzaPrenotazioni(@PathVariable("idA") Long idA,@RequestParam
        model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
        model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
 
-       return "admin/prenotazioniAssociazione"; // O il path corretto del tuo template
+       return "admin/prenotazioniAssociazione.html"; // O il path corretto del tuo template
 }
 
 

@@ -9,7 +9,7 @@
 
     <h1>Crea il Tuo Campo</h1>
 
-    <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}" 
+    <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}"
 		 th:method="post"
 		 enctype="multipart/form-data">
         <label for="nome">Nome del Campo:</label>
@@ -33,19 +33,18 @@
         <br><br>
 
         <label>Giorni Disponibili:</label><br>
-        <input type="checkbox" id="lunedi" name="giorniDisponibili" value="MONDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('MONDAY'))}"> Lunedì<br>
-        <input type="checkbox" id="martedi" name="giorniDisponibili" value="TUESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('TUESDAY'))}"> Martedì<br>
-        <input type="checkbox" id="mercoledi" name="giorniDisponibili" value="WEDNESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('WEDNESDAY'))}"> Mercoledì<br>
-        <input type="checkbox" id="giovedi" name="giorniDisponibili" value="THURSDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('THURSDAY'))}"> Giovedì<br>
-        <input type="checkbox" id="venerdi" name="giorniDisponibili" value="FRIDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('FRIDAY'))}"> Venerdì<br>
-        <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SATURDAY'))}"> Sabato<br>
-        <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SUNDAY'))}"> Domenica<br>
+        <input type="checkbox" id="lunedi" name="giorniDisponibili" value="MONDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).MONDAY)}"> Lunedì<br>
+        <input type="checkbox" id="martedi" name="giorniDisponibili" value="TUESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).TUESDAY)}"> Martedì<br>
+        <input type="checkbox" id="mercoledi" name="giorniDisponibili" value="WEDNESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).WEDNESDAY)}"> Mercoledì<br>
+        <input type="checkbox" id="giovedi" name="giorniDisponibili" value="THURSDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).THURSDAY)}"> Giovedì<br>
+        <input type="checkbox" id="venerdi" name="giorniDisponibili" value="FRIDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).FRIDAY)}"> Venerdì<br>
+        <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SATURDAY)}"> Sabato<br>
+        <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SUNDAY)}"> Domenica<br>
         <br>
 		<div class="form-group">
-		            <label for="immagineFile">Immagine Associazione:</label>
-		            <input type="file" id="file" name="file" accept="image/*">
+		            <label for="immagineFile">Immagine Campo:</label> <input type="file" id="file" name="file" accept="image/*">
 		 </div>
-    
+
 
         <label for="sport-select">Seleziona uno sport:</label>
         <select id="sport-select" th:field="*{sport}" required>

@@ -36,5 +36,12 @@ public class CampoService {
 	public void addAssociazioneToCampo(Associazione associazione, Campo campo) {
 		this.campoRepository.addAssociazioneToCampo(associazione.getId(), campo.getId());
 	}
+	public List<Campo> filtraPerSportAndAssociazioneAndNome(Long idS, Long idA,String nome) {
+		String lower=null;
+		if (nome!=null) {
+			lower= nome.toLowerCase();
+		}
+		return this.campoRepository.findCampiByOptionalFilters(idS,idA, lower);
+	}
 
 }

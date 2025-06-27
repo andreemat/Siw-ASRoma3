@@ -1,7 +1,7 @@
 package siw.uniroma3.asroma3.controller;
 
 import java.io.IOException;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,6 +92,37 @@ public class CampoController {
 	    model.addAttribute("associazione", campo.getAssociazione());
 		return "campo";
 	}
+	@GetMapping("/admin/associazione/{idA}/campi")
+	public String mostraCampiAdmin(@PathVariable("idA") Long idA, @RequestParam(name= "nomeCampo",required = false) String nomeCampo, 
+			@RequestParam(name="sportFiltro", required=false) Long sportFiltro , Model model) {
+		
+			List <Campo> campi = this.campoService.filtraPerSportAndAssociazioneAndNome(sportFiltro,idA, nomeCampo);
+			model.addAttribute("campi",campi);
+			Associazione associazione = this.associazioneService.getAssociazione(idA);
+			model.addAttribute("associazione",associazione);
+			model.addAttribute("sportDellAssociazione", associazione.getSportList());
+			
+			model.addAttribute("sportFiltroAttuale", sportFiltro);
+			model.addAttribute("nomeCampoAttuale",nomeCampo);
+			
+		
+		
+		
+		
+		return "admin/campiAdmin.html";
+	}
+	
+	@GetMapping("admin/associazione/{idA}/modifica/campo/{idC}")
+	public String modificaCampo(@PathVariable("idA") Long idA, @PathVariable("idC") Long idC, Model model) {
+		model.addAttribute("sports",sportService.getAllSport());
+		model.addAttribute("campo", this.campoService.getCampo(idC));
+		model.addAttribute("idA",idA);
+		return "admin/formCampo.html";
+		
+	}
+	
+	
+	
 
 
 	

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Campi </title>
+</head>
+<body>
+    <h1>Campi per: <span th:text="${associazione.nome}">Nome Associazione</span></h1>
+
+    <!-- FORM PER I FILTRI -->
+    <form th:action="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" method="get">
+        <label for="nomeCampo">Filtra per nome:</label>
+        <input type="text" id="nomeCampo" name="nomeCampo" th:value="${nomeCampoAttuale}">
+
+		<label for="sportFiltro">Filtra per Sport:</label>
+		       <select id="sportFiltro" name="sportFiltro">
+		           <option value="">-- Tutti gli sport --</option>
+		           <option th:each="sport : ${sportDellAssociazione}"
+		                   th:value="${sport.id}"
+		                   th:text="${sport.nome}"
+		                   th:selected="${sportFiltroAttuale != null and sport.id == sportFiltroAttuale}">
+		           </option>
+		       </select>
+
+        <button type="submit">Filtra</button>
+        <a th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}">Resetta</a>
+    </form>
+    <hr/>
+
+
+    <table border="1">
+        <thead>
+            <tr>
+				<th>Modifica</th>
+				<th>Nome</th>
+				<th>Sport</th>
+                <th>Orari</th>
+                <th>Durata Slot</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${campi.isEmpty()}">
+                <td colspan="5">Nessuna campo trovato con questi filtri.</td>
+            </tr>
+            <tr th:each="campo : ${campi}">
+				<td><a th:href="@{/admin/associazione/{idA}/modifica/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Modifica</a></td>
+                <td th:text="${campo.nome}"></td>
+				<td th:text="${campo.sport.nome}"></td>
+                <td th:text="${#temporals.format(campo.oraApertura, 'HH:mm')} + ' - ' + ${#temporals.format(campo.oraChiusura, 'HH:mm')}"></td>
+                <td th:text="${campo.durataSlot}"></td>
+  
+            </tr>
+        </tbody>
+    </table>
+	
+    <br/>
+    <a href="/">Torna alla Home</a>
+</body>
+</html>
