@@ -19,10 +19,7 @@
         <input type="number" id="durataSlot" th:field="*{durataSlot}" min="1" required>
         <br><br>
 
-        <label for="capienza">Capienza:</label>
-        <input type="number" id="capienza" th:field="*{capienza}" min="1" required>
-        <br><br>
-
+  
         <label for="oraApertura">Ora di Apertura:</label>
         <input type="time" id="oraApertura" th:field="*{oraApertura}" required>
         <br><br>
@@ -40,8 +37,7 @@
         <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SATURDAY'))}"> Sabato<br>
         <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(#strings.toDayOfWeek('SUNDAY'))}"> Domenica<br>
         <br>
-		
-    
+
 
         <label for="sport-select">Seleziona uno sport:</label>
         <select id="sport-select" th:field="*{sport}" required>
