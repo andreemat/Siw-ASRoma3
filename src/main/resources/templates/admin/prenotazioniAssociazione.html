@@ -13,16 +13,7 @@
         <label for="dataFiltro">Filtra per Data:</label>
         <input type="date" id="dataFiltro" name="dataFiltro" th:value="${dataFiltroAttuale}">
 
-        <label for="campoFiltro">Filtra per Campo:</label>
-        <select id="campoFiltro" name="campoIdFiltro">
-            <option value="">-- Tutti i Campi --</option>
-            <option th:each="campo : ${campiDellAssociazione}"
-                    th:value="${campo.id}"
-                    th:text="${campo.nome}"
-                    th:selected="${campoIdFiltroAttuale != null and campo.id == campoIdFiltroAttuale}">
-            </option>
-        </select>
-		
+ 
 		
 		<label for="sportFiltro">Filtra per Sport:</label>
 		       <select id="sportFiltro" name="sportIdFiltro">
@@ -33,9 +24,24 @@
 		                   th:selected="${sportIdFiltroAttuale != null and sport.id == sportIdFiltroAttuale}">
 		           </option>
 		       </select>
+  
+	
+		    <!-- Mostra il filtro per campo solo se ci sono campi da mostrare -->
+		    <div th:if="${campiDellAssociazione != null}">
+		        <label for="campoFiltro">Filtra per Campo:</label>
+		        <select id="campoFiltro" name="campoIdFiltro">
+		            <option value="">-- Tutti i Campi --</option>
+		            <option th:each="campo : ${campiDellAssociazione}"
+		                    th:value="${campo.id}"
+		                    th:text="${campo.nome}"
+		                    th:selected="${campoIdFiltroAttuale != null and campo.id == campoIdFiltroAttuale}">
+		            </option>
+		        </select>
+		    </div>
 
-        <button type="submit">Filtra</button>
-        <a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}">Resetta</a>
+		    <button type="submit">Filtra</button>
+		    <a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}">Resetta</a>
+		</form>
     </form>
     <hr/>
 
@@ -50,6 +56,7 @@
                 <th>Sport</th>
                 <th>Cliente</th>
                 <th>Nome e Cognome</th>
+				<th>Azioni</th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +74,7 @@
                 <td th:text="${prenotazione.campo.sport.nome}"></td>
                 <td th:text="${prenotazione.cliente.credentials.username}"></td>
                 <td th:text="${prenotazione.cliente.name} + ' ' + ${prenotazione.cliente.surname}"></td>
+				<td ><a th:href="@{/admin/associazione/{idA}/prenotazioni/cancella/{idP}(idA=${associazione.id},idP=${prenotazione.id})}">	elimina</a></td>
             </tr>
         </tbody>
     </table>

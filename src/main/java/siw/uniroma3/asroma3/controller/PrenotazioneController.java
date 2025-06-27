@@ -148,31 +148,35 @@ public String visualizzaDettaglioPrenotazione(@PathVariable("idA")Long idA,@Path
 @GetMapping("/admin/associazione/{idA}/prenotazioni")
 public String visualizzaPrenotazioni(@PathVariable("idA") Long idA,@RequestParam(name = "dataFiltro", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
         @RequestParam(name = "campoIdFiltro", required = false) Long campoIdFiltro,   @RequestParam(name = "sportIdFiltro", required = false) Long sportIdFiltro, Model model) {
-	   Associazione associazione = associazioneService.getAssociazione(idA);
-       if (associazione == null) {
-           // Gestisci associazione non trovata
-           return "redirect:/errore";
-       }
+	 Associazione associazione = associazioneService.getAssociazione(idA);
+	    if (associazione == null) {
+	        return "redirect:/errore";
+	    }
 
-       // 2. Chiama il service per ottenere le prenotazioni filtrate
-       List<Prenotazione> prenotazioni = prenotazioneService.getAllPrenotazioneByAssociazione(
-               idA, dataFiltro, campoIdFiltro,sportIdFiltro);
+	    List<Prenotazione> prenotazioni = prenotazioneService.getAllPrenotazioneByAssociazione(idA, dataFiltro,campoIdFiltro, sportIdFiltro);
+	    
 
-       // 3. Passa tutti i dati necessari alla vista
-       model.addAttribute("associazione", associazione);
-       model.addAttribute("prenotazioni", prenotazioni);
-       model.addAttribute("campiDellAssociazione", associazione.getCampi()); // Per la dropdown del filtro
-       model.addAttribute("sportDellAssociazione", associazione.getSportList()); // Per la dropdown del filtro
+	    model.addAttribute("associazione", associazione);
+	    model.addAttribute("prenotazioni", prenotazioni);
+	    model.addAttribute("sportDellAssociazione", associazione.getSportList());
+	    model.addAttribute("campiDellAssociazione", sportIdFiltro != null
+	        ? this.campoService.getCampiBySport(idA,sportIdFiltro)
+	        : null);
 
-
-       // 4. Passa anche i valori dei filtri attuali, così il form può mostrarli
-       model.addAttribute("dataFiltroAttuale", dataFiltro);
-       model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
-       model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
-
-       return "admin/prenotazioniAssociazione"; // O il path corretto del tuo template
+	    // Sempre settare tutti i filtri, anche se null
+	    model.addAttribute("dataFiltroAttuale", dataFiltro);
+	    model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
+	    model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
+       return "admin/prenotazioniAssociazione.html"; 
 }
 
+@GetMapping("/admin/associazione/{idA}/prenotazioni/cancella/{idP}")
+public String cancellaPrenotazioneAdmin(Model model,@PathVariable("idP") Long idP,@PathVariable("idA") Long idA) {
+    Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
+      prenotazioneService.deletePrenotazioneById(idP);
+   model.addAttribute("associazione",this.associazioneService.getAssociazione(idA));
+    return "redirect:/admin/associazione/{idA}/prenotazioni";
+}
 
 
 

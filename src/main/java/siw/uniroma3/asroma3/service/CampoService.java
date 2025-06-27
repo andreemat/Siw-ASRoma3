@@ -36,5 +36,8 @@ public class CampoService {
 	public void addAssociazioneToCampo(Associazione associazione, Campo campo) {
 		this.campoRepository.addAssociazioneToCampo(associazione.getId(), campo.getId());
 	}
+	public List<Campo> getCampiBySport(Long idA,Long sportIdFiltro) {
+		return this.campoRepository.findByAssociazioneIdAndSportId(idA,sportIdFiltro);
+	}
 
 }
