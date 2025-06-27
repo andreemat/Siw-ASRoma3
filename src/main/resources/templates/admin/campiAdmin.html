@@ -29,9 +29,13 @@
 
 
     <table border="1">
+		<p th:if="${errorMessage}" style="color: red;">
+		    <span th:text="${errorMessage}"></span>
+		</p>
         <thead>
             <tr>
 				<th>Modifica</th>
+				<th>Cancella</th>
 				<th>Nome</th>
 				<th>Sport</th>
                 <th>Orari</th>
@@ -40,10 +44,11 @@
         </thead>
         <tbody>
             <tr th:if="${campi.isEmpty()}">
-                <td colspan="5">Nessuna campo trovato con questi filtri.</td>
+                <td colspan="6">Nessuna campo trovato con questi filtri.</td>
             </tr>
             <tr th:each="campo : ${campi}">
 				<td><a th:href="@{/admin/associazione/{idA}/modifica/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Modifica</a></td>
+				<td><a th:href="@{/admin/associazione/{idA}/cancella/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Cancella</a></td>
                 <td th:text="${campo.nome}"></td>
 				<td th:text="${campo.sport.nome}"></td>
                 <td th:text="${#temporals.format(campo.oraApertura, 'HH:mm')} + ' - ' + ${#temporals.format(campo.oraChiusura, 'HH:mm')}"></td>

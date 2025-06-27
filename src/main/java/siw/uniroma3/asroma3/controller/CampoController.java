@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 import siw.uniroma3.asroma3.model.Associazione;
@@ -118,6 +119,21 @@ public class CampoController {
 		model.addAttribute("campo", this.campoService.getCampo(idC));
 		model.addAttribute("idA",idA);
 		return "admin/formCampo.html";
+		
+	}
+	
+	@GetMapping("/admin/associazione/{idA}/cancella/campo/{idC}")
+	public String cancellaCampo(@PathVariable("idA") Long idA, @PathVariable("idC") Long idC, Model model, RedirectAttributes redirectAttributes) {
+		Campo campo = this.campoService.getCampo(idC);
+		if (!campo.getPrenotazioni().isEmpty()) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Il campo ha delle prenotazioni, cancellale prima di eliminare il campo!");
+			return "redirect:/admin/associazione/"+idA+"/campi";
+		}
+		
+		this.campoService.deleteCampo(idC);
+		return "redirect:/admin/associazione/"+idA+"/campi";
+		
+		
 		
 	}
 	
