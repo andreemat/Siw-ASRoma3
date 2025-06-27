@@ -35,6 +35,8 @@ public interface CampoRepository extends CrudRepository<Campo, Long> {
 	@Modifying
 	@Query(value="UPDATE campo SET associazione_id = :associazioneId WHERE id= :campoId", nativeQuery = true )
 	public void addAssociazioneToCampo(@Param("associazioneId") Long associazioneId, @Param("campoId") Long campoId);
+
+
 	
-	
+
 }

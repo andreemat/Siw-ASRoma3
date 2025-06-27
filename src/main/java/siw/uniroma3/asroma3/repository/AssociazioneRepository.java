@@ -14,4 +14,6 @@ public interface AssociazioneRepository extends CrudRepository<Associazione,Long
 	@Query(value="UPDATE associazione SET user_id = :userId WHERE id= :associazioneId", nativeQuery = true )
 	public void addAdminAssociazione(@Param("associazioneId") Long associazioneId, @Param("userId") Long userId);
 
+	
+
 }

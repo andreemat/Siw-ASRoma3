@@ -9,7 +9,10 @@
 <body>
 	
 	<div>
-		<a th:href="@{/admin/upload/associazione/{id}(id=${associazione.id})}">Aggiungi immagine per Associazione</a>
+	  <a th:href="@{/admin/upload/associazione/{id}(id=${associazione.id})}"
+	     th:text="${associazione.immagine != null} ? 'Modifica immagine per Associazione' : 'Aggiungi immagine per Associazione'">
+	    Link testo di default
+	  </a>
 	</div>
 	<div><a href="/"><img src="/logo-siw.png" width="10%" /></a></div>
 	<h1>	<a th:text="${associazione.nome} ">Nome mancante</a></h1> 
