@@ -41,11 +41,6 @@
         <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SATURDAY)}"> Sabato<br>
         <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SUNDAY)}"> Domenica<br>
         <br>
-		<div class="form-group">
-		            <label for="immagineFile">Immagine Campo:</label> <input type="file" id="file" name="file" accept="image/*">
-		 </div>
-
-
         <label for="sport-select">Seleziona uno sport:</label>
         <select id="sport-select" th:field="*{sport}" required>
             <option value="">-- Seleziona uno sport --</option>
