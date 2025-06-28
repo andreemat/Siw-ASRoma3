@@ -49,5 +49,9 @@ public class CampoService {
 
 	}
 	
+	public boolean existsCampoByNomeAndAssociaizone(String nome, Long idA) {
+		return this.campoRepository.existsByNomeAndAssociazioneId(nome, idA);
+	}
+	
 
 }

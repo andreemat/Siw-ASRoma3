@@ -29,7 +29,7 @@ public class PrenotazioneService {
 	public List<SlotDisponibili> getSlot(Campo campo, LocalDate data){
 		List<Prenotazione> prenotazioni = prenotazioneRepository.findByDataAndCampo(data, campo);
 		List<SlotDisponibili> slots = new LinkedList<>();
-		Long durata =campo.getDurataSlot();
+		Integer durata =campo.getDurataSlot();
 		LocalTime orarioSlot = campo.getOraApertura();
 		while (orarioSlot.isBefore(campo.getOraChiusura()) ) {
 			
