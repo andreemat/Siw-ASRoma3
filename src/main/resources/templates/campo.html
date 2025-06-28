@@ -9,9 +9,9 @@
 
     <h1 th:text="${campo.nome}">Nome Campo</h1>
 
-    <div>
-        <img th:src="@{/image/campo/{id}(id=${campo.id})}" alt="Immagine campo" width="300"/>
-    </div>
+	<div>
+	<img th:src="@{'/image/campo/' + ${campo.id}}" alt="Immagine campo" width="300"/>
+	</div>
 
     <p><strong>Capienza:</strong> <span th:text="${campo.capienza}">0</span></p>
     <p><strong>Durata Slot:</strong> <span th:text="${campo.durataSlot}">0</span> minuti</p>

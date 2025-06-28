@@ -5,6 +5,9 @@
 </head>
 <body>
     <h3>Seleziona gli orari disponibili per il giorno: <span th:text="*{data}"></span></h3>
+	<div th:if="${erroreSlot}" class="alert alert-danger" role="alert" style="color: red; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+	    <span th:text="${erroreSlot}"></span>
+	</div>
 
     <form th:action="@{/prenota/campo/{idC}/conferma(idC=${campo.id})}"
           th:object="${prenotazione}" method="post">

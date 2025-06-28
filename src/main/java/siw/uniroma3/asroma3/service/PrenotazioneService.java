@@ -2,6 +2,7 @@ package siw.uniroma3.asroma3.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class PrenotazioneService {
 	public List<SlotDisponibili> getSlot(Campo campo, LocalDate data){
 		List<Prenotazione> prenotazioni = prenotazioneRepository.findByDataAndCampo(data, campo);
 		List<SlotDisponibili> slots = new LinkedList<>();
-		Long durata =campo.getDurataSlot();
+		Integer durata =campo.getDurataSlot();
 		LocalTime orarioSlot = campo.getOraApertura();
 		while (orarioSlot.isBefore(campo.getOraChiusura()) ) {
 			
@@ -61,6 +62,32 @@ public class PrenotazioneService {
 	
 	public List<Prenotazione> getAllPrenotazioneByAssociazione(Long idAssociazione,LocalDate data,Long idCampo,Long idSport){
 		return this.prenotazioneRepository.findPrenotazioniFiltratePerAssociazione(idAssociazione, data,idCampo,idSport);
+	}
+	
+	public boolean sonoSlotConsecutivi(List<String> orariSelezionati, Integer durataSlot) {
+	    if (orariSelezionati.size() <= 1) {
+	        return true; // Un solo slot è sempre consecutivo
+	    }
+
+	    // Ordina gli orari per essere sicuri
+	    orariSelezionati.sort(Comparator.naturalOrder());
+	    
+	    for (int i = 0; i < orariSelezionati.size() - 1; i++) {
+	        String orarioCorrente = orariSelezionati.get(i);
+	        String orarioSuccessivo = orariSelezionati.get(i + 1);
+	        
+	        // Estrai l'ora di fine del slot corrente
+	        String fineCorrente = orarioCorrente.split("-")[1];
+	        // Estrai l'ora di inizio del slot successivo
+	        String inizioSuccessivo = orarioSuccessivo.split("-")[0];
+	        
+	        // Verifica che la fine del slot corrente coincida con l'inizio del successivo
+	        if (!fineCorrente.equals(inizioSuccessivo)) {
+	            return false;
+	        }
+	    }
+	    
+	    return true;
 	}
 
 

@@ -34,7 +34,7 @@
 		</p>
         <thead>
             <tr>
-				<th>Modifica</th>
+				<th>Dettagli</th>
 				<th>Cancella</th>
 				<th>Nome</th>
 				<th>Sport</th>
@@ -47,7 +47,7 @@
                 <td colspan="6">Nessuna campo trovato con questi filtri.</td>
             </tr>
             <tr th:each="campo : ${campi}">
-				<td><a th:href="@{/admin/associazione/{idA}/modifica/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Modifica</a></td>
+				<td><a th:href="@{/admin/associazione/{idA}/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Dettagli</a></td>
 				<td><a th:href="@{/admin/associazione/{idA}/cancella/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Cancella</a></td>
                 <td th:text="${campo.nome}"></td>
 				<td th:text="${campo.sport.nome}"></td>
