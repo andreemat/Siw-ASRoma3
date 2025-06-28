@@ -14,15 +14,29 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Associazione {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String indirizzo;
 	
+	private Integer annoFondazione;
+	@NotBlank
+	private String partitaIVA; 
+	@Column(length = 1000)
+	@Size(max = 1000)
+	private String descrizione;
+	@NotBlank
+	private String telefono;
+	@NotBlank
+	private String email;
 	@Column(columnDefinition = "bytea",nullable=true)
 	private byte[] immagine; //path
 	
@@ -100,6 +114,66 @@ public class Associazione {
 	}
 	public List<Campo> getCampi() {
 		return campi;
+	}
+	/**
+	 * @return the annoFondazione
+	 */
+	public Integer getAnnoFondazione() {
+		return annoFondazione;
+	}
+	/**
+	 * @param annoFondazione the annoFondazione to set
+	 */
+	public void setAnnoFondazione(Integer annoFondazione) {
+		this.annoFondazione = annoFondazione;
+	}
+	/**
+	 * @return the partitaIVA
+	 */
+	public String getPartitaIVA() {
+		return partitaIVA;
+	}
+	/**
+	 * @param partitaIVA the partitaIVA to set
+	 */
+	public void setPartitaIVA(String partitaIVA) {
+		this.partitaIVA = partitaIVA;
+	}
+	/**
+	 * @return the descrizione
+	 */
+	public String getDescrizione() {
+		return descrizione;
+	}
+	/**
+	 * @param descrizione the descrizione to set
+	 */
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	/**
+	 * @return the telefono
+	 */
+	public String getTelefono() {
+		return telefono;
+	}
+	/**
+	 * @param telefono the telefono to set
+	 */
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public void setCampi(List<Campo> campi) {
 		this.campi = campi;

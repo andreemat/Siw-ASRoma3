@@ -30,6 +30,7 @@ public class Campo {
 	private String nome;
 	private Long durataSlot;
 	private Integer capienza;
+	
 	private LocalTime oraApertura;
 	private LocalTime oraChiusura;
 	private Set<DayOfWeek> giorniDisponibili ;

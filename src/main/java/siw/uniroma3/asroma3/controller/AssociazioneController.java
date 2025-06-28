@@ -1,8 +1,10 @@
 package siw.uniroma3.asroma3.controller;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import siw.uniroma3.asroma3.repository.UserRepository;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CredentialsService;
 import siw.uniroma3.asroma3.service.UserService;
+import siw.uniroma3.asroma3.validator.AssociazioneValidator;
 
 @Controller
 public class AssociazioneController {
@@ -32,7 +35,9 @@ public class AssociazioneController {
 	private CredentialsService credentialsService;
 	@Autowired
 	private UserService userService;
-
+	@Autowired private AssociazioneValidator associazioneValidator;
+	@Autowired
+    private MessageSource messageSource;
 	
 
 	@GetMapping("/associazione/{id}")
@@ -58,12 +63,12 @@ public class AssociazioneController {
 			@Valid @ModelAttribute("associazione") Associazione associazione,
 			BindingResult bindingResult,
 			Model model, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-
-		if (bindingResult.hasErrors()) {
-			System.out.println("Errori di validazione sul form di registrazione associazione:");
-			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
-			return "admin/registraAssociazioneForm";
-		}
+		this.associazioneValidator.validate(associazione,bindingResult);
+	       if (bindingResult.hasErrors()) {
+	            
+	         
+	            return "admin/formAssociazione.html";
+	        } 
 		if (file != null && !file.isEmpty()) {
 	        // Salva i byte del file dentro l'entità
 	        associazione.setImmagine(file.getBytes());

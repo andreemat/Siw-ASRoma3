@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name= "users")
@@ -18,8 +19,11 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String surname;
+	@NotBlank
 	private String email;
 	private int eta;
 	@OneToMany(mappedBy = "adminAssociazione")

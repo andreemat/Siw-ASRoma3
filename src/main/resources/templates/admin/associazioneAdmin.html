@@ -7,29 +7,41 @@
 </head>
 
 <body>
-	
-	<div>
-	  <a th:href="@{/admin/upload/associazione/{id}(id=${associazione.id})}"
-	     th:text="${associazione.immagine != null} ? 'Modifica immagine per Associazione' : 'Aggiungi immagine per Associazione'">
-	    Link testo di default
-	  </a>
-	</div>
-	<div><a href="/"><img src="/logo-siw.png" width="10%" /></a></div>
-	<h1>	<a th:text="${associazione.nome} ">Nome mancante</a></h1> 
-	<div>
-		<img th:src="@{'/image/associazione/' + ${associazione.id}}" alt="immagine" />
+		    <div>
+		        <a href="/"><img src="/logo-siw.png" width="10%" alt="Logo" /></a>
+		    </div>
 
-	</div>
-	<h2>	Lista Sport</h2>
-	<div th:if="${sports.isEmpty()}">Non ci sono sport nel sistema per questa associazione</div>
-	<ul>
-		<li th:each="sport : ${sports}">
-			<a th:href="@{/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
-			               th:text="${sport.nome}">Link</a>
-			
-			
-		</li>
-	</ul>
+		    <h1 th:text="${associazione.nome}">Nome Associazione</h1>
+
+		    <p>Nome: <span th:text="${associazione.nome}">Nome Associazione</span></p>
+		    <p>Indirizzo: <span th:text="${associazione.indirizzo}">Indirizzo</span></p>
+		    <p>Email: <span th:text="${associazione.email}">Email</span></p>
+		    <p>Telefono: <span th:text="${associazione.telefono}">Telefono</span></p>
+		    <p>Partita IVA: <span th:text="${associazione.partitaIVA}">Partita IVA</span></p>
+		    <p>Anno di Fondazione: <span th:text="${associazione.annoFondazione}">Anno</span></p>
+		    <p>Descrizione:</p>
+		    <p th:text="${associazione.descrizione}">Descrizione</p>
+
+		    <div>
+		        Immagine:<br />
+		        <img th:if="${associazione.immagine != null}"
+		             th:src="@{${'/associazione/immagine/' + associazione.id}}" 
+		             alt="Immagine Associazione" width="200" />
+		        <p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
+		    </div>
+
+		    <p>Lista Sport:</p>
+		    <div th:if="${associazione.sportList == null or #lists.isEmpty(associazione.sportList)}">
+		        Non ci sono sport associati a questa associazione.
+		    </div>
+		    <ul>
+		        <li th:each="sport : ${associazione.sportList}">
+		            <a th:href="@{/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
+		               th:text="${sport.nome}">Nome Sport</a>
+		        </li>
+		    </ul>
+
+		
 	<div><a th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" >Vai ai Campi</a></div>
 	<div><a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" >Visualizza tutte le prenotazioni</a></div>
 	<div><a th:href="@{/admin/associazione/{id}/registra-campo(id=${associazione.id})}" >Aggiungi un campo</a></div>
