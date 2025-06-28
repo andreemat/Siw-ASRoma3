@@ -12,6 +12,9 @@
             <input type="date" th:field="*{data}" required />
         </label>
         <button type="submit">Conferma giorno</button>
+		<div th:if="${erroreGiorno}" class="alert alert-danger" role="alert">
+		    <span th:text="${erroreGiorno}"></span>
+		</div>
     </form>
 </body>
 </html>

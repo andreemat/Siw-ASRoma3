@@ -10,8 +10,7 @@
     <h1>Crea il Tuo Campo</h1>
 
     <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}"
-		 th:method="post"
-		 enctype="multipart/form-data">
+		 th:method="post">
         <label for="nome">Nome del Campo:</label>
         <input type="text" id="nome" th:field="*{nome}" required>
         <br><br>

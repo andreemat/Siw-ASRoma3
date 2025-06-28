@@ -1,6 +1,7 @@
 package siw.uniroma3.asroma3.controller;
 
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
@@ -60,6 +61,23 @@ public class PrenotazioneController {
                                   @PathVariable("idC") Long idC,
                                   Model model) {
         Campo campo = campoService.getCampo(idC);
+        if (prenotazione.getData() != null) {
+            DayOfWeek giornoSelezionato = prenotazione.getData().getDayOfWeek();
+            
+            if (campo.getGiorniDisponibili() == null || 
+                !campo.getGiorniDisponibili().contains(giornoSelezionato)) {
+                
+                // Aggiungi messaggio di errore
+                model.addAttribute("erroreGiorno", "Il campo è chiuso il " + giornoSelezionato);
+                model.addAttribute("campo", campo);
+                model.addAttribute("associazione", campo.getAssociazione());
+                model.addAttribute("sport", campo.getSport());
+                model.addAttribute("prenotazione", prenotazione);
+                
+                // Torna al form di selezione data
+                return "formDataPrenotazione.html";
+            }
+        }
         model.addAttribute("campo", campo);
         model.addAttribute("associazione", campo.getAssociazione());
         model.addAttribute("sport", campo.getSport());
