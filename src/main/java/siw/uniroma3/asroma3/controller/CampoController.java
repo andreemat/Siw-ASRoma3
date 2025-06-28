@@ -48,8 +48,11 @@ public class CampoController {
 	}
 	
 	@PostMapping("/admin/associazione/{idA}/registra-campo")
-	public String salvaCampo(@Valid @ModelAttribute("campo") Campo campo, BindingResult bindingResult,@PathVariable ("idA") Long idA, Model model){
-		
+
+
+	public String salvaCampo(@Valid @ModelAttribute("campo") Campo campo,BindingResult bindingResult, @PathVariable ("idA") Long idA,
+			 Model model){
+
 		Associazione associazione= associazioneService.getAssociazione(idA);
 		
 		campo.setAssociazione(associazione);
@@ -134,11 +137,7 @@ public class CampoController {
 		this.campoService.deleteCampo(idC);
 		return "redirect:/admin/associazione/"+idA+"/campi";
 	}
-	@ExceptionHandler({ BindException.class, MethodArgumentNotValidException.class })
-	public String handleBindingErrors(BindException ex, Model model) {
-	    model.addAttribute("errors", ex.getBindingResult().getAllErrors());
-	    return "admin/formCampo"; // o una pagina di errore dedicata
-	}
+	
 	
 	@GetMapping("/admin/associazione/{idA}/campo/{idC}")
 	public String mostraDettagliCampo(@PathVariable("idA") Long idA, @PathVariable("idC") Long idC, Model model) {

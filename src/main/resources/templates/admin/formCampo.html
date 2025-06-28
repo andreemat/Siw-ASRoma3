@@ -16,7 +16,9 @@
 		  </div>
 
         <label for="nome">Nome del Campo:</label>
-        <input type="text" id="nome" th:field="*{nome}">
+
+        <input type="text" id="nome" th:field="*{nome}" >
+
 		<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
 
         <br><br>
