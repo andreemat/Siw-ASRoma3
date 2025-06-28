@@ -35,8 +35,8 @@ import siw.uniroma3.asroma3.service.UserService;
 
 @Controller
 public class PrenotazioneController {
-	
-	
+
+
 	@Autowired CampoService campoService;
 	@Autowired private AssociazioneService associazioneService;
 	@Autowired private PrenotazioneService prenotazioneService;
@@ -44,8 +44,8 @@ public class PrenotazioneController {
 	@Autowired private SportService sportService;
 	@Autowired private UserService userService;
 	private Campo campo;
-	
-	
+
+
 	@GetMapping("/prenota/campo/{idC}")
 	public String formNewPrenotazione(@PathVariable("idC") Long idC,Model model) {
 		Campo campo = campoService.getCampo(idC);
@@ -54,149 +54,175 @@ public class PrenotazioneController {
 		model.addAttribute("prenotazione",new Prenotazione());
 		model.addAttribute("campo", campo);
 		return "formDataPrenotazione.html"; 
-		
+
 	}
-    @PostMapping("/prenota/campo/{idC}/giorno")
-    public String selezionaGiorno(@ModelAttribute("prenotazione") Prenotazione prenotazione,
-                                  @PathVariable("idC") Long idC,
-                                  Model model) {
-        Campo campo = campoService.getCampo(idC);
-        if (prenotazione.getData() != null) {
-            DayOfWeek giornoSelezionato = prenotazione.getData().getDayOfWeek();
-            
-            if (campo.getGiorniDisponibili() == null || 
-                !campo.getGiorniDisponibili().contains(giornoSelezionato)) {
-                
-                // Aggiungi messaggio di errore
-                model.addAttribute("erroreGiorno", "Il campo è chiuso il " + giornoSelezionato);
-                model.addAttribute("campo", campo);
-                model.addAttribute("associazione", campo.getAssociazione());
-                model.addAttribute("sport", campo.getSport());
-                model.addAttribute("prenotazione", prenotazione);
-                
-                // Torna al form di selezione data
-                return "formDataPrenotazione.html";
-            }
-        }
-        model.addAttribute("campo", campo);
-        model.addAttribute("associazione", campo.getAssociazione());
-        model.addAttribute("sport", campo.getSport());
-        model.addAttribute("prenotazione", prenotazione);
-        model.addAttribute("slots", prenotazioneService.getSlot(campo, prenotazione.getData()));
-        return "formOrariPrenotazione.html";
-    }
+	@PostMapping("/prenota/campo/{idC}/giorno")
+	public String selezionaGiorno(@ModelAttribute("prenotazione") Prenotazione prenotazione,
+			@PathVariable("idC") Long idC,
+			Model model) {
+		Campo campo = campoService.getCampo(idC);
 
-    // SECONDO STEP: Conferma prenotazione
-    @PostMapping("/prenota/campo/{idC}/conferma")
-    public String confermaPrenotazione(@ModelAttribute("prenotazione") Prenotazione prenotazione,
-                                       @PathVariable("idC") Long idC,
-                                       @RequestParam("orariSelezionati") List<String> orariSelezionati) {
+		if (prenotazione.getData() != null) {
+			LocalDate dataSelezionata = prenotazione.getData();
+			LocalDate oggi = LocalDate.now();
 
-        Campo campo = campoService.getCampo(idC);
+			// VALIDAZIONE 1: Non puoi prenotare giorni passati
+			if (dataSelezionata.isBefore(oggi)) {
+				model.addAttribute("erroreGiorno", "Non puoi prenotare giorni passati");
+				model.addAttribute("campo", campo);
+				model.addAttribute("associazione", campo.getAssociazione());
+				model.addAttribute("sport", campo.getSport());
+				model.addAttribute("prenotazione", prenotazione);
+				return "formDataPrenotazione.html";
+			}
 
-        orariSelezionati.sort(Comparator.naturalOrder());
-        String inizio = orariSelezionati.get(0).split("-")[0];
-        String fine = orariSelezionati.get(orariSelezionati.size() - 1).split("-")[1];
+			if (prenotazione.getData() != null) {
+				DayOfWeek giornoSelezionato = prenotazione.getData().getDayOfWeek();
 
-        prenotazione.setOraInizio(LocalTime.parse(inizio));
-        prenotazione.setOraFine(LocalTime.parse(fine));
-        prenotazione.setCampo(campo);
+				if (campo.getGiorniDisponibili() == null || 
+						!campo.getGiorniDisponibili().contains(giornoSelezionato)) {
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
-        prenotazione.setCliente(user);
-        user.addPrenotazione(prenotazione);
+					// Aggiungi messaggio di errore
+					model.addAttribute("erroreGiorno", "Il campo è chiuso il " + giornoSelezionato);
+					model.addAttribute("campo", campo);
+					model.addAttribute("associazione", campo.getAssociazione());
+					model.addAttribute("sport", campo.getSport());
+					model.addAttribute("prenotazione", prenotazione);
 
-        prenotazioneService.save(prenotazione);
+					// Torna al form di selezione data
+					return "formDataPrenotazione.html";
+				}
+			}
+		}
+		model.addAttribute("campo", campo);
+		model.addAttribute("associazione", campo.getAssociazione());
+		model.addAttribute("sport", campo.getSport());
+		model.addAttribute("prenotazione", prenotazione);
+		model.addAttribute("slots", prenotazioneService.getSlot(campo, prenotazione.getData()));
+		return "formOrariPrenotazione.html";
+	}
 
-        return "redirect:/utente/prenotazioni";
-    }
+	// SECONDO STEP: Conferma prenotazione
+	@PostMapping("/prenota/campo/{idC}/conferma")
+	public String confermaPrenotazione(@ModelAttribute("prenotazione") Prenotazione prenotazione,
+			@PathVariable("idC") Long idC,
+			@RequestParam("orariSelezionati") List<String> orariSelezionati,Model model) {
 
+		Campo campo = campoService.getCampo(idC);
 
+		if (!prenotazioneService.sonoSlotConsecutivi(orariSelezionati, campo.getDurataSlot())) {
+			model.addAttribute("erroreSlot", "Gli slot devono essere continui");
+			model.addAttribute("campo", campo);
+			model.addAttribute("associazione", campo.getAssociazione());
+			model.addAttribute("sport", campo.getSport());
+			model.addAttribute("prenotazione", prenotazione);
+			model.addAttribute("slots", prenotazioneService.getSlot(campo, prenotazione.getData()));
+			return "formOrariPrenotazione.html";
+		}
 
+		orariSelezionati.sort(Comparator.naturalOrder());
+		String inizio = orariSelezionati.get(0).split("-")[0];
+		String fine = orariSelezionati.get(orariSelezionati.size() - 1).split("-")[1];
 
+		prenotazione.setOraInizio(LocalTime.parse(inizio));
+		prenotazione.setOraFine(LocalTime.parse(fine));
+		prenotazione.setCampo(campo);
 
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		prenotazione.setCliente(user);
+		user.addPrenotazione(prenotazione);
 
-@GetMapping("/utente/prenotazioni")
-public String getPrenotazioniUtente(Model model) {
-	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	User user=credentialsService.getCredentials(userDetails.getUsername()).getUser();
-	List<Prenotazione> prenotazioni= prenotazioneService.getPrenotazioneByCliente(user);
-	model.addAttribute("prenotazioni",prenotazioni);
-	return "prenotazioniUtente.html";
-	
-}
+		prenotazioneService.save(prenotazione);
 
-
-
-
-
-
-
-@GetMapping("/utente/prenotazioni/cancella/{idP}")
-public String cancellaPrenotazione(Model model,@PathVariable("idP") Long idP) {
-    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
- 
-    User currentUser = credentialsService.getCredentials(userDetails.getUsername()).getUser();
-
-    Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
-
-    if (prenotazione != null && prenotazione.getCliente().getId().equals(currentUser.getId())) {
-        prenotazioneService.deletePrenotazioneById(idP);
-    }
-    
-
-    model.addAttribute("prenotazioni", prenotazioneService.getPrenotazioneByCliente(currentUser));
-    return "prenotazioniUtente.html";
-}
+		return "redirect:/utente/prenotazioni";
+	}
 
 
 
-@GetMapping("/admin/associazione/{idA}/prenotazioni/{idP}")
-public String visualizzaDettaglioPrenotazione(@PathVariable("idA")Long idA,@PathVariable("idP") Long idP,Model model) {
-	model.addAttribute("prenotazione",prenotazioneService.getPrenotazioneByid(idP));
-	model.addAttribute("associazione", associazioneService.getAssociazione(idA));
-	return "admin/DettaglioPrenotazioneAdmin.html";
-	
-	
-	
-}
 
 
-@GetMapping("/admin/associazione/{idA}/prenotazioni")
-public String visualizzaPrenotazioni(@PathVariable("idA") Long idA,@RequestParam(name = "dataFiltro", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
-        @RequestParam(name = "campoIdFiltro", required = false) Long campoIdFiltro,   @RequestParam(name = "sportIdFiltro", required = false) Long sportIdFiltro, Model model) {
-	 Associazione associazione = associazioneService.getAssociazione(idA);
-	    if (associazione == null) {
-	        return "redirect:/errore";
-	    }
 
-	    List<Prenotazione> prenotazioni = prenotazioneService.getAllPrenotazioneByAssociazione(idA, dataFiltro,campoIdFiltro, sportIdFiltro);
-	    
+	@GetMapping("/utente/prenotazioni")
+	public String getPrenotazioniUtente(Model model) {
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user=credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		List<Prenotazione> prenotazioni= prenotazioneService.getPrenotazioneByCliente(user);
+		model.addAttribute("prenotazioni",prenotazioni);
+		return "prenotazioniUtente.html";
 
-	    model.addAttribute("associazione", associazione);
-	    model.addAttribute("prenotazioni", prenotazioni);
-	    model.addAttribute("sportDellAssociazione", associazione.getSportList());
-	    model.addAttribute("campiDellAssociazione", sportIdFiltro != null
-	        ? this.campoService.getCampiBySport(idA,sportIdFiltro)
-	        : null);
-
-	    // Sempre settare tutti i filtri, anche se null
-	    model.addAttribute("dataFiltroAttuale", dataFiltro);
-	    model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
-	    model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
-       return "admin/prenotazioniAssociazione.html"; 
-}
+	}
 
 
-@GetMapping("/admin/associazione/{idA}/prenotazioni/cancella/{idP}")
-public String cancellaPrenotazioneAdmin(Model model,@PathVariable("idP") Long idP,@PathVariable("idA") Long idA) {
-    Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
-      prenotazioneService.deletePrenotazioneById(idP);
-   model.addAttribute("associazione",this.associazioneService.getAssociazione(idA));
-    return "redirect:/admin/associazione/{idA}/prenotazioni";
 
-}
+
+
+
+
+	@GetMapping("/utente/prenotazioni/cancella/{idP}")
+	public String cancellaPrenotazione(Model model,@PathVariable("idP") Long idP) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		User currentUser = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+
+		Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
+
+		if (prenotazione != null && prenotazione.getCliente().getId().equals(currentUser.getId())) {
+			prenotazioneService.deletePrenotazioneById(idP);
+		}
+
+
+		model.addAttribute("prenotazioni", prenotazioneService.getPrenotazioneByCliente(currentUser));
+		return "prenotazioniUtente.html";
+	}
+
+
+
+	@GetMapping("/admin/associazione/{idA}/prenotazioni/{idP}")
+	public String visualizzaDettaglioPrenotazione(@PathVariable("idA")Long idA,@PathVariable("idP") Long idP,Model model) {
+		model.addAttribute("prenotazione",prenotazioneService.getPrenotazioneByid(idP));
+		model.addAttribute("associazione", associazioneService.getAssociazione(idA));
+		return "admin/DettaglioPrenotazioneAdmin.html";
+
+
+
+	}
+
+
+	@GetMapping("/admin/associazione/{idA}/prenotazioni")
+	public String visualizzaPrenotazioni(@PathVariable("idA") Long idA,@RequestParam(name = "dataFiltro", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
+			@RequestParam(name = "campoIdFiltro", required = false) Long campoIdFiltro,   @RequestParam(name = "sportIdFiltro", required = false) Long sportIdFiltro, Model model) {
+		Associazione associazione = associazioneService.getAssociazione(idA);
+		if (associazione == null) {
+			return "redirect:/errore";
+		}
+
+		List<Prenotazione> prenotazioni = prenotazioneService.getAllPrenotazioneByAssociazione(idA, dataFiltro,campoIdFiltro, sportIdFiltro);
+
+
+		model.addAttribute("associazione", associazione);
+		model.addAttribute("prenotazioni", prenotazioni);
+		model.addAttribute("sportDellAssociazione", associazione.getSportList());
+		model.addAttribute("campiDellAssociazione", sportIdFiltro != null
+				? this.campoService.getCampiBySport(idA,sportIdFiltro)
+						: null);
+
+		// Sempre settare tutti i filtri, anche se null
+		model.addAttribute("dataFiltroAttuale", dataFiltro);
+		model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
+		model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
+		return "admin/prenotazioniAssociazione.html"; 
+	}
+
+
+	@GetMapping("/admin/associazione/{idA}/prenotazioni/cancella/{idP}")
+	public String cancellaPrenotazioneAdmin(Model model,@PathVariable("idP") Long idP,@PathVariable("idA") Long idA) {
+		Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
+		prenotazioneService.deletePrenotazioneById(idP);
+		model.addAttribute("associazione",this.associazioneService.getAssociazione(idA));
+		return "redirect:/admin/associazione/{idA}/prenotazioni";
+
+	}
 
 
 
