@@ -14,6 +14,7 @@
 		  <div th:if="${#fields.hasGlobalErrors()}">
 		   <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
 		  </div>
+
         <label for="nome">Nome del Campo:</label>
         <input type="text" id="nome" th:field="*{nome}" required>
 		<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
@@ -51,6 +52,7 @@
         <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SUNDAY)}"> Domenica<br>
         <br>
 		
+
 
 
         <label for="sport-select">Seleziona uno sport:</label>

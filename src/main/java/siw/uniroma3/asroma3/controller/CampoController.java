@@ -117,14 +117,9 @@ public class CampoController {
 			Associazione associazione = this.associazioneService.getAssociazione(idA);
 			model.addAttribute("associazione",associazione);
 			model.addAttribute("sportDellAssociazione", associazione.getSportList());
-			
 			model.addAttribute("sportFiltroAttuale", sportFiltro);
 			model.addAttribute("nomeCampoAttuale",nomeCampo);
-			
-		
-		
-		
-		
+
 		return "admin/campiAdmin.html";
 	}
 	
@@ -147,15 +142,24 @@ public class CampoController {
 		
 		this.campoService.deleteCampo(idC);
 		return "redirect:/admin/associazione/"+idA+"/campi";
-		
-		
-		
 	}
 	@ExceptionHandler({ BindException.class, MethodArgumentNotValidException.class })
 	public String handleBindingErrors(BindException ex, Model model) {
 	    model.addAttribute("errors", ex.getBindingResult().getAllErrors());
 	    return "admin/formCampo"; // o una pagina di errore dedicata
 	}
+	
+	@GetMapping("/admin/associazione/{idA}/campo/{idC}")
+	public String mostraDettagliCampo(@PathVariable("idA") Long idA, @PathVariable("idC") Long idC, Model model) {
+	    Campo campo = campoService.getCampo(idC);
+	    if(campo == null) {
+	        return "redirect:/admin/associazione/"+idA+"/campi";
+	    }
+	    model.addAttribute("campo", campo);
+	    return "/admin/campoAdmin";
+	}
+	
+	
 	
 	
 	
