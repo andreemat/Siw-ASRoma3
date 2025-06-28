@@ -64,7 +64,7 @@ public class PrenotazioneService {
 		return this.prenotazioneRepository.findPrenotazioniFiltratePerAssociazione(idAssociazione, data,idCampo,idSport);
 	}
 	
-	public boolean sonoSlotConsecutivi(List<String> orariSelezionati, Long durataSlot) {
+	public boolean sonoSlotConsecutivi(List<String> orariSelezionati, Integer integer) {
 	    if (orariSelezionati.size() <= 1) {
 	        return true; // Un solo slot è sempre consecutivo
 	    }

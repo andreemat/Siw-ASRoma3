@@ -128,7 +128,8 @@ public class ImageController {
 	private String determineContentType(String fileName) {
 		String extension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
 		switch (extension) {
-		case "jpg":
+		case "jpg": 
+			return "image/jpg";
 		case "jpeg":
 			return "image/jpeg";
 		case "png":
