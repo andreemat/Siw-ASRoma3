@@ -9,8 +9,13 @@
 <body>
 	
 
-	<div><a href="/"><img src="/logo-siw.png" width="10%" /></a></div>
+	
 	<h1>	<a th:text="${associazione.nome} ">Nome mancante</a></h1>
+	<div>
+	<img th:src="@{'/image/associazione/' + ${associazione.id}}" 
+	        alt="Immagine associazione" 
+	        width="300" />
+	</div>
 	<h2>	Lista Sport</h2>
 	<div th:if="${sports.isEmpty()}">Non ci sono sport nel sistema per questa associazione</div>
 	<ul>

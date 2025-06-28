@@ -47,7 +47,7 @@ public class AuthConfiguration {
                 .csrf(CsrfConfigurer::disable)
                 .cors(CorsConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize 
-                        .requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/css/**", "/images/**","/fragments/**",  "/favicon.ico","/associazione/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/css/**", "/images/**","/fragments/**",  "/favicon.ico","/associazione/**","/image/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(Credentials.ADMIN_ROLE)
                         .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(Credentials.ADMIN_ROLE)   
