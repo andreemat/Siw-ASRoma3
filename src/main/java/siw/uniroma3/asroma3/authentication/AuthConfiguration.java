@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configurers.CorsConfig
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import siw.uniroma3.asroma3.model.Credentials;
@@ -28,13 +30,13 @@ public class AuthConfiguration {
 	@Autowired
 	private DataSource dataSource;
 	
-	@Autowired
-	  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.jdbcAuthentication()
-	    .dataSource(dataSource)
-	    .authoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?")
-	    .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
-	  }
+	@Bean
+    public UserDetailsManager userDetailsService() {
+        JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
+        manager.setUsersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
+        manager.setAuthoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?");
+        return manager;
+    }
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
