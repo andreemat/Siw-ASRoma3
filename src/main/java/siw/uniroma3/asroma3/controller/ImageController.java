@@ -1,13 +1,14 @@
 package siw.uniroma3.asroma3.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
+import java.io.InputStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.StreamUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Sport;
@@ -55,11 +55,6 @@ public class ImageController {
 				associazioneService.saveAssociazione(ass);
 				break;
 
-			case "sport":
-				Sport sport = sportService.getSportByid(id);
-				sport.setImmagine(imageBytes);
-				sportService.saveSport(sport);
-				break;
 
 			case "campo":
 				Campo campo = campoService.getCampo(id);
@@ -97,8 +92,6 @@ public class ImageController {
 	        case "associazione":
 	            return associazioneService.getAssociazione(id).getImmagine();
 
-	        case "sport":
-	            return sportService.getSportByid(id).getImmagine();
 
 	        case "campo":
 	            return campoService.getCampo(id).getImmagine();
@@ -107,9 +100,53 @@ public class ImageController {
 	            return null;
 	    }
 	}
-
-
-
-
-
+	
+	@GetMapping("/images/{fileName}")
+	@ResponseBody
+	public ResponseEntity<Resource> getStaticImage(@PathVariable String fileName) {
+		try {
+			// Carica l'immagine dalle risorse statiche
+			Resource resource = new ClassPathResource("static/images/" + fileName);
+			
+			if (!resource.exists()) {
+				return ResponseEntity.notFound().build();
+			}
+			
+			// Determina il content type basato sull'estensione
+			String contentType = determineContentType(fileName);
+			
+			return ResponseEntity.ok()
+					.contentType(MediaType.parseMediaType(contentType))
+					.body(resource);
+					
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	// Metodo helper per determinare il content type
+	private String determineContentType(String fileName) {
+		String extension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+		switch (extension) {
+		case "jpg":
+		case "jpeg":
+			return "image/jpeg";
+		case "png":
+			return "image/png";
+		case "gif":
+			return "image/gif";
+		case "webp":
+			return "image/webp";
+		case "svg":
+			return "image/svg+xml";
+		default:
+			return "application/octet-stream";
+		}
+	}
 }
+
+
+
+
+
+

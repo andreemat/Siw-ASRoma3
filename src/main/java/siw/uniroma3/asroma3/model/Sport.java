@@ -20,8 +20,7 @@ public class Sport {
 	private Long id;
 	private String nome;
 	
-	@Column(columnDefinition = "bytea",nullable=true)
-	private byte[] immagine;
+	private String immagine;
 	
 	@OneToMany(mappedBy="sport")
 	private List<Campo> campi;
@@ -75,11 +74,11 @@ public class Sport {
 
 	
 
-	public byte[] getImmagine() {
+	public String getImmagine() {
 		return immagine;
 	}
 
-	public void setImmagine(byte[] immagine) {
+	public void setImmagine(String immagine) {
 		this.immagine = immagine;
 	}
 
