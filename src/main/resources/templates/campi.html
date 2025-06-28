@@ -8,6 +8,9 @@
 <body>
 
     <h1 th:text="'Sport: ' + ${sport.nome}">Nome Sport</h1>
+	<div>
+	<img th:src="${sport.immagine}" th:alt="${sport.nome}" class="sport-image">
+	</div>
 
     <h2>Campi disponibili:</h2>
 
