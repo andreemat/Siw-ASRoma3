@@ -16,7 +16,9 @@
 		  </div>
 
         <label for="nome">Nome del Campo:</label>
-        <input type="text" id="nome" th:field="*{nome}" required>
+
+        <input type="text" id="nome" th:field="*{nome}" >
+
 		<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
 
         <br><br>
@@ -34,12 +36,12 @@
         <br><br>
 
         <label for="oraApertura">Ora di Apertura:</label>
-        <input type="time" id="oraApertura" th:field="*{oraApertura}" required>
+        <input type="time" id="oraApertura" th:field="*{oraApertura}">
 		
         <br><br>
 
         <label for="oraChiusura">Ora di Chiusura:</label>
-        <input type="time" id="oraChiusura" th:field="*{oraChiusura}" required>
+        <input type="time" id="oraChiusura" th:field="*{oraChiusura}">
         <br><br>
 
         <label>Giorni Disponibili:</label><br>
@@ -56,7 +58,7 @@
 
 
         <label for="sport-select">Seleziona uno sport:</label>
-        <select id="sport-select" th:field="*{sport}" required>
+        <select id="sport-select" th:field="*{sport}">
             <option value="">-- Seleziona uno sport --</option>
             <option th:each="sportIter : ${sports}"
                     th:value="${sportIter.id}"

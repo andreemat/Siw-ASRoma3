@@ -48,9 +48,11 @@ public class CampoController {
 	}
 	
 	@PostMapping("/admin/associazione/{idA}/registra-campo")
-	public String salvaCampo(@Valid @ModelAttribute Campo campo, @PathVariable ("idA") Long idA, @RequestParam("durataSlot") Integer durataSlot,
-			BindingResult bindingResult, Model model){
-		System.out.println("Durata Slot raw: '" + durataSlot + "'");
+
+
+	public String salvaCampo(@Valid @ModelAttribute("campo") Campo campo,BindingResult bindingResult, @PathVariable ("idA") Long idA,
+			 Model model){
+
 		Associazione associazione= associazioneService.getAssociazione(idA);
 		
 		campo.setAssociazione(associazione);
@@ -58,18 +60,10 @@ public class CampoController {
 		this.campoValidator.validate(campo, bindingResult);
 
 		if (bindingResult.hasErrors()) {
-		
-			model.addAttribute("campo",campo);
-			model.addAttribute("sports",sportService.getAllSport());
-			model.addAttribute("idA",idA);
-			System.err.println("ERRORE PRESO");
-			bindingResult.getAllErrors().forEach(error -> System.out.println(error.toString()));
-			return "admin/formCampo.html";
-		}
-		
-		if (campo.getId() != null && campo.getId() != 0) {
-			System.err.println("AVVISO: L'ID del Campo non è null. Hibernate eseguirà un UPDATE invece di un INSERT!");
-			
+		    model.addAttribute("campo", campo); 
+		    model.addAttribute("sports", sportService.getAllSport());
+		    model.addAttribute("idA", idA);
+		    return "admin/formCampo.html";
 		}
 		
 		Sport sport = campo.getSport();
@@ -143,11 +137,7 @@ public class CampoController {
 		this.campoService.deleteCampo(idC);
 		return "redirect:/admin/associazione/"+idA+"/campi";
 	}
-	@ExceptionHandler({ BindException.class, MethodArgumentNotValidException.class })
-	public String handleBindingErrors(BindException ex, Model model) {
-	    model.addAttribute("errors", ex.getBindingResult().getAllErrors());
-	    return "admin/formCampo"; // o una pagina di errore dedicata
-	}
+	
 	
 	@GetMapping("/admin/associazione/{idA}/campo/{idC}")
 	public String mostraDettagliCampo(@PathVariable("idA") Long idA, @PathVariable("idC") Long idC, Model model) {

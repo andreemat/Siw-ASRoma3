@@ -30,6 +30,11 @@ public class AssociazioneService {
 		this.associazioneRepository.addAdminAssociazione(associazione.getId(), user.getId());
 	}
 
+	public boolean existsByNomeAndPartitaIVA(String nome, String partitaIVA) {
+		
+		return this.associazioneRepository.existsByNomeAndPartitaIVA(nome,partitaIVA);
+	}
+
 	
 
 	

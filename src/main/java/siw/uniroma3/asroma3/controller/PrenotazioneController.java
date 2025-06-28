@@ -225,12 +225,4 @@ public class PrenotazioneController {
 	}
 
 
-
-
-
-
-
-
-
-
 }

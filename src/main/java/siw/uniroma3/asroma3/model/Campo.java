@@ -35,6 +35,7 @@ public class Campo {
 	@NotNull
 	private Integer capienza;
 	
+
 	@NotNull
 	private LocalTime oraApertura;
 	@NotNull
