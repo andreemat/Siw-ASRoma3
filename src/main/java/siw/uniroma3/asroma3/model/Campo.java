@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;         // Importa l'interfaccia Set
 import java.util.HashSet;     // Importa un'implementazione comune di Set
-
+import jakarta.validation.Constraint;
 // Se stai usando EnumSet (fortemente consigliato per gli enum come DayOfWeek)
 import java.util.EnumSet;
 import java.time.DayOfWeek;
@@ -18,20 +18,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-
+import jakarta.validation.constraints.*;
 @Entity
 public class Campo {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
+	@NotBlank
 	private String nome;
-	private Long durataSlot;
+	@Positive
+	@NotNull
+	private Integer durataSlot;
+	@Positive
+	@NotNull
 	private Integer capienza;
+	
+	@NotNull
 	private LocalTime oraApertura;
+	@NotNull
 	private LocalTime oraChiusura;
+	
 	private Set<DayOfWeek> giorniDisponibili ;
 	
 	@Column(columnDefinition = "bytea",nullable=true)
@@ -89,10 +97,10 @@ public class Campo {
 		this.oraChiusura = oraChiusura;
 	}
 	
-	public Long getDurataSlot() {
+	public Integer getDurataSlot() {
 		return durataSlot;
 	}
-	public void setDurataSlot(Long durataSlot) {
+	public void setDurataSlot(Integer durataSlot) {
 		this.durataSlot = durataSlot;
 	}
 	public List<Prenotazione> getPrenotazioni() {

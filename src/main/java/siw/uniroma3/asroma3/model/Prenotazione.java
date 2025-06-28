@@ -4,6 +4,7 @@ package siw.uniroma3.asroma3.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
+import jakarta.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,6 +21,7 @@ public class Prenotazione {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Future
 	private LocalDate data;
 	private LocalTime oraInizio;
 	private LocalTime oraFine;

@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ import siw.uniroma3.asroma3.model.Sport;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CampoService;
 import siw.uniroma3.asroma3.service.SportService;
+import siw.uniroma3.asroma3.validator.CampoValidator;
 
 @Controller
 public class CampoController {
@@ -31,6 +35,8 @@ public class CampoController {
 	CampoService campoService;
 	@Autowired
 	AssociazioneService associazioneService;
+	@Autowired
+	CampoValidator campoValidator;
 	
 	
 	@GetMapping("/admin/associazione/{idA}/registra-campo")
@@ -42,25 +48,34 @@ public class CampoController {
 	}
 	
 	@PostMapping("/admin/associazione/{idA}/registra-campo")
-	public String salvaCampo(@Valid @ModelAttribute Campo campo, @PathVariable ("idA") Long idA,
-			BindingResult bindingResult, Model model,@RequestParam(value = "file", required = false) MultipartFile file) throws IOException  {
+	public String salvaCampo(@Valid @ModelAttribute Campo campo, @PathVariable ("idA") Long idA, @RequestParam("durataSlot") Integer durataSlot,
+			BindingResult bindingResult, Model model){
+		System.out.println("Durata Slot raw: '" + durataSlot + "'");
+		Associazione associazione= associazioneService.getAssociazione(idA);
+		
+		campo.setAssociazione(associazione);
+		
+		this.campoValidator.validate(campo, bindingResult);
+
 		if (bindingResult.hasErrors()) {
-			System.out.println("Errori di validazione sul form di registrazione associazione:");
-			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+		
+			model.addAttribute("campo",campo);
+			model.addAttribute("sports",sportService.getAllSport());
+			model.addAttribute("idA",idA);
+			System.err.println("ERRORE PRESO");
+			bindingResult.getAllErrors().forEach(error -> System.out.println(error.toString()));
 			return "admin/formCampo.html";
 		}
-		if (file != null && !file.isEmpty()) {
-	        campo.setImmagine(file.getBytes());
-	    }
+		
 		if (campo.getId() != null && campo.getId() != 0) {
 			System.err.println("AVVISO: L'ID del Campo non è null. Hibernate eseguirà un UPDATE invece di un INSERT!");
 			
 		}
-		Associazione associazione= associazioneService.getAssociazione(idA);
+		
 		Sport sport = campo.getSport();
 		associazione.addSport(sport);
 		associazione.addCampo(campo);
-		campo.setAssociazione(associazione);
+		
 		this.campoService.saveCampo(campo);
 		this.associazioneService.saveAssociazione(associazione);
 		
@@ -127,6 +142,11 @@ public class CampoController {
 		
 		this.campoService.deleteCampo(idC);
 		return "redirect:/admin/associazione/"+idA+"/campi";
+	}
+	@ExceptionHandler({ BindException.class, MethodArgumentNotValidException.class })
+	public String handleBindingErrors(BindException ex, Model model) {
+	    model.addAttribute("errors", ex.getBindingResult().getAllErrors());
+	    return "admin/formCampo"; // o una pagina di errore dedicata
 	}
 	
 	@GetMapping("/admin/associazione/{idA}/campo/{idC}")

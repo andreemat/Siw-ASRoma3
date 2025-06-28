@@ -11,20 +11,31 @@
 
     <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}"
 		 th:method="post">
+		  <div th:if="${#fields.hasGlobalErrors()}">
+		   <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+		  </div>
+
         <label for="nome">Nome del Campo:</label>
         <input type="text" id="nome" th:field="*{nome}" required>
+		<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+
         <br><br>
 
         <label for="durataSlot">Durata Slot (minuti):</label>
-        <input type="number" id="durataSlot" th:field="*{durataSlot}" min="1" required>
+        <input type="number" id="durataSlot" th:field="*{durataSlot}">
+		<span th:if="${#fields.hasErrors('durataSlot')}" th:errors="*{durataSlot}"></span>
+
         <br><br>
 
         <label for="capienza">Capienza:</label>
-        <input type="number" id="capienza" th:field="*{capienza}" min="1" required>
+        <input type="number" id="capienza" th:field="*{capienza}">
+		<span th:if="${#fields.hasErrors('capienza')}" th:errors="*{capienza}"></span>
+
         <br><br>
 
         <label for="oraApertura">Ora di Apertura:</label>
         <input type="time" id="oraApertura" th:field="*{oraApertura}" required>
+		
         <br><br>
 
         <label for="oraChiusura">Ora di Chiusura:</label>
@@ -40,6 +51,10 @@
         <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SATURDAY)}"> Sabato<br>
         <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SUNDAY)}"> Domenica<br>
         <br>
+		
+
+
+
         <label for="sport-select">Seleziona uno sport:</label>
         <select id="sport-select" th:field="*{sport}" required>
             <option value="">-- Seleziona uno sport --</option>
