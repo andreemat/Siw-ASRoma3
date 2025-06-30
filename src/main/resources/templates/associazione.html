@@ -7,10 +7,7 @@
 
 <body>
 
-    <div>
-        <a href="/"><img src="/logo-siw.png" width="10%" alt="Logo" /></a>
-    </div>
-
+    
     <h1 th:text="${associazione.nome}">Nome Associazione</h1>
 
     <p>Nome: <span th:text="${associazione.nome}">Nome Associazione</span></p>
@@ -24,10 +21,9 @@
 
     <div>
         Immagine:<br />
-        <img th:if="${associazione.immagine != null}"
-             th:src="@{${'/associazione/immagine/' + associazione.id}}" 
-             alt="Immagine Associazione" width="200" />
-        <p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
+		<img th:if="${associazione.immagine != null}"
+			th:src="@{'/image/associazione/' + ${associazione.id}}" alt="Immagine associazione" width="300"/>
+		<p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
     </div>
 
     <p>Lista Sport:</p>
