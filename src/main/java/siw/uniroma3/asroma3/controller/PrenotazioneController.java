@@ -16,12 +16,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.validation.Valid;
 import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Prenotazione;
@@ -57,18 +59,14 @@ public class PrenotazioneController {
 
 	}
 	@PostMapping("/prenota/campo/{idC}/giorno")
-	public String selezionaGiorno(@ModelAttribute("prenotazione") Prenotazione prenotazione,
+	public String selezionaGiorno(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, BindingResult bindingResult,
 			@PathVariable("idC") Long idC,
 			Model model) {
 		Campo campo = campoService.getCampo(idC);
 
-		if (prenotazione.getData() != null) {
-			LocalDate dataSelezionata = prenotazione.getData();
-			LocalDate oggi = LocalDate.now();
-
 			// VALIDAZIONE 1: Non puoi prenotare giorni passati
-			if (dataSelezionata.isBefore(oggi)) {
-				model.addAttribute("erroreGiorno", "Non puoi prenotare giorni passati");
+			if (bindingResult.hasErrors()) {
+			
 				model.addAttribute("campo", campo);
 				model.addAttribute("associazione", campo.getAssociazione());
 				model.addAttribute("sport", campo.getSport());
@@ -93,7 +91,7 @@ public class PrenotazioneController {
 					return "formDataPrenotazione.html";
 				}
 			}
-		}
+		
 		model.addAttribute("campo", campo);
 		model.addAttribute("associazione", campo.getAssociazione());
 		model.addAttribute("sport", campo.getSport());

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 INSERT INTO associazione (id, nome, indirizzo,immagine) VALUES (-1, 'ASRoma3','Via Pasquale Franchino 180',null);
 INSERT INTO associazione (id, nome, indirizzo,immagine) VALUES (-2,'Certosa' ,'Via CentoCelle 27',null);
 INSERT INTO sport (id, nome,immagine) VALUES (1,'Calcio a otto','sport_calcio_8.jpg');
@@ -25,5 +25,3 @@ INSERT INTO credentials (id, username, password, role, user_id) VALUES (200, 'ad
 INSERT INTO users (id, name, surname, email, eta) VALUES (101, 'Giulia', 'Bianchi', 'user@example.com', 28);
 INSERT INTO credentials (id, username, password, role, user_id) VALUES (201, 'ute', '$2a$12$x/pn.th/advauZHiRKICZer7ObgOzLpyOwZdZ4GrrOaaGKgS4yeee', 'ROLE_USER', 101);
 
-=======
->>>>>>> bfe3f2e6096f8f17f1f69286500f4bb714519a86

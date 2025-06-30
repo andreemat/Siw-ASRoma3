@@ -10,11 +10,10 @@
         <label>
             Data:
             <input type="date" th:field="*{data}" required />
+			<span th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></span>
         </label>
         <button type="submit">Conferma giorno</button>
-		<div th:if="${erroreGiorno}" class="alert alert-danger" role="alert">
-		    <span th:text="${erroreGiorno}"></span>
-		</div>
+	
     </form>
 </body>
 </html>

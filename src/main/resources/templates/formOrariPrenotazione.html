@@ -11,8 +11,9 @@
 
     <form th:action="@{/prenota/campo/{idC}/conferma(idC=${campo.id})}"
           th:object="${prenotazione}" method="post">
-
+	
         <input type="hidden" th:field="*{data}" />
+		
 
         <!-- Correct: li elements should always be inside a ul or ol -->
         <ul>

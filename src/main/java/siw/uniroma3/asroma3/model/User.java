@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name= "users")
@@ -24,6 +24,7 @@ public class User {
 	@NotBlank
 	private String surname;
 	@NotBlank
+	@Email
 	private String email;
 	private int eta;
 	@OneToMany(mappedBy = "adminAssociazione")
