@@ -25,11 +25,11 @@
 		    <div>
 		        Immagine:<br />
 		        <img th:if="${associazione.immagine != null}"
-		             th:src="@{${'/associazione/immagine/' + associazione.id}}" 
+		             th:src="@{'/image/associazione/' + ${associazione.id}}"
 		             alt="Immagine Associazione" width="200" />
 		        <p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
 		    </div>
-
+			
 		    <p>Lista Sport:</p>
 		    <div th:if="${associazione.sportList == null or #lists.isEmpty(associazione.sportList)}">
 		        Non ci sono sport associati a questa associazione.
