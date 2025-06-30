@@ -37,11 +37,12 @@
 
         <label for="oraApertura">Ora di Apertura:</label>
         <input type="time" id="oraApertura" th:field="*{oraApertura}">
-		
+		<span th:if="${#fields.hasErrors('oraApertura')}" th:errors="*{oraApertura}"></span>
         <br><br>
 
         <label for="oraChiusura">Ora di Chiusura:</label>
         <input type="time" id="oraChiusura" th:field="*{oraChiusura}">
+		<span th:if="${#fields.hasErrors('oraChiusura')}" th:errors="*{oraChiusura}"></span>
         <br><br>
 
         <label>Giorni Disponibili:</label><br>
@@ -64,6 +65,9 @@
                     th:value="${sportIter.id}"
                     th:text="${sportIter.nome}">Sport Nome</option>
         </select>
+		
+		<input type="hidden" th:field="*{id}" />
+		<span th:if="${#fields.hasErrors('sport')}" th:errors="*{sport}"></span>
         <br><br>
 
         <button type="submit">Crea Campo</button>

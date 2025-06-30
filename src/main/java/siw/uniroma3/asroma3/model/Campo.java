@@ -45,7 +45,7 @@ public class Campo {
 	
 	@Column(columnDefinition = "bytea",nullable=true)
 	private byte[] immagine;
-	
+	@NotNull
 	@ManyToOne
 	private Sport sport;
 	

@@ -16,13 +16,23 @@ public class CampoValidator implements Validator {
   @Override
   public void validate(Object o, Errors errors) {
     Campo campo = (Campo)o;
-    if (!campo.getOraApertura().isBefore(campo.getOraChiusura()))  {
-      errors.reject("campo.timeInconsistency");
-    }
+    if(campo.getOraChiusura()!=null&&campo.getOraApertura()!=null)
+	    if (!campo.getOraApertura().isBefore(campo.getOraChiusura()))  {
+	      errors.reject("campo.timeInconsistency");
+	    
+	    }
+    if(campo.getId()!=null) {
+    	System.err.println("Id esistente nel database");
+    	Campo campoDatabase = this.campoService.getCampo(campo.getId());
+    	if(!(campoDatabase.getNome().equals(campo.getNome())) && this.campoService.existsCampoByNomeAndAssociaizone(campo.getNome(), campo.getAssociazione().getId()))
+    		errors.reject("campo.duplicate");
+    } else
     if (this.campoService.existsCampoByNomeAndAssociaizone(campo.getNome(), campo.getAssociazione().getId()))  {
         errors.reject("campo.duplicate");
       }
   }
+  
+  
   
   @Override
     public boolean supports(Class<?> aClass) {

@@ -38,7 +38,7 @@
 		</div>
 		<div>
 			<label>Email</label>
-			<span><input type="text" placeholder="email"  th:field="${user.email}" /></span>
+			<span><input type="text" placeholder="email" required th:field="${user.email}" /></span>
 			<span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}" th:style="'color:red'">
 			</span>
 		</div>

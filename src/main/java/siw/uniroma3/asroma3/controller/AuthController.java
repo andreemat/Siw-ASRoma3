@@ -58,7 +58,7 @@ public class AuthController {
 			model.addAttribute("user", user);
 			return "registrationSuccessful";
 		}
-		return "registerUser";
+		return "formRegisterUser";
 	}
 
 	@GetMapping("/")

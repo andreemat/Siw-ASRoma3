@@ -126,6 +126,15 @@ public class CampoController {
 		
 	}
 	
+	/*@PostMapping("admin/associazione/{idA}/modifica/campo/{idC}")
+	public String confermaModificaCampo(@PathVariable("idA") Long idA, @PathVariable("idC") Long idC, Model model) {
+		// to do
+		return null;
+		
+	}*/
+	
+	
+	
 	@GetMapping("/admin/associazione/{idA}/cancella/campo/{idC}")
 	public String cancellaCampo(@PathVariable("idA") Long idA, @PathVariable("idC") Long idC, Model model, RedirectAttributes redirectAttributes) {
 		Campo campo = this.campoService.getCampo(idC);
