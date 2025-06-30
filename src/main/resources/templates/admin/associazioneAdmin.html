@@ -25,6 +25,7 @@
 		    <div>
 		        Immagine:<br />
 		        <img th:if="${associazione.immagine != null}"
+
 		             th:src="@{${'/associazione/immagine/{id} (id=${associazione.id) }}" 
 		             alt="Immagine Associazione" width="200" />
 		        <p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
@@ -34,6 +35,7 @@
 	<div><a th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" >Gestisci Campi</a></div>
 	<div><a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" >Gestisci prenotazioni</a></div>
 	
+
 </body>
 </html>
 
