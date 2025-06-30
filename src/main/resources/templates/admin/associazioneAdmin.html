@@ -26,8 +26,8 @@
 		        Immagine:<br />
 		        <img th:if="${associazione.immagine != null}"
 
-		             th:src="@{${'/associazione/immagine/{id} (id=${associazione.id) }}" 
-		             alt="Immagine Associazione" width="200" />
+		              th:src="@{'/image/associazione/' + ${associazione.id}}" alt="Immagine associazione" width="300"/>
+		         
 		        <p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
 		    </div>
 			<div><a th:href="@{/admin/associazione/{idA}/sports(idA=${associazione.id})}" > Gestisci sport</a>
