@@ -25,26 +25,17 @@
 		    <div>
 		        Immagine:<br />
 		        <img th:if="${associazione.immagine != null}"
-		             th:src="@{${'/associazione/immagine/' + associazione.id}}" 
+
+		             th:src="@{${'/associazione/immagine/{id} (id=${associazione.id) }}" 
 		             alt="Immagine Associazione" width="200" />
 		        <p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
 		    </div>
+			<div><a th:href="@{/admin/associazione/{idA}/sports(idA=${associazione.id})}" > Gestisci sport</a>
+			
+	<div><a th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" >Gestisci Campi</a></div>
+	<div><a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" >Gestisci prenotazioni</a></div>
+	
 
-		    <p>Lista Sport:</p>
-		    <div th:if="${associazione.sportList == null or #lists.isEmpty(associazione.sportList)}">
-		        Non ci sono sport associati a questa associazione.
-		    </div>
-		    <ul>
-		        <li th:each="sport : ${associazione.sportList}">
-		            <a th:href="@{/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
-		               th:text="${sport.nome}">Nome Sport</a>
-		        </li>
-		    </ul>
-
-		
-	<div><a th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" >Vai ai Campi</a></div>
-	<div><a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" >Visualizza tutte le prenotazioni</a></div>
-	<div><a th:href="@{/admin/associazione/{id}/registra-campo(id=${associazione.id})}" >Aggiungi un campo</a></div>
 </body>
 </html>
 

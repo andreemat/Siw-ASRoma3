@@ -142,13 +142,36 @@ public class PrenotazioneController {
 
 
 	@GetMapping("/utente/prenotazioni")
-	public String getPrenotazioniUtente(Model model) {
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user=credentialsService.getCredentials(userDetails.getUsername()).getUser();
-		List<Prenotazione> prenotazioni= prenotazioneService.getPrenotazioneByCliente(user);
-		model.addAttribute("prenotazioni",prenotazioni);
-		return "prenotazioniUtente.html";
+	public String getPrenotazioniUtente(
+	    @ModelAttribute("userDetails") UserDetails userDetails,
+	    @RequestParam(required = false) Long associazioneId,
+	    @RequestParam(required = false) Long campoId,
+	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
+	    Model model
+	) {
+	    User utente = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 
+	    List<Prenotazione> tutte = prenotazioneService.getPrenotazioniFiltratePerUtente(
+	        utente,associazioneId , dataFiltro, campoId);
+
+	    List<Prenotazione> future = tutte.stream()
+	        .filter(p -> !p.getData().isBefore(LocalDate.now()))
+	        .toList();
+	    List<Prenotazione> passate = tutte.stream()
+	        .filter(p -> p.getData().isBefore(LocalDate.now()))
+	        .toList();
+
+	    model.addAttribute("prenotazioniFuture", future);
+	    model.addAttribute("prenotazioniPassate", passate);
+	    model.addAttribute("campi", campoService.getAllCampi());
+	    model.addAttribute("associazioni", associazioneService.getAllAssociazioni());
+
+	   
+	    model.addAttribute("associazioneIdFiltro", associazioneId);
+	    model.addAttribute("campoIdFiltro", campoId);
+	    model.addAttribute("dataFiltro", dataFiltro);
+
+	    return "prenotazioniUtente"; 
 	}
 
 
@@ -157,21 +180,33 @@ public class PrenotazioneController {
 
 
 
+
+
+
 	@GetMapping("/utente/prenotazioni/cancella/{idP}")
-	public String cancellaPrenotazione(Model model,@PathVariable("idP") Long idP) {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	public String cancellaPrenotazione(
+	        @PathVariable("idP") Long idP,
+	        @RequestParam(required = false) Long associazioneId,
+	        @RequestParam(required = false) Long campoId,
+	        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro
+	) {
+	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    User currentUser = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+	    Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
 
-		User currentUser = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+	    if (prenotazione != null && prenotazione.getCliente().getId().equals(currentUser.getId())) {
+	        prenotazioneService.deletePrenotazioneById(idP);
+	    }
 
-		Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
+	    // 🔁 Reindirizza alla pagina prenotazioni, mantenendo i filtri
+	    String redirectUrl = String.format(
+	        "redirect:/utente/prenotazioni?associazioneId=%s&campoId=%s&dataFiltro=%s",
+	        associazioneId != null ? associazioneId : "",
+	        campoId != null ? campoId : "",
+	        dataFiltro != null ? dataFiltro.toString() : ""
+	    );
 
-		if (prenotazione != null && prenotazione.getCliente().getId().equals(currentUser.getId())) {
-			prenotazioneService.deletePrenotazioneById(idP);
-		}
-
-
-		model.addAttribute("prenotazioni", prenotazioneService.getPrenotazioneByCliente(currentUser));
-		return "prenotazioniUtente.html";
+	    return redirectUrl;
 	}
 
 

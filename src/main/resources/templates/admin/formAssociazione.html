@@ -55,14 +55,14 @@
         <!-- Telefono -->
         <div>
             <label for="telefono">Telefono:</label>
-            <input type="tel" id="telefono" th:field="*{telefono}"  pattern="^\+?[0-9\s\-]*$" maxlength="20" placeholder="Es: +39 06 1234567">
+            <input type="text" id="telefono" th:field="*{telefono}"  placeholder="Es: +39 06 1234567">
             <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
         </div>
 
         <!-- Email -->
         <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" th:field="*{email}" placeholder="esempio@mail.com">
+            <input type="text" id="email" th:field="*{email}" placeholder="esempio@mail.com">
             <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         </div>
 

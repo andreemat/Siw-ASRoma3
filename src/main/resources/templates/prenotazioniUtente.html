@@ -3,27 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <title>Le mie prenotazioni</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
 
     <h1>Le tue prenotazioni</h1>
+    <!-- Form di filtro -->
+	<form method="get" action="/utente/prenotazioni">
+	    <label>Associazione:
+	        <select name="associazioneId">
+	            <option value="">-- Tutte --</option>
+	            <option th:each="associazione : ${associazioni}"
+	                    th:value="${associazione.id}"
+	                    th:text="${associazione.nome}"
+	                    th:selected="${associazione.id == associazioneIdFiltro}">
+	            </option>
+	        </select>
+	    </label>
 
-    <div th:if="${prenotazioni.isEmpty()}">
-        <p>Non hai prenotazioni al momento.</p>
-    </div>
+	    <label>Campo:
+	        <select name="campoId">
+	            <option value="">-- Tutti --</option>
+	            <option th:each="campo : ${campi}"
+	                    th:value="${campo.id}"
+	                    th:text="${campo.nome}"
+	                    th:selected="${campo.id == campoIdFiltro}">
+	            </option>
+	        </select>
+	    </label>
 
-    <ul th:each="prenotazione : ${prenotazioni}">
-        <li>
-            Campo: <span th:text="${prenotazione.campo.nome}"></span><br/>
-            Data: <span th:text="${prenotazione.data}"></span><br/>
-            Orario: <span th:text="${prenotazione.oraInizio}"></span> - 
-                    <span th:text="${prenotazione.oraFine}"></span><br/>
-					<a th:href="@{/utente/prenotazioni/cancella/{idP}(idP=${prenotazione.Id})}">Cancella</a>
-            <hr/>
-        </li>
-    </ul>
+	    <label>Data:
+	        <input type="date" name="dataFiltro" th:value="${dataFiltro}"/>
+	    </label>
 
-    <a href="/">Torna alla home</a>
+	    <button type="submit">Filtra</button>
+		<a href="/utente/prenotazioni">
+		    <button type="button">Reset filtri</button>
+		</a>
+	</form>
+
+    <!-- Prenotazioni future -->
+    <section>
+        <h2>📅 Prenotazioni future</h2>
+
+        <div th:if="${#lists.isEmpty(prenotazioniFuture)}">
+            <p>⏳ Nessuna prenotazione futura trovata.</p>
+        </div>
+
+        <ul th:each="prenotazione : ${prenotazioniFuture}">
+            <li>
+                Campo: <span th:text="${prenotazione.campo.nome}"></span><br/>
+                Data: <span th:text="${prenotazione.data}"></span><br/>
+                Orario: <span th:text="${prenotazione.oraInizio}"></span> - 
+                        <span th:text="${prenotazione.oraFine}"></span><br/>
+						<a th:href="@{/utente/prenotazioni/cancella/{idP}(
+						        idP=${prenotazione.id},
+						        associazioneId=${associazioneIdFiltro},
+						        campoId=${campoIdFiltro},
+						        dataFiltro=${dataFiltro}
+						    )}">
+						    Cancella
+						</a>                <hr/>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Prenotazioni passate -->
+    <section>
+        <h2>🕘 Prenotazioni passate</h2>
+
+        <div th:if="${#lists.isEmpty(prenotazioniPassate)}">
+            <p>✅ Nessuna prenotazione passata trovata.</p>
+        </div>
+
+        <ul th:each="prenotazione : ${prenotazioniPassate}">
+            <li>
+                Campo: <span th:text="${prenotazione.campo.nome}"></span><br/>
+                Data: <span th:text="${prenotazione.data}"></span><br/>
+                Orario: <span th:text="${prenotazione.oraInizio}"></span> - 
+                        <span th:text="${prenotazione.oraFine}"></span><br/>
+                <!-- Nessun pulsante cancella per prenotazioni passate -->
+                <hr/>
+            </li>
+        </ul>
+    </section>
+
+    <a href="/">🏠 Torna alla home</a>
 
 </body>
 </html>

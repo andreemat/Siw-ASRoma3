@@ -64,6 +64,11 @@ public class PrenotazioneService {
 		return this.prenotazioneRepository.findPrenotazioniFiltratePerAssociazione(idAssociazione, data,idCampo,idSport);
 	}
 	
+	public List<Prenotazione> getPrenotazioniFiltratePerUtente(User utente,Long idAssociazione,LocalDate data,Long idCampo) {
+return this.prenotazioneRepository.findPrenotazioniFiltratePerUtente(utente, idAssociazione, data, idCampo);
+}
+
+	
 
 	public boolean sonoSlotConsecutivi(List<String> orariSelezionati, Integer durataSlot) {
 
