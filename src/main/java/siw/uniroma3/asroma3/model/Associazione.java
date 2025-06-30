@@ -14,7 +14,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -34,8 +36,10 @@ public class Associazione {
 	@Size(max = 1000)
 	private String descrizione;
 	@NotBlank
+	@Pattern(regexp = "^(\\+39)?\\s?3[1-9][0-9]\\d{6,7}$",message = "{telefono.invalid}")
 	private String telefono;
 	@NotBlank
+	@Email
 	private String email;
 	@Column(columnDefinition = "bytea",nullable=true)
 	private byte[] immagine; //path

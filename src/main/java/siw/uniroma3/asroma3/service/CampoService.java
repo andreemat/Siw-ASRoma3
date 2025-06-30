@@ -52,6 +52,10 @@ public class CampoService {
 	public boolean existsCampoByNomeAndAssociaizone(String nome, Long idA) {
 		return this.campoRepository.existsByNomeAndAssociazioneId(nome, idA);
 	}
+	public boolean existsCampoBySportIdAndAssociazioneId(Long idS, Long idA) {
+		
+		return this.campoRepository.existsBySportIdAndAssociazioneId(idS,idA);
+	}
 	
 
 }

@@ -1,0 +1,60 @@
+      
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport per <span th:text="${associazione.nome}">Associazione</span></title>
+</head>
+<body>
+    <h1>Sport per: <span th:text="${associazione.nome}">Nome Associazione</span></h1>
+
+
+    <!-- TABELLA DELLE PRENOTAZIONI -->
+    <table border="1">
+		<p th:if="${errorMessage}" style="color: red;">
+				    <span th:text="${errorMessage}"></span> </p>
+        <thead>
+            <tr>
+				<th>Nome</th>
+				<th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+			<tr th:if="${sports.isEmpty()}">
+			       <td colspan="6"> Nessuno sport aggiunto nell'associazionie</td>
+			   </tr>
+			   <tr th:each="sport : ${sports}">
+			       <td th:text="${sport.nome}"></td>
+				<td ><a th:href="@{/admin/associazione/{idA}/sports/rimuovi/{idS}(idA=${associazione.id},idS=${sport.id})}">	elimina</a></td>
+			   </tr>
+        </tbody>
+    </table>
+	
+	
+	<table border="1">
+	      <thead>
+	          <tr>
+				<th>Nome</th>
+				<th>Azioni</th>
+	          </tr>
+	      </thead>
+	      <tbody>
+			<tr th:if="${altriSport.isEmpty()}">
+			              <td colspan="6"> Nessuno sport trovato</td>
+			          </tr>
+			          <tr th:each="sport : ${altriSport}">
+			              <td th:text="${sport.nome}"></td>
+						<td ><a th:href="@{/admin/associazione/{idA}/sports/aggiungi/{idS}(idA=${associazione.id},idS=${sport.id})}">	aggiungi</a></td>
+			          </tr>
+	      </tbody>
+	  </table>
+	
+	
+	
+	
+    <br/>
+    <a th:href="@{/admin/associazione/{idA}(idA=${associazione.id})}">Torna alla Home</a>
+</body>
+</html>
+
+    

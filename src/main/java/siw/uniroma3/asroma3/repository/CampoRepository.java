@@ -39,6 +39,8 @@ public interface CampoRepository extends CrudRepository<Campo, Long> {
 	
 	public boolean existsByNomeAndAssociazioneId(String nome, Long id);
 
+	public boolean existsBySportIdAndAssociazioneId(Long idS, Long idA);
+
 
 	
 

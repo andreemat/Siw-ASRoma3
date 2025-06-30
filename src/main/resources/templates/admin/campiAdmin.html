@@ -27,7 +27,7 @@
     </form>
     <hr/>
 
-
+	<div><a th:href="@{/admin/associazione/{id}/registra-campo(id=${associazione.id})}" >Aggiungi un campo</a></div>
     <table border="1">
 		<p th:if="${errorMessage}" style="color: red;">
 		    <span th:text="${errorMessage}"></span>

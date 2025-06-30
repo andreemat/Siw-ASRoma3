@@ -41,7 +41,8 @@ public class CampoController {
 	
 	@GetMapping("/admin/associazione/{idA}/registra-campo")
 	public String registraCampo(@PathVariable ("idA") Long idA ,Model model) {
-		model.addAttribute("sports",sportService.getAllSport());
+		Associazione associazione = this.associazioneService.getAssociazione(idA);
+		model.addAttribute("sports",associazione.getSportList());
 		model.addAttribute("campo", new Campo());
 		model.addAttribute("idA",idA);
 		return "admin/formCampo.html";
@@ -61,13 +62,10 @@ public class CampoController {
 
 		if (bindingResult.hasErrors()) {
 		    model.addAttribute("campo", campo); 
-		    model.addAttribute("sports", sportService.getAllSport());
+		    model.addAttribute("sports", associazione.getSportList());
 		    model.addAttribute("idA", idA);
 		    return "admin/formCampo.html";
 		}
-		
-		Sport sport = campo.getSport();
-		associazione.addSport(sport);
 		associazione.addCampo(campo);
 		
 		this.campoService.saveCampo(campo);
