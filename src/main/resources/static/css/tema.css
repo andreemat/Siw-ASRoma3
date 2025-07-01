@@ -1,0 +1,93 @@
+/* style.css */
+
+/* Palette colori */
+:root {
+  --verde-campo: #3a913f;  /* Verde campo da calcio */
+  --verde-scuro: #2f7032;
+  --verde-chiaro: #52b755;
+  --bianco: #ffffff;
+  --grigio-chiaro: #f2f2f2;
+  --grigio: #cccccc;
+  --nero-soft: #222;
+}
+
+/* Font base */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--grigio-chiaro);
+  color: var(--nero-soft);
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--verde-campo);
+}
+
+.navbar-brand,
+.nav-link {
+  color: var(--bianco) !important;
+}
+
+.nav-link:hover {
+  color: var(--grigio) !important;
+}
+
+/* Pulsanti */
+.btn-verde {
+  background-color: var(--verde-campo);
+  color: var(--bianco);
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-verde:hover {
+  background-color: var(--verde-scuro);
+}
+
+/* Card */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: var(--verde-campo);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--verde-campo);
+  color: var(--bianco);
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Input e form */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  border-radius: 10px;
+  border: 1px solid var(--grigio);
+  padding: 0.5rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--verde-chiaro);
+  box-shadow: 0 0 5px var(--verde-chiaro);
+}
+
+/* Hero o intestazione grande */
+.hero {
+  background: linear-gradient(to right, var(--verde-campo), var(--verde-chiaro));
+  color: var(--bianco);
+  padding: 4rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+}
