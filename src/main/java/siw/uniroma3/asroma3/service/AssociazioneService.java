@@ -43,8 +43,8 @@ public class AssociazioneService {
 		return (List<Associazione>) this.associazioneRepository.findAllById(ids);
 	}
 
-	public List<Associazione> findByCitta(Citta citta) {
-	return this.associazioneRepository.findByCittaId(citta.getId());
+	public List<Associazione> findAssociazioneByCitta(Citta citta) {
+	return this.associazioneRepository.findByCittaId(citta.getId()).orElse(null);
 		
 	}
 
