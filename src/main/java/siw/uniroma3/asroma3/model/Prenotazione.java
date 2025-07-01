@@ -21,7 +21,7 @@ public class Prenotazione {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Future
+	@FutureOrPresent
 	private LocalDate data;
 	private LocalTime oraInizio;
 	private LocalTime oraFine;
