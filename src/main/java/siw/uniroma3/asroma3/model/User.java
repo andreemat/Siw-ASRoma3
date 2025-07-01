@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -31,6 +32,8 @@ public class User {
 	private List<Associazione> associazioni;
 	@OneToMany(mappedBy= "cliente")
 	private List<Prenotazione> prenotazioni;
+	@ManyToOne
+	Citta citta;
 	
 	
 	@OneToOne(mappedBy="user")
@@ -89,6 +92,13 @@ public class User {
 	}
 	public void setAssociazioni(List<Associazione> associazioni) {
 		this.associazioni = associazioni;
+	}
+	
+	public Citta getCitta() {
+		return citta;
+	}
+	public void setCitta(Citta citta) {
+		this.citta = citta;
 	}
 	public void addAssociazione(Associazione associazione) {
 		if (this.associazioni==null)

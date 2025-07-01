@@ -58,6 +58,17 @@
 			<span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"
 				th:style="'color:red'">
 			</span>
+			
+			<div>
+					    <label for="citta">Città:</label>
+					    <select id="citta" th:field="*{citta}">
+					        <option value="" disabled selected>Scegli una città</option>
+					        <option th:each="c : ${citta}"
+					                th:value="${c.id}" 
+					                th:text="${c.nome}">Città</option>
+					    </select>
+					    <span th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></span>
+					</div>
 		</div>
 		<div>
 			<button type="submit">Registra</button>

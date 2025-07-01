@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import siw.uniroma3.asroma3.model.Associazione;
+import siw.uniroma3.asroma3.model.Citta;
 import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.repository.AssociazioneRepository;
 
@@ -40,6 +41,11 @@ public class AssociazioneService {
 
 	public List<Associazione> findByIdIn(List<Long> ids) {
 		return (List<Associazione>) this.associazioneRepository.findAllById(ids);
+	}
+
+	public List<Associazione> findByCitta(Citta citta) {
+	return this.associazioneRepository.findByCittaId(citta.getId());
+		
 	}
 
 	
