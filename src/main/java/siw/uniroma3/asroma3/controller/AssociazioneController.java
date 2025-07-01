@@ -19,10 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import siw.uniroma3.asroma3.model.Associazione;
+import siw.uniroma3.asroma3.model.Citta;
 import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.repository.AssociazioneRepository;
 import siw.uniroma3.asroma3.repository.UserRepository;
 import siw.uniroma3.asroma3.service.AssociazioneService;
+import siw.uniroma3.asroma3.service.CittaService;
 import siw.uniroma3.asroma3.service.CredentialsService;
 import siw.uniroma3.asroma3.service.UserService;
 import siw.uniroma3.asroma3.validator.AssociazioneValidator;
@@ -36,8 +38,8 @@ public class AssociazioneController {
 	@Autowired
 	private UserService userService;
 	@Autowired private AssociazioneValidator associazioneValidator;
-	@Autowired
-    private MessageSource messageSource;
+	@Autowired private MessageSource messageSource;
+	@Autowired private CittaService cittaService;
 	
 
 	@GetMapping("/associazione/{id}")
@@ -55,6 +57,7 @@ public class AssociazioneController {
 		
 		
 		model.addAttribute("associazione",new Associazione());
+		model.addAttribute("citta",this.cittaService.findAll());
 		return "admin/formAssociazione.html";
 	}
 
@@ -66,7 +69,7 @@ public class AssociazioneController {
 		this.associazioneValidator.validate(associazione,bindingResult);
 	       if (bindingResult.hasErrors()) {
 	            
-	         
+	    		model.addAttribute("citta",this.cittaService.findAll());
 	            return "admin/formAssociazione.html";
 	        } 
 		if (file != null && !file.isEmpty()) {
@@ -76,9 +79,12 @@ public class AssociazioneController {
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		Citta citta = associazione.getCitta();
 		associazione.setAdminAssociazione(user);
+		citta.addAssociazione(associazione);
 		this.associazioneService.addAdminAssociazione(associazione, user);
 		this.associazioneService.saveAssociazione(associazione);
+		this.cittaService.save(citta);
 		return "redirect:/";
 	}
 	
