@@ -1,5 +1,6 @@
 package siw.uniroma3.asroma3.controller;
 import siw.uniroma3.asroma3.model.User;
+import siw.uniroma3.asroma3.model.Citta;
 import siw.uniroma3.asroma3.model.Credentials;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import jakarta.validation.Valid;
 
 import siw.uniroma3.asroma3.service.UserService;
 import siw.uniroma3.asroma3.service.AssociazioneService;
+import siw.uniroma3.asroma3.service.CittaService;
 import siw.uniroma3.asroma3.service.CredentialsService;
 import java.lang.RuntimeException;
 @Controller
@@ -26,6 +28,9 @@ public class AuthController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CittaService cittaService;
 
 	@Autowired
 	private AssociazioneService associazioneService;
@@ -38,6 +43,7 @@ public class AuthController {
 
 	@GetMapping(value = "/register") 
 	public String showRegisterForm (Model model) {
+		model.addAttribute("citta", this.cittaService.findAll());
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
 		return "formRegisterUser";
@@ -52,12 +58,14 @@ public class AuthController {
 
 		// se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
 		if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+			
 			userService.saveUser(user);
 			credentials.setUser(user);
 			credentialsService.saveCredentials(credentials);
 			model.addAttribute("user", user);
 			return "registrationSuccessful";
 		}
+	  model.addAttribute("citta",cittaService.findAll());
 		return "formRegisterUser";
 	}
 
@@ -76,7 +84,9 @@ public class AuthController {
 				return "admin/homeAdmin.html";
 			}
 			else {
-				model.addAttribute("associazioni", associazioneService.getAllAssociazioni());
+				User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+				
+				model.addAttribute("associazioni", this.associazioneService.findByCitta(user.getCitta()));
 				return "home.html";}
 		}
 			

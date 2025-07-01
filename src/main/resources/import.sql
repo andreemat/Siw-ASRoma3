@@ -120,10 +120,10 @@ INSERT INTO sport (id, nome,immagine) VALUES (10,'Hockey su prato','sport_hockey
 
 
 
-INSERT INTO users (id, name, surname, email, eta) VALUES (100, 'Mario', 'Rossi', 'admin@example.com', 40);
+INSERT INTO users (id, name, surname, email, eta,citta_id) VALUES (100, 'Mario', 'Rossi', 'admin@example.com', 40,103);
 INSERT INTO credentials (id, username, password, role, user_id) VALUES (200, 'adm', '$2a$12$s3QTUipQcQAOXN0aZ0scie6KFTZ9ISeU6nnIUmeeXwgrL4AsnJ4.u', 'ROLE_ADMIN', 100);
-INSERT INTO users (id, name, surname, email, eta) VALUES (101, 'Giulia', 'Bianchi', 'user@example.com', 28);
+INSERT INTO users (id, name, surname, email, eta,citta_id) VALUES (101, 'Giulia', 'Bianchi', 'user@example.com', 28,103);
 INSERT INTO credentials (id, username, password, role, user_id) VALUES (201, 'ute', '$2a$12$x/pn.th/advauZHiRKICZer7ObgOzLpyOwZdZ4GrrOaaGKgS4yeee', 'ROLE_USER', 101);
-INSERT INTO users (id, name, surname, email, eta) VALUES (102, 'Biagou', 'Wanyou', 'biagou.02@gmail.com', 29);
-INSERT INTO credentials (id, username, password, role, user_id) VALUES (202, 'biagou', '$2a$10$qanOsKUT3qHAzpL71RpE1e.E21mT9P3XAOzTiT9fs8dDXG1lwHSo.', 'ROLE_ADMIN', 102);
+INSERT INTO users (id, name, surname, email,eta,citta_id) VALUES (10, 'Biagou', 'Wanyou', 'biagou.02@gmail.com', 29,103);
+INSERT INTO credentials (id, username, password, role, user_id) VALUES (202, 'biagou', '$2a$10$qanOsKUT3qHAzpL71RpE1e.E21mT9P3XAOzTiT9fs8dDXG1lwHSo.', 'ROLE_ADMIN', 10);
 
