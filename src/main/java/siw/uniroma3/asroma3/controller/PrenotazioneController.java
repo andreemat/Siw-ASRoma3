@@ -4,11 +4,13 @@ package siw.uniroma3.asroma3.controller;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import java.security.Principal;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +29,7 @@ import jakarta.validation.Valid;
 import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Prenotazione;
+import siw.uniroma3.asroma3.model.Sport;
 import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CampoService;
@@ -145,37 +148,90 @@ public class PrenotazioneController {
 	public String getPrenotazioniUtente(
 	    @ModelAttribute("userDetails") UserDetails userDetails,
 	    @RequestParam(required = false) Long associazioneId,
-	    @RequestParam(required = false) Long campoId,
+	    @RequestParam(required = false) Long sportId,
 	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
 	    Model model
 	) {
 	    User utente = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 
-	    List<Prenotazione> tutte = prenotazioneService.getPrenotazioniFiltratePerUtente(
-	        utente,associazioneId , dataFiltro, campoId);
+	    // ==========================================================================================
+	    // PARTE 1: OTTENERE I DATI DA VISUALIZZARE (LA LISTA DELLE PRENOTAZIONI FILTRATE)
+	    // ==========================================================================================
+	    // Questo metodo dovrebbe essere nel tuo PrenotazioneService e usare una query che accetta
+	    // tutti i filtri (utente, associazione, sport, data).
+	    List<Prenotazione> prenotazioniFiltrate = prenotazioneService.getPrenotazioniFiltratePerUtente(
+	        utente, associazioneId, dataFiltro, sportId);
 
-	    List<Prenotazione> future = tutte.stream()
+	    // Dividi in future e passate per la visualizzazione
+	    List<Prenotazione> future = prenotazioniFiltrate.stream()
 	        .filter(p -> !p.getData().isBefore(LocalDate.now()))
 	        .toList();
-	    List<Prenotazione> passate = tutte.stream()
+	    List<Prenotazione> passate = prenotazioniFiltrate.stream()
 	        .filter(p -> p.getData().isBefore(LocalDate.now()))
 	        .toList();
 
+	    // ==========================================================================================
+	    // PARTE 2: PREPARARE I DATI PER LE DROPDOWN DEI FILTRI
+	    // ==========================================================================================
+	    
+	    // Per popolare i filtri, abbiamo bisogno di TUTTE le prenotazioni dell'utente, non solo quelle già filtrate.
+	    List<Prenotazione> tutteLePrenotazioniDellUtente = prenotazioneService.getPrenotazioneByCliente(utente); // Nuovo metodo da creare in PrenotazioneService
+
+	    // A. Popola il filtro ASSOCIAZIONI
+	    List<Long> idAssociazioniCoinvolte = tutteLePrenotazioniDellUtente.stream()
+	        .map(p -> p.getCampo().getAssociazione().getId())
+	        .distinct()
+	        .collect(Collectors.toList());
+	    
+	    List<Associazione> associazioniPerFiltro = idAssociazioniCoinvolte.isEmpty() ? 
+	        new ArrayList<>() : associazioneService.findByIdIn(idAssociazioniCoinvolte);
+
+	    // B. Popola il filtro SPORT (con la logica corretta)
+	    List<Prenotazione> prenotazioniDaConsiderarePerSport;
+
+	    if (associazioneId != null) {
+	        // CASO B: Un'associazione è già stata selezionata.
+	        // Filtriamo le prenotazioni dell'utente solo per quell'associazione.
+	        prenotazioniDaConsiderarePerSport = tutteLePrenotazioniDellUtente.stream()
+	            .filter(p -> p.getCampo().getAssociazione().getId().equals(associazioneId))
+	            .toList();
+	    } else {
+	        // CASO A: Nessuna associazione selezionata.
+	        // Consideriamo tutte le prenotazioni dell'utente.
+	        prenotazioniDaConsiderarePerSport = tutteLePrenotazioniDellUtente;
+	    }
+
+	    // Ora, da queste prenotazioni, estraiamo gli ID dei campi e poi troviamo gli sport
+	    List<Long> idCampiCoinvoltiPerSport = prenotazioniDaConsiderarePerSport.stream()
+	        .map(p -> p.getCampo().getId())
+	        .distinct()
+	        .collect(Collectors.toList());
+
+	    List<Sport> sportPerFiltro = new ArrayList<>();
+	    if (!idCampiCoinvoltiPerSport.isEmpty()) {
+	        // Usiamo il nuovo metodo del repository che è più pulito
+	        sportPerFiltro = sportService.findDistinctSportsByCampoIds(idCampiCoinvoltiPerSport);
+	    }
+	    
+	    // ==========================================================================================
+	    // PARTE 3: PASSA TUTTO AL MODELLO
+	    // ==========================================================================================
 	    model.addAttribute("prenotazioniFuture", future);
 	    model.addAttribute("prenotazioniPassate", passate);
-	    model.addAttribute("campi", campoService.getAllCampi());
-	    model.addAttribute("associazioni", associazioneService.getAllAssociazioni());
+	    
+	    // Dati per le dropdown dei filtri
+	    model.addAttribute("associazioni", associazioniPerFiltro);
+	    model.addAttribute("sports", sportPerFiltro);
 
-	   
+	    // Valori dei filtri attualmente attivi (per far "ricordare" al form le selezioni)
 	    model.addAttribute("associazioneIdFiltro", associazioneId);
-	    model.addAttribute("campoIdFiltro", campoId);
+	    model.addAttribute("sportIdFiltro", sportId);
 	    model.addAttribute("dataFiltro", dataFiltro);
 
 	    return "prenotazioniUtente"; 
+
+
 	}
-
-
-
 
 
 

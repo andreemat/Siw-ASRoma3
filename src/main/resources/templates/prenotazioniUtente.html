@@ -10,6 +10,9 @@
     <h1>Le tue prenotazioni</h1>
     <!-- Form di filtro -->
 	<form method="get" action="/utente/prenotazioni">
+		<label>Data:
+		        <input type="date" name="dataFiltro" th:value="${dataFiltro}"/>
+		    </label>
 	    <label>Associazione:
 	        <select name="associazioneId">
 	            <option value="">-- Tutte --</option>
@@ -20,21 +23,18 @@
 	            </option>
 	        </select>
 	    </label>
-
-	    <label>Campo:
-	        <select name="campoId">
+	    <label>sport:
+	        <select name="sportId">
 	            <option value="">-- Tutti --</option>
-	            <option th:each="campo : ${campi}"
-	                    th:value="${campo.id}"
-	                    th:text="${campo.nome}"
-	                    th:selected="${campo.id == campoIdFiltro}">
+	            <option th:each="sport : ${sports}"
+	                    th:value="${sport.id}"
+	                    th:text="${sport.nome}"
+	                    th:selected="${sport.id == sportIdFiltro}">
 	            </option>
 	        </select>
 	    </label>
 
-	    <label>Data:
-	        <input type="date" name="dataFiltro" th:value="${dataFiltro}"/>
-	    </label>
+	  
 
 	    <button type="submit">Filtra</button>
 		<a href="/utente/prenotazioni">

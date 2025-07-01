@@ -73,8 +73,4 @@ public class SportController {
 		
 		return "redirect:/admin/associazione/{idA}/sports";
 	}
-	
-	
-	
-
 }

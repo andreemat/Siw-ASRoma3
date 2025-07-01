@@ -33,14 +33,14 @@ public interface PrenotazioneRepository extends CrudRepository<Prenotazione, Lon
 @Query("SELECT p FROM Prenotazione p " +
 	       "WHERE p.cliente = :utente " +
 	       "AND (CAST(:dataFiltro AS date) IS NULL OR p.data = :dataFiltro) " +
-	       "AND (:campoIdFiltro IS NULL OR p.campo.id = :campoIdFiltro) " +
+	       "AND (:sportIdFiltro IS NULL OR p.campo.sport.id = :sportIdFiltro) " +
 	       "AND (:associazioneIdFiltro IS NULL OR p.campo.associazione.id = :associazioneIdFiltro) " +
 	       "ORDER BY p.data DESC, p.oraInizio DESC")
 	List<Prenotazione> findPrenotazioniFiltratePerUtente(
 	    User utente,
 	    Long associazioneIdFiltro,
 	    LocalDate dataFiltro,
-	    Long campoIdFiltro
+	    Long sportIdFiltro
 	);
 
 }
