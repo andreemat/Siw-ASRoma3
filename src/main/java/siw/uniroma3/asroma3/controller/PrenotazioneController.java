@@ -153,12 +153,6 @@ public class PrenotazioneController {
 	    Model model
 	) {
 	    User utente = credentialsService.getCredentials(userDetails.getUsername()).getUser();
-
-	    // ==========================================================================================
-	    // PARTE 1: OTTENERE I DATI DA VISUALIZZARE (LA LISTA DELLE PRENOTAZIONI FILTRATE)
-	    // ==========================================================================================
-	    // Questo metodo dovrebbe essere nel tuo PrenotazioneService e usare una query che accetta
-	    // tutti i filtri (utente, associazione, sport, data).
 	    List<Prenotazione> prenotazioniFiltrate = prenotazioneService.getPrenotazioniFiltratePerUtente(
 	        utente, associazioneId, dataFiltro, sportId);
 
@@ -170,14 +164,12 @@ public class PrenotazioneController {
 	        .filter(p -> p.getData().isBefore(LocalDate.now()))
 	        .toList();
 
-	    // ==========================================================================================
-	    // PARTE 2: PREPARARE I DATI PER LE DROPDOWN DEI FILTRI
-	    // ==========================================================================================
 	    
-	    // Per popolare i filtri, abbiamo bisogno di TUTTE le prenotazioni dell'utente, non solo quelle già filtrate.
-	    List<Prenotazione> tutteLePrenotazioniDellUtente = prenotazioneService.getPrenotazioneByCliente(utente); // Nuovo metodo da creare in PrenotazioneService
+	    
+	  
+	    List<Prenotazione> tutteLePrenotazioniDellUtente = prenotazioneService.getPrenotazioneByCliente(utente); 
 
-	    // A. Popola il filtro ASSOCIAZIONI
+	    
 	    List<Long> idAssociazioniCoinvolte = tutteLePrenotazioniDellUtente.stream()
 	        .map(p -> p.getCampo().getAssociazione().getId())
 	        .distinct()
@@ -186,22 +178,20 @@ public class PrenotazioneController {
 	    List<Associazione> associazioniPerFiltro = idAssociazioniCoinvolte.isEmpty() ? 
 	        new ArrayList<>() : associazioneService.findByIdIn(idAssociazioniCoinvolte);
 
-	    // B. Popola il filtro SPORT (con la logica corretta)
+	    
 	    List<Prenotazione> prenotazioniDaConsiderarePerSport;
 
 	    if (associazioneId != null) {
-	        // CASO B: Un'associazione è già stata selezionata.
-	        // Filtriamo le prenotazioni dell'utente solo per quell'associazione.
+	        
 	        prenotazioniDaConsiderarePerSport = tutteLePrenotazioniDellUtente.stream()
 	            .filter(p -> p.getCampo().getAssociazione().getId().equals(associazioneId))
 	            .toList();
 	    } else {
-	        // CASO A: Nessuna associazione selezionata.
-	        // Consideriamo tutte le prenotazioni dell'utente.
+	        
 	        prenotazioniDaConsiderarePerSport = tutteLePrenotazioniDellUtente;
 	    }
 
-	    // Ora, da queste prenotazioni, estraiamo gli ID dei campi e poi troviamo gli sport
+	   
 	    List<Long> idCampiCoinvoltiPerSport = prenotazioniDaConsiderarePerSport.stream()
 	        .map(p -> p.getCampo().getId())
 	        .distinct()
@@ -209,21 +199,19 @@ public class PrenotazioneController {
 
 	    List<Sport> sportPerFiltro = new ArrayList<>();
 	    if (!idCampiCoinvoltiPerSport.isEmpty()) {
-	        // Usiamo il nuovo metodo del repository che è più pulito
+	        
 	        sportPerFiltro = sportService.findDistinctSportsByCampoIds(idCampiCoinvoltiPerSport);
 	    }
 	    
-	    // ==========================================================================================
-	    // PARTE 3: PASSA TUTTO AL MODELLO
-	    // ==========================================================================================
+	  
 	    model.addAttribute("prenotazioniFuture", future);
 	    model.addAttribute("prenotazioniPassate", passate);
 	    
-	    // Dati per le dropdown dei filtri
+	   
 	    model.addAttribute("associazioni", associazioniPerFiltro);
 	    model.addAttribute("sports", sportPerFiltro);
 
-	    // Valori dei filtri attualmente attivi (per far "ricordare" al form le selezioni)
+
 	    model.addAttribute("associazioneIdFiltro", associazioneId);
 	    model.addAttribute("sportIdFiltro", sportId);
 	    model.addAttribute("dataFiltro", dataFiltro);
