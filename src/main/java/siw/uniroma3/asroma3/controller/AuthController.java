@@ -55,7 +55,8 @@ public class AuthController {
 			@ModelAttribute("credentials") Credentials credentials,
 			BindingResult credentialsBindingResult,
 			Model model) {
-
+		if (user.getCitta()==null)
+			System.err.println("Citta null");
 		// se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
 		if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
 			
@@ -86,7 +87,7 @@ public class AuthController {
 			else {
 				User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 				
-				model.addAttribute("associazioni", this.associazioneService.findByCitta(user.getCitta()));
+				model.addAttribute("associazioni", this.associazioneService.findAssociazioneByCitta(user.getCitta()));
 				return "home.html";}
 		}
 			

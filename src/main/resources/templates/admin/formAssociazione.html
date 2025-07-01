@@ -1,90 +1,130 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>Registra Associazione</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registra Associazione - Admin</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" 
+          crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/css/tema.css}" />
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}" />
 </head>
 <body>
 
-<div>
-    <h2>Registra Nuova Associazione</h2>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <form th:action="@{/admin/registra-associazione}" 
-          th:object="${associazione}" 
-		  
-          method="post" 
-          enctype="multipart/form-data">
-		  <div th:if="${#fields.hasGlobalErrors()}">
-		        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
-		    </div>
+<div class="container my-5" style="max-width: 600px;">
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h2 class="mb-4">Registra Nuova Associazione</h2>
 
-        <!-- Nome -->
-        <div>
-            <label for="nome">Nome Associazione:</label>
-            <input type="text" id="nome" th:field="*{nome}"  placeholder="Nome dell'associazione">
-            <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+            <form th:action="@{/admin/registra-associazione}" 
+                  th:object="${associazione}" 
+                  method="post" 
+                  enctype="multipart/form-data">
+
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                    <ul class="mb-0" th:each="err : ${#fields.globalErrors()}">
+                        <li th:text="${err}">Errore</li>
+                    </ul>
+                </div>
+
+                <!-- Nome -->
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome Associazione</label>
+                    <input type="text" id="nome" th:field="*{nome}" 
+                           class="form-control" 
+                           th:classappend="${#fields.hasErrors('nome')} ? ' is-invalid' : ''"
+                           placeholder="Nome dell'associazione" >
+                    <div class="invalid-feedback" th:errors="*{nome}"></div>
+                </div>
+
+                <!-- Indirizzo -->
+                <div class="mb-3">
+                    <label for="indirizzo" class="form-label">Indirizzo</label>
+                    <input type="text" id="indirizzo" th:field="*{indirizzo}" 
+                           class="form-control" 
+                           th:classappend="${#fields.hasErrors('indirizzo')} ? ' is-invalid' : ''"
+                           placeholder="Indirizzo completo" >
+                    <div class="invalid-feedback" th:errors="*{indirizzo}"></div>
+                </div>
+
+                <!-- Città -->
+                <div class="mb-3">
+                    <label for="citta" class="form-label">Città</label>
+                    <select id="citta" th:field="*{citta}" 
+                            class="form-select"
+                            th:classappend="${#fields.hasErrors('citta')} ? ' is-invalid' : ''" >
+                        <option value="" disabled>Scegli una città</option>
+                        <option th:each="c : ${citta}" th:value="${c.id}" th:text="${c.nome}"></option>
+                    </select>
+                    <div class="invalid-feedback" th:errors="*{citta}"></div>
+                </div>
+
+                <!-- Anno di Fondazione -->
+                <div class="mb-3">
+                    <label for="annoFondazione" class="form-label">Anno di Fondazione</label>
+                    <input type="number" id="annoFondazione" th:field="*{annoFondazione}" 
+                           class="form-control" 
+                           th:classappend="${#fields.hasErrors('annoFondazione')} ? ' is-invalid' : ''"
+                           min="1800" max="2100" >
+                    <div class="invalid-feedback" th:errors="*{annoFondazione}"></div>
+                </div>
+
+                <!-- Partita IVA -->
+                <div class="mb-3">
+                    <label for="partitaIVA" class="form-label">Partita IVA</label>
+                    <input type="text" id="partitaIVA" th:field="*{partitaIVA}" 
+                           class="form-control" 
+                           th:classappend="${#fields.hasErrors('partitaIVA')} ? ' is-invalid' : ''"
+                           placeholder="Es: 01234567890" >
+                    <div class="invalid-feedback" th:errors="*{partitaIVA}"></div>
+                </div>
+
+                <!-- Descrizione -->
+                <div class="mb-3">
+                    <label for="descrizione" class="form-label">Descrizione</label>
+                    <textarea id="descrizione" th:field="*{descrizione}" 
+                              class="form-control" 
+                              th:classappend="${#fields.hasErrors('descrizione')} ? ' is-invalid' : ''"
+                              rows="5" maxlength="1000" placeholder="Descrizione dell'associazione" ></textarea>
+                    <div class="invalid-feedback" th:errors="*{descrizione}"></div>
+                </div>
+
+                <!-- Telefono -->
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Telefono</label>
+                    <input type="text" id="telefono" th:field="*{telefono}" 
+                           class="form-control" 
+                           th:classappend="${#fields.hasErrors('telefono')} ? ' is-invalid' : ''"
+                           placeholder="Es: +39 06 1234567" >
+                    <div class="invalid-feedback" th:errors="*{telefono}"></div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" th:field="*{email}" 
+                           class="form-control" 
+                           th:classappend="${#fields.hasErrors('email')} ? ' is-invalid' : ''"
+                           placeholder="esempio@mail.com" >
+                    <div class="invalid-feedback" th:errors="*{email}"></div>
+                </div>
+
+                <!-- Immagine -->
+                <div class="mb-3">
+                    <label for="file" class="form-label">Immagine Associazione</label>
+                    <input type="file" id="file" name="file" accept="image/*" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-custom w-100">Registra Associazione</button>
+            </form>
         </div>
-
-        <!-- Indirizzo -->
-        <div>
-            <label for="indirizzo">Indirizzo:</label>
-            <input type="text" id="indirizzo" th:field="*{indirizzo}"  placeholder="Indirizzo completo">
-            <span th:if="${#fields.hasErrors('indirizzo')}" th:errors="*{indirizzo}"></span>
-        </div>
-		
-		<div>
-		    <label for="citta">Città:</label>
-		    <select id="citta" th:field="*{citta}">
-		        <option value="" disabled selected>Scegli una città</option>
-		        <option th:each="c : ${citta}"
-		                th:value="${c.id}" 
-		                th:text="${c.nome}">Città</option>
-		    </select>
-		    <span th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></span>
-		</div>
-
-        <!-- Anno di Fondazione -->
-        <div>
-            <label for="annoFondazione">Anno di Fondazione:</label>
-            <input type="number" id="annoFondazione" th:field="*{annoFondazione}" min="1800" max="2100">
-        </div>
-
-        <!-- Partita IVA -->
-        <div>
-            <label for="partitaIVA">Partita IVA:</label>
-            <input type="text" id="partitaIVA" th:field="*{partitaIVA}"  placeholder="Es: 01234567890">
-            <span th:if="${#fields.hasErrors('partitaIVA')}" th:errors="*{partitaIVA}"></span>
-        </div>
-
-        <!-- Descrizione -->
-        <div>
-            <label for="descrizione">Descrizione:</label>
-            <textarea id="descrizione" th:field="*{descrizione}" rows="5" maxlength="1000" placeholder="Descrizione dell'associazione"></textarea>
-            <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></span>
-        </div>
-
-        <!-- Telefono -->
-        <div>
-            <label for="telefono">Telefono:</label>
-            <input type="text" id="telefono" th:field="*{telefono}"  placeholder="Es: +39 06 1234567">
-            <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
-        </div>
-
-        <!-- Email -->
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" id="email" th:field="*{email}" placeholder="esempio@mail.com">
-            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        </div>
-
-        <!-- Immagine -->
-        <div>
-            <label for="file">Immagine Associazione:</label>
-            <input type="file" id="file" name="file" accept="image/*">
-        </div>
-
-        <button type="submit">Registra Associazione</button>
-    </form>
+    </div>
 </div>
 
 </body>

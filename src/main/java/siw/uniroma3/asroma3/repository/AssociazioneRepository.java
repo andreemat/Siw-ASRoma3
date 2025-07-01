@@ -1,6 +1,7 @@
 package siw.uniroma3.asroma3.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +19,7 @@ public interface AssociazioneRepository extends CrudRepository<Associazione,Long
 
 	public boolean existsByNomeAndPartitaIVA(String nome, String partitaIVA);
 
-	public List<Associazione> findByCittaId(Long id);
+	public Optional<List<Associazione>> findByCittaId(Long id);
 
 	
 

@@ -60,16 +60,16 @@
 			</span>
 			
 			<div>
-					    <label for="citta">Città:</label>
-					    <select id="citta" th:field="*{citta}">
-					        <option value="" disabled selected>Scegli una città</option>
-					        <option th:each="c : ${citta}"
-					                th:value="${c.id}" 
-					                th:text="${c.nome}">Città</option>
-					    </select>
-					    <span th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></span>
-					</div>
-		</div>
+				<label for="citta-select">Seleziona unoa citta:</label>
+				        <select id="citta-select" th:field="${user.citta}">
+				            <option value="">-- Seleziona una citta --</option>
+				            <option th:each="cit : ${citta}"
+				                    th:value="${cit.id}"
+				                    th:text="${cit.nome}">Citta Nome</option>
+				        </select>
+								    <span th:if="${#fields.hasErrors('user.citta')}" th:errors="${user.citta}"></span> <!-- MODIFICATO QUI -->
+								</div>
+			</div>
 		<div>
 			<button type="submit">Registra</button>
 		</div>

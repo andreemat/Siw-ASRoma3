@@ -60,6 +60,7 @@ public class AssociazioneController {
 		model.addAttribute("citta",this.cittaService.findAll());
 		return "admin/formAssociazione.html";
 	}
+	
 
 	@PostMapping("/admin/registra-associazione")
 	public String registraAssociazione(
