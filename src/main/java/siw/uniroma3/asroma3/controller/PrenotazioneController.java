@@ -4,11 +4,13 @@ package siw.uniroma3.asroma3.controller;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import java.security.Principal;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +29,7 @@ import jakarta.validation.Valid;
 import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Prenotazione;
+import siw.uniroma3.asroma3.model.Sport;
 import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CampoService;
@@ -145,37 +148,78 @@ public class PrenotazioneController {
 	public String getPrenotazioniUtente(
 	    @ModelAttribute("userDetails") UserDetails userDetails,
 	    @RequestParam(required = false) Long associazioneId,
-	    @RequestParam(required = false) Long campoId,
+	    @RequestParam(required = false) Long sportId,
 	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
 	    Model model
 	) {
 	    User utente = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+	    List<Prenotazione> prenotazioniFiltrate = prenotazioneService.getPrenotazioniFiltratePerUtente(
+	        utente, associazioneId, dataFiltro, sportId);
 
-	    List<Prenotazione> tutte = prenotazioneService.getPrenotazioniFiltratePerUtente(
-	        utente,associazioneId , dataFiltro, campoId);
-
-	    List<Prenotazione> future = tutte.stream()
+	    // Dividi in future e passate per la visualizzazione
+	    List<Prenotazione> future = prenotazioniFiltrate.stream()
 	        .filter(p -> !p.getData().isBefore(LocalDate.now()))
 	        .toList();
-	    List<Prenotazione> passate = tutte.stream()
+	    List<Prenotazione> passate = prenotazioniFiltrate.stream()
 	        .filter(p -> p.getData().isBefore(LocalDate.now()))
 	        .toList();
 
-	    model.addAttribute("prenotazioniFuture", future);
-	    model.addAttribute("prenotazioniPassate", passate);
-	    model.addAttribute("campi", campoService.getAllCampi());
-	    model.addAttribute("associazioni", associazioneService.getAllAssociazioni());
+	    
+	    
+	  
+	    List<Prenotazione> tutteLePrenotazioniDellUtente = prenotazioneService.getPrenotazioneByCliente(utente); 
+
+	    
+	    List<Long> idAssociazioniCoinvolte = tutteLePrenotazioniDellUtente.stream()
+	        .map(p -> p.getCampo().getAssociazione().getId())
+	        .distinct()
+	        .collect(Collectors.toList());
+	    
+	    List<Associazione> associazioniPerFiltro = idAssociazioniCoinvolte.isEmpty() ? 
+	        new ArrayList<>() : associazioneService.findByIdIn(idAssociazioniCoinvolte);
+
+	    
+	    List<Prenotazione> prenotazioniDaConsiderarePerSport;
+
+	    if (associazioneId != null) {
+	        
+	        prenotazioniDaConsiderarePerSport = tutteLePrenotazioniDellUtente.stream()
+	            .filter(p -> p.getCampo().getAssociazione().getId().equals(associazioneId))
+	            .toList();
+	    } else {
+	        
+	        prenotazioniDaConsiderarePerSport = tutteLePrenotazioniDellUtente;
+	    }
 
 	   
+	    List<Long> idCampiCoinvoltiPerSport = prenotazioniDaConsiderarePerSport.stream()
+	        .map(p -> p.getCampo().getId())
+	        .distinct()
+	        .collect(Collectors.toList());
+
+	    List<Sport> sportPerFiltro = new ArrayList<>();
+	    if (!idCampiCoinvoltiPerSport.isEmpty()) {
+	        
+	        sportPerFiltro = sportService.findDistinctSportsByCampoIds(idCampiCoinvoltiPerSport);
+	    }
+	    
+	  
+	    model.addAttribute("prenotazioniFuture", future);
+	    model.addAttribute("prenotazioniPassate", passate);
+	    
+	   
+	    model.addAttribute("associazioni", associazioniPerFiltro);
+	    model.addAttribute("sports", sportPerFiltro);
+
+
 	    model.addAttribute("associazioneIdFiltro", associazioneId);
-	    model.addAttribute("campoIdFiltro", campoId);
+	    model.addAttribute("sportIdFiltro", sportId);
 	    model.addAttribute("dataFiltro", dataFiltro);
 
 	    return "prenotazioniUtente"; 
+
+
 	}
-
-
-
 
 
 

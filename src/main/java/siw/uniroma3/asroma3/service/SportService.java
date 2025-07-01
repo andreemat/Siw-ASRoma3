@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.model.Sport;
 import siw.uniroma3.asroma3.repository.SportRepository;
@@ -27,6 +28,15 @@ public class SportService {
 	public void saveSport(Sport sport) {
 		this.sportRepository.save(sport);
 	}
+	public List<Sport> findByAssociazioneIdAndIdIn(Long associazioneId, List<Long> idSport) {
+		
+		return this.sportRepository.findByAssociazioneIdAndSportIds(associazioneId, idSport);
+	}
+	public List<Sport> findDistinctSportsByCampoIds(List<Long> idCampiCoinvoltiPerSport) {
 	
+		return  this.sportRepository.findDistinctSportsByCampoIds(idCampiCoinvoltiPerSport);
+	}
+	
+
 	
 }

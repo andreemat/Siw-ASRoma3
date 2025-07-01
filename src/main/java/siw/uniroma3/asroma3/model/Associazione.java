@@ -16,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -29,6 +30,22 @@ public class Associazione {
 	@NotBlank
 	private String indirizzo;
 	
+	@NotNull
+	@ManyToOne
+	private Citta citta;
+	
+	/**
+	 * @return the citta
+	 */
+	public Citta getCitta() {
+		return citta;
+	}
+	/**
+	 * @param citta the citta to set
+	 */
+	public void setCitta(Citta citta) {
+		this.citta = citta;
+	}
 	private Integer annoFondazione;
 	@NotBlank
 	private String partitaIVA; 
