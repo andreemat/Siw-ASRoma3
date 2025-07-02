@@ -17,6 +17,7 @@
 <p><strong>Durata Slot:</strong> <span th:text="${campo.durataSlot}">0</span> minuti</p>
 <p><strong>Orario di apertura:</strong> <span th:text="${campo.oraApertura}">--:--</span></p>
 <p><strong>Orario di chiusura:</strong> <span th:text="${campo.oraChiusura}">--:--</span></p>
+<p><strong>Costo orario:</strong> <span th:text="${campo.costoOrario}">--:--</span></p>
 
 <p><strong>Giorni disponibili:</strong>
 <span th:each="giorno : ${campo.giorniDisponibili}" th:text="${giorno} + ' '">Giorno</span>

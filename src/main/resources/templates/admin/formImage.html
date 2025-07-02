@@ -10,6 +10,7 @@
 		<title>ASRoma3 - formImage</title>
 	</head>
 	<body>
+		
 		<form th:action="@{/admin/upload/{type}/{id}(type=${type},id=${id})}" method="post" enctype="multipart/form-data">
 		    <div>
 		        <label for="file">Seleziona immagine da caricare per [[${type}]]:</label>
