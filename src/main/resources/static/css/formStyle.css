@@ -1,4 +1,46 @@
+/* Contenitore del form */
+.form-wrapper {
+  background-color: #f8f9fa;       /* sfondo chiaro */
+  border-radius: 1rem;             /* angoli stondati */
+  padding: 2rem;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+  border: 1px solid #d1e7dd;       /* bordo verde chiaro */
+}
 
+<<<<<<< HEAD
+/* Titolo */
+.form-wrapper h2 {
+  color: #198754;                  /* verde principale */
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* Campi input */
+.form-wrapper .form-control,
+.form-wrapper .form-select {
+  border-radius: 0.5rem;
+  border-color: #ced4da;
+}
+
+/* Bottone */
+.btn-form {
+  background-color: #198754;
+  color: white;
+  border-radius: 0.5rem;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.btn-form:hover {
+  background-color: #146c43;
+}
+
+/* Messaggi di errore */
+.invalid-feedback {
+  font-size: 0.875em;
+}
+	
+=======
        body {
            background-color: #f8f9fa;
            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -34,3 +76,4 @@
 		margin-top: 10px;
 	  }
 	 
+>>>>>>> 2f1d04f4f7e5c307d4f687a3e464c5ab22b2db6a
