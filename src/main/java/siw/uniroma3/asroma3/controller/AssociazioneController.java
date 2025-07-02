@@ -97,6 +97,14 @@ public class AssociazioneController {
 		model.addAttribute("associazione", associazione);
 		return "admin/associazioneAdmin";
 	}
+	
+	@GetMapping("admin/modifica/associazione/{idA}")
+	public String modificaAssociazione(@PathVariable("idA") Long idA, Model model) {
+	    Associazione associazione = this.associazioneService.getAssociazione(idA);
+	    model.addAttribute("associazione", associazione);
+	    model.addAttribute("citta", this.cittaService.findAll());
+	    return "admin/formAssociazione.html";
+	}
 
 
 
