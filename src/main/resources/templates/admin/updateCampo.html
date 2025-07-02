@@ -5,10 +5,12 @@
 	<title>
 		SiwMovie - Registrazione
 	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
 </head>
 
 <body>
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
 	<header>
 		<div th:if="${userDetails}">
 			<span th:text="${userDetails.username}"></span>

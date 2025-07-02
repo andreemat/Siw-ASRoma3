@@ -75,16 +75,11 @@ body {
 }
 
 .card-image img {
-<<<<<<< HEAD
-	width: 100%;
-	    height: 100%;
-	    object-fit: contain; /* CAMBIAMENTO CHIAVE QUI */
-	    object-position: center;
-=======
+
     width: 50%;
     height: 100%;
     object-fit: cover;
->>>>>>> b82610f2ebfd70af52aca0842eb02b91d1953b6c
+
 }
 
 .card-content {
