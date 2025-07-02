@@ -12,8 +12,8 @@
           th:object="${prenotazione}" method="post">
         <label>
             Data:
-            <input type="date" th:field="*{data}" required />
-			<span th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></span>
+            <input type="date" th:field="*{data}" required	th:classappend="${#fields.hasErrors('data')} ? ' is-invalid' : ''" placeholder=" Data" >
+			<div class="invalid-feedback" th:errors="*{data}"></div>
         </label>
         <button type="submit">Conferma giorno</button>
 	
