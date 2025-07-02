@@ -4,78 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crea il Tuo Campo con Sport</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}" />
 </head>
 <body>
 
-    <h1>Crea il Tuo Campo</h1>
+    <div class="form-container mt-5"> 
+        <h1 class="form-header">Crea il Tuo Campo</h1>
 
-    <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}"
-		 th:method="post">
-		  <div th:if="${#fields.hasGlobalErrors()}">
-		   <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-		  </div>
+        <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}"
+              th:method="post" class="form-wrapper">
+              
+            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mb-3" role="alert">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
 
-        <label for="nome">Nome del Campo:</label>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome del Campo:</label>
+                <input type="text" id="nome" th:field="*{nome}" 
+                       class="form-control" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+            </div>
 
-        <input type="text" id="nome" th:field="*{nome}" >
+            <div class="mb-3">
+                <label for="durataSlot" class="form-label">Durata Slot (minuti):</label>
+                <input type="number" id="durataSlot" th:field="*{durataSlot}" 
+                       class="form-control" th:classappend="${#fields.hasErrors('durataSlot')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('durataSlot')}" th:errors="*{durataSlot}"></div>
+            </div>
 
-		<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+            <div class="mb-3">
+                <label for="capienza" class="form-label">Capienza:</label>
+                <input type="number" id="capienza" th:field="*{capienza}" 
+                       class="form-control" th:classappend="${#fields.hasErrors('capienza')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('capienza')}" th:errors="*{capienza}"></div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="costoOrario" class="form-label">Costo orario:</label>
+                <input type="number" step="0.01" id="costoOrario" th:field="*{costoOrario}" 
+                       class="form-control" th:classappend="${#fields.hasErrors('costoOrario')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('costoOrario')}" th:errors="*{costoOrario}"></div>
+            </div>
 
-        <br><br>
+            <div class="mb-3">
+                <label for="oraApertura" class="form-label">Ora di Apertura:</label>
+                <input type="time" id="oraApertura" th:field="*{oraApertura}" 
+                       class="form-control" th:classappend="${#fields.hasErrors('oraApertura')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('oraApertura')}" th:errors="*{oraApertura}"></div>
+            </div>
 
-        <label for="durataSlot">Durata Slot (minuti):</label>
-        <input type="number" id="durataSlot" th:field="*{durataSlot}">
-		<span th:if="${#fields.hasErrors('durataSlot')}" th:errors="*{durataSlot}"></span>
+            <div class="mb-3">
+                <label for="oraChiusura" class="form-label">Ora di Chiusura:</label>
+                <input type="time" id="oraChiusura" th:field="*{oraChiusura}" 
+                       class="form-control" th:classappend="${#fields.hasErrors('oraChiusura')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('oraChiusura')}" th:errors="*{oraChiusura}"></div>
+            </div>
 
-        <br><br>
+            <div class="mb-3">
+                <label class="form-label d-block mb-2">Giorni Disponibili:</label>
+                <div class="btn-group d-flex flex-wrap" role="group" aria-label="Giorni Disponibili">
+                    <th:block th:each="day : ${T(java.time.DayOfWeek).values()}">
+                        <input type="checkbox" class="btn-check" th:id="${'daycheck-' + day.name()}" 
+                               name="giorniDisponibili" th:value="${day.name()}" autocomplete="off"
+                               th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(day)}">
+                        <label class="btn btn-outline-primary flex-fill" th:for="${'daycheck-' + day.name()}" th:text="${#strings.capitalize(#strings.toLowerCase(day.name()))}">Day</label>
+                    </th:block>
+                </div>
+            </div>
+            
+            <input type="hidden" th:field="*{id}" />
+            
+            <div class="mb-3">
+                <label for="sport-select" class="form-label">Seleziona uno sport:</label>
+                <select id="sport-select" th:field="*{sport}" 
+                        class="form-select" th:classappend="${#fields.hasErrors('sport')} ? 'is-invalid' : ''">
+                    <option value="">-- Seleziona uno sport --</option>
+                    <option th:each="sportIter : ${sports}"
+                            th:value="${sportIter.id}"
+                            th:text="${sportIter.nome}">Sport Nome</option>
+                </select>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('sport')}" th:errors="*{sport}"></div>
+            </div>
 
-        <label for="capienza">Capienza:</label>
-        <input type="number" id="capienza" th:field="*{capienza}">
-		<span th:if="${#fields.hasErrors('capienza')}" th:errors="*{capienza}"></span>
-
-        <br><br>
-		<label for="costo orario">Costo orario:</label>
-			       <input type="number" step="0.01" id="costoOrario" th:field="*{costoOrario}">
-				<span th:if="${#fields.hasErrors('capienza')}" th:errors="*{costoOrario}"></span>
-
-
-        <label for="oraApertura">Ora di Apertura:</label>
-        <input type="time" id="oraApertura" th:field="*{oraApertura}">
-		<span th:if="${#fields.hasErrors('oraApertura')}" th:errors="*{oraApertura}"></span>
-        <br><br>
-
-        <label for="oraChiusura">Ora di Chiusura:</label>
-        <input type="time" id="oraChiusura" th:field="*{oraChiusura}">
-		<span th:if="${#fields.hasErrors('oraChiusura')}" th:errors="*{oraChiusura}"></span>
-        <br><br>
-
-        <label>Giorni Disponibili:</label><br>
-        <input type="checkbox" id="lunedi" name="giorniDisponibili" value="MONDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).MONDAY)}"> Lunedì<br>
-        <input type="checkbox" id="martedi" name="giorniDisponibili" value="TUESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).TUESDAY)}"> Martedì<br>
-        <input type="checkbox" id="mercoledi" name="giorniDisponibili" value="WEDNESDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).WEDNESDAY)}"> Mercoledì<br>
-        <input type="checkbox" id="giovedi" name="giorniDisponibili" value="THURSDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).THURSDAY)}"> Giovedì<br>
-        <input type="checkbox" id="venerdi" name="giorniDisponibili" value="FRIDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).FRIDAY)}"> Venerdì<br>
-        <input type="checkbox" id="sabato" name="giorniDisponibili" value="SATURDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SATURDAY)}"> Sabato<br>
-        <input type="checkbox" id="domenica" name="giorniDisponibili" value="SUNDAY" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(T(java.time.DayOfWeek).SUNDAY)}"> Domenica<br>
-        <br>
-		
-
-
-
-        <label for="sport-select">Seleziona uno sport:</label>
-        <select id="sport-select" th:field="*{sport}">
-            <option value="">-- Seleziona uno sport --</option>
-            <option th:each="sportIter : ${sports}"
-                    th:value="${sportIter.id}"
-                    th:text="${sportIter.nome}">Sport Nome</option>
-        </select>
-		
-		<input type="hidden" th:field="*{id}" />
-		<span th:if="${#fields.hasErrors('sport')}" th:errors="*{sport}"></span>
-        <br><br>
-
-        <button type="submit">Crea Campo</button>
-    </form>
+            <button type="submit" class="btn btn-custom w-100">Crea Campo</button>
+        </form>
+    </div>
 
 </body>
 </html>

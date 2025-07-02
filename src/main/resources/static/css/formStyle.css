@@ -7,7 +7,7 @@
   border: 1px solid #d1e7dd;       /* bordo verde chiaro */
 }
 
-<<<<<<< HEAD
+
 /* Titolo */
 .form-wrapper h2 {
   color: #198754;                  /* verde principale */
@@ -40,7 +40,7 @@
   font-size: 0.875em;
 }
 	
-=======
+
        body {
            background-color: #f8f9fa;
            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -75,5 +75,22 @@
 	   .mb-3 .custom-label{
 		margin-top: 10px;
 	  }
+	  
+	  .btn-outline-success-custom { /* A new, descriptive class name */
+	      --bs-btn-color: #2f7032; /* Text color (dark green) */
+	      --bs-btn-border-color: #2f7032; /* Border color (dark green) */
+	      --bs-btn-hover-color: #fff; /* Text color on hover (white) */
+	      --bs-btn-hover-bg: #2f7032; /* Background color on hover (dark green) */
+	      --bs-btn-hover-border-color: #2f7032; /* Border color on hover (dark green) */
+	      --bs-btn-focus-shadow-rgb: 47,112,50; /* Focus shadow color (RGB of dark green) */
+	      --bs-btn-active-color: #fff; /* Text color when active/selected (white) */
+	      --bs-btn-active-bg: #2f7032; /* Background color when active/selected (dark green) */
+	      --bs-btn-active-border-color: #2f7032; /* Border color when active/selected (dark green) */
+	      --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	      --bs-btn-disabled-color: #2f7032; /* Text color when disabled (dark green) */
+	      --bs-btn-disabled-bg: transparent;
+	      --bs-btn-disabled-border-color: #2f7032;
+	      --bs-gradient: none; /* Ensure no unwanted gradient */
+	  }
 	 
->>>>>>> 2f1d04f4f7e5c307d4f687a3e464c5ab22b2db6a
+
