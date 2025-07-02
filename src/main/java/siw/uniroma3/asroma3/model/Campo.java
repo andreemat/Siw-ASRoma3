@@ -1,5 +1,6 @@
 package siw.uniroma3.asroma3.model;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.EnumSet;
@@ -34,6 +35,9 @@ public class Campo {
 	@Positive
 	@NotNull
 	private Integer capienza;
+	
+	@NotNull
+	private BigDecimal costoOrario;
 	
 
 	@NotNull
@@ -118,6 +122,14 @@ public class Campo {
 	
 	public Set<DayOfWeek> getGiorniDisponibili() {
 		return giorniDisponibili;
+	}
+
+	public BigDecimal getCostoOrario() {
+		return costoOrario;
+	}
+
+	public void setCostoOrario(BigDecimal costoOrario) {
+		this.costoOrario = costoOrario;
 	}
 	public void setGiorniDisponibili(Set<DayOfWeek> giorniDisponibili) {
 		this.giorniDisponibili = giorniDisponibili;
