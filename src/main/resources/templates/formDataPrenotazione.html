@@ -7,9 +7,15 @@
 </head>
 <body>
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
     <h3>Seleziona il giorno</h3>
     <form th:action="@{/prenota/campo/{idC}/giorno(idC=${campo.id})}" 
           th:object="${prenotazione}" method="post">
+		  <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+		  		                    <ul class="mb-0" th:each="err : ${#fields.globalErrors()}">
+		  		                        <li th:text="${err}">Errore</li>
+		  		                    </ul>
+		 </div>
         <label>
             Data:
             <input type="date" th:field="*{data}" required	th:classappend="${#fields.hasErrors('data')} ? ' is-invalid' : ''" placeholder=" Data" >

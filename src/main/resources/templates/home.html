@@ -20,8 +20,8 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container">
-        <h2 class="section-title">Associazioni Disponibili</h2>
+    <div  th:if="${userDetails != null}" class="container">
+        <h2 class="section-title">Associazioni vicine a te</h2>
         
         <div class="associations-container">
             <div class="associations-scroll">
@@ -41,9 +41,6 @@
 						<p class="card-description" th:utext="'telefono: ' + ${associazione.telefono} + '<br>' + 'email : ' + ${associazione.email}">
 						    Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
 						</p>
-               <p class="card-description" th:text="${associazione.email + ', ' + associazione.telefono}">
-                            email,telefono
-                        </p>
 
                         <div class="card-footer">
                             <span class="founded-year" th:if="${associazione.annoFondazione}">
@@ -68,6 +65,49 @@
             ← Scorri orizzontalmente per vedere tutte le associazioni →
         </div>
     </div>
+	
+	
+	
+	<!-- Main Content -->
+	    <div class="container">
+	        <h2 class="section-title">Associazioni</h2>
+	        
+	        <div class="associations-container">
+	            <div class="associations-scroll">
+	                <!-- Sample cards - replace with Thymeleaf iteration -->
+	                <a href="#" class="association-card" th:each="associazione : ${allAssociazioni}" th:href="@{'/associazione/' + ${associazione.id}}">
+	                    <div class="card-image">
+	                        <img th:if="${associazione.immagine}" th:src="@{'/image/associazione/' + ${associazione.id}}" th:alt="${associazione.nome}" />
+	                        <div th:unless="${associazione.immagine}">🏢</div>
+	                    </div>
+	                    <div class="card-content">
+	                        <h3 class="card-title" th:text="${associazione.nome}">Nome Associazione</h3>
+	                        <div class="card-location">
+	                            <span>📍</span>
+	                            <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
+	                        </div>
+	                        <p class="card-description" th:text="${associazione.descrizione}">
+	                            Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
+	                        </p>
+	                        <div class="card-footer">
+	                            <span class="founded-year" th:if="${associazione.annoFondazione}">
+	                                Fondata nel <span th:text="${associazione.annoFondazione}">2020</span>
+	                            </span>
+	                            <button class="btn-view">Scopri di più</button>
+	                        </div>
+	                    </div>
+	                </a>	              
+	            </div>
+	        </div>
+	        
+	        <div class="scroll-hint" th:if="${not #lists.isEmpty(associazioni)}">
+	            ← Scorri orizzontalmente per vedere tutte le associazioni →
+	        </div>
+	    </div>
+	
+	
+	
+	
 
    
                     
