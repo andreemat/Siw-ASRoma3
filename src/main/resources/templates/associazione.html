@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+
+  <title th:text="'Dettagli - ' + ${associazione.nome}">Dettagli Associazione</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
+	  <link rel="stylesheet" th:href="@{/css/associazioneStyle.css}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="'Dettagli - ' + ${associazione.nome}">Dettagli Associazione</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" th:href="@{/css/tema.css}" />
-    <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
-    <link rel="stylesheet" th:href="@{/css/associazioneStyle.css}" />
 </head>
 <body>
 
