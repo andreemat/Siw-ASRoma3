@@ -4,36 +4,42 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" 
+	         rel="stylesheet" 
+	         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" 
+	         crossorigin="anonymous" />
+			 <link rel="stylesheet" th:href="@{/css/formStyle.css}"/>
+			 <link rel="stylesheet" th:href="@{/css/navbarStyle.css}"/>
 </head>
-<body>
-
-    <h1>Accedi</h1>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+	<div class=" container my-5 container-custom-login">
+	<div class="card-body p-4">
+    <h1 class="mb-4">Accedi</h1>
 
     <form th:action="@{/login}" method="post">
+        <div class="row mb-3">
+            <label  class="col-sm-2 col-form label"for="username">Username:</label>
+			<div class="col-sm-10">
+			 <input  class="form-control form-control-custom" type="text" id="username" name="username" required />
+			 </div>
+		   </div>
 
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form label" for="password">Password:</label>
+			<div class="col-sm-10">
+            <input  class="form-control form-control-custom" type="password" id="password" name="password" required />
+       		</div>
+		</div>
 
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-        </div>
-
-        <div>
-            <button type="submit">Login</button>
+        <div class="row mb-3">
+            <button class="btn btn-form w-100" type="submit">Login</button>
         </div>
 
         <div th:if="${param.error}">
-            <p style="color:red;">Username o password errati.</p>
+            <p class="mb-0">Username o password errati.</p>
         </div>
-
-        <div th:if="${param.logout}">
-            <p style="color:green;">Logout effettuato con successo.</p>
-        </div>
-
     </form>
-
+	</div>
+	</div>
 </body>
 </html>

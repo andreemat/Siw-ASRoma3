@@ -36,6 +36,7 @@ public class Campo {
 	@NotNull
 	private Integer capienza;
 	
+	@Positive
 	@NotNull
 	private BigDecimal costoOrario;
 	
