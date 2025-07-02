@@ -2,10 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Seleziona giorno</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+			  <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
 </head>
 <body>
-	
-	
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
     <h3>Seleziona il giorno</h3>
     <form th:action="@{/prenota/campo/{idC}/giorno(idC=${campo.id})}" 
           th:object="${prenotazione}" method="post">
@@ -16,8 +18,8 @@
 		 </div>
         <label>
             Data:
-            <input type="date" th:field="*{data}" required />
-			<span th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></span>
+            <input type="date" th:field="*{data}" required	th:classappend="${#fields.hasErrors('data')} ? ' is-invalid' : ''" placeholder=" Data" >
+			<div class="invalid-feedback" th:errors="*{data}"></div>
         </label>
         <button type="submit">Conferma giorno</button>
 	

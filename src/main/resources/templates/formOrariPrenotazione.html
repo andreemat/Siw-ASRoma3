@@ -14,19 +14,15 @@
 	
         <input type="hidden" th:field="*{data}" />
 		
-
-        <!-- Correct: li elements should always be inside a ul or ol -->
         <ul>
             <li th:each="slot : ${slots}">
                 <label>
-                    <!-- Correct: Use ${} for expressions and ensure 'disponibile' is consistent -->
                     <span th:if="${slot.disponibile}">
                         <input type="checkbox" name="orariSelezionati"
                                th:value="${slot.oraInizio} + '-' + ${slot.oraFine}"
-                               class="orario-checkbox">
-                        <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span>
+                               class="orario-checkbox"
+                               th:attr="data-ora-inizio=${slot.oraInizio}, data-ora-fine=${slot.oraFine}"> <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span>
                     </span>
-                    <!-- Correct: Use ${} for expressions -->
                     <span th:unless="${slot.disponibile}" style="color: grey;">
                         <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span> (Non disponibile)
                     </span>
@@ -36,5 +32,36 @@
 
         <button type="submit">Prenota</button>
     </form>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const checkboxes = document.querySelectorAll('.orario-checkbox');
+        let lastChecked = null; // Per tenere traccia dell'ultimo checkbox selezionato
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', (e) => {
+                const currentChecked = e.target;
+
+                if (currentChecked.checked && lastChecked) {
+                    const currentId = Array.from(checkboxes).indexOf(currentChecked);
+                    const lastId = Array.from(checkboxes).indexOf(lastChecked);
+
+                    const start = Math.min(currentId, lastId);
+                    const end = Math.max(currentId, lastId);
+
+                    for (let i = start + 1; i < end; i++) {
+                        const intermediateCheckbox = checkboxes[i];
+                        // Se l'intermedio è disponibile (non disabilitato, non ha stile 'grey')
+                        // E non è già selezionato, lo selezioniamo
+                        if (!intermediateCheckbox.disabled && !intermediateCheckbox.parentElement.style.color) {
+                            intermediateCheckbox.checked = true;
+                        }
+                    }
+                }
+                lastChecked = currentChecked;
+            });
+        });
+        /*]]>*/
+    </script>
 </body>
 </html>

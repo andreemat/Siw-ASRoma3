@@ -15,7 +15,6 @@
 	<link rel="stylesheet" th:href="@{/css/navbarStyle.css}"/>
 </head>
 <body>
-
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="container my-5" style="max-width: 600px;">
@@ -27,7 +26,7 @@
                   th:object="${associazione}" 
                   method="post" 
                   enctype="multipart/form-data">
-
+				  <input type="hidden" th:field="*{id}" />
                 <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
                     <ul class="mb-0" th:each="err : ${#fields.globalErrors()}">
                         <li th:text="${err}">Errore</li>

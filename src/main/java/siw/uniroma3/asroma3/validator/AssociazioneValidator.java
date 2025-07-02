@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import siw.uniroma3.asroma3.model.Associazione;
+import siw.uniroma3.asroma3.model.Campo;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 
 
@@ -18,10 +19,19 @@ public class AssociazioneValidator implements Validator{
 	@Override
 	public void validate(Object o, Errors error) {
 		Associazione associazione = (Associazione) o;
+		 if(associazione.getId()!=null) {
+			 Associazione associazioneDatabase = this.associazioneService.getAssociazione(associazione.getId());
+		 if(!(associazione.getNome().equals(associazioneDatabase.getNome()))
+				 &&!(associazione.getPartitaIVA().equals(associazioneDatabase.getPartitaIVA()))
+				 &&this.associazioneService.existsByNomeAndPartitaIVA(associazione.getNome(), associazione.getPartitaIVA())) {
+			 error.rejectValue("nome", "associazione.duplicate", "Questa associazione esiste già!1");
+			 }
+		 }else
 		if(associazione.getNome()!=null &&associazione.getPartitaIVA()!=null
 			&&this.associazioneService.existsByNomeAndPartitaIVA(associazione.getNome(),associazione.getPartitaIVA())	
 				)
 			 error.rejectValue("nome", "associazione.duplicate", "Questa associazione esiste già!");
+		 
 	}
 
 	@Override
