@@ -37,6 +37,7 @@ import siw.uniroma3.asroma3.service.CredentialsService;
 import siw.uniroma3.asroma3.service.PrenotazioneService;
 import siw.uniroma3.asroma3.service.SportService;
 import siw.uniroma3.asroma3.service.UserService;
+import siw.uniroma3.asroma3.validator.DataPrenotazionevalidator;
 
 @Controller
 public class PrenotazioneController {
@@ -49,6 +50,7 @@ public class PrenotazioneController {
 	@Autowired private SportService sportService;
 	@Autowired private UserService userService;
 	private Campo campo;
+	@Autowired private DataPrenotazionevalidator dataPrenotazioneValidator;
 
 
 	@GetMapping("/prenota/campo/{idC}")
@@ -66,6 +68,8 @@ public class PrenotazioneController {
 			@PathVariable("idC") Long idC,
 			Model model) {
 		Campo campo = campoService.getCampo(idC);
+		prenotazione.setCampo(campo);
+		this.dataPrenotazioneValidator.validate(prenotazione, bindingResult);
 
 			// VALIDAZIONE 1: Non puoi prenotare giorni passati
 			if (bindingResult.hasErrors()) {
@@ -110,7 +114,7 @@ public class PrenotazioneController {
 			@RequestParam("orariSelezionati") List<String> orariSelezionati,Model model) {
 
 		Campo campo = campoService.getCampo(idC);
-
+		
 		if (!prenotazioneService.sonoSlotConsecutivi(orariSelezionati, campo.getDurataSlot())) {
 			model.addAttribute("erroreSlot", "Gli slot devono essere continui");
 			model.addAttribute("campo", campo);

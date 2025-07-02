@@ -88,6 +88,7 @@ public class AuthController {
 				User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 				
 				model.addAttribute("associazioni", this.associazioneService.findAssociazioneByCitta(user.getCitta()));
+				model.addAttribute("allAssociazioni", this.associazioneService.getAllAssociazioni());
 				return "home.html";}
 		}
 			
