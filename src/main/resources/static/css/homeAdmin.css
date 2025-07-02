@@ -1,11 +1,10 @@
-/* Home Page Styles */
 body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .hero-section {
-    background: linear-gradient(45deg, rgb(0, 0, 0) 0%, #2f7032 100%);
+    background: linear-gradient(135deg, #3a913f 0%, #2f7032 100%);
     color: white;
     padding: 4rem 0;
     text-align: center;
@@ -30,6 +29,35 @@ body {
     text-align: center;
 }
 
+.admin-actions {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+
+.btn-primary-custom {
+    background-color: #3a913f;
+    border: none;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary-custom:hover {
+    background-color: #2f7032;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 145, 63, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
 .associations-container {
     overflow-x: auto;
     padding: 1rem 0;
@@ -46,13 +74,14 @@ body {
 .association-card {
     min-width: 320px;
     max-width: 320px;
-    background: rgb(255, 255, 255);
+    background: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
+    position: relative;
 }
 
 .association-card:hover {
@@ -62,10 +91,23 @@ body {
     color: inherit;
 }
 
+.admin-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 500;
+    z-index: 2;
+}
+
 .card-image {
     width: 100%;
     height: 200px;
-    background: linear-gradient(75deg, rgb(255, 255, 255), rgb(0, 128, 0));
+    background: linear-gradient(45deg, #e9ecef, #dee2e6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,16 +117,10 @@ body {
 }
 
 .card-image img {
-<<<<<<< HEAD
-	width: 100%;
-	    height: 100%;
-	    object-fit: contain; /* CAMBIAMENTO CHIAVE QUI */
-	    object-position: center;
-=======
-    width: 50%;
+    width: 100%;
     height: 100%;
-    object-fit: cover;
->>>>>>> b82610f2ebfd70af52aca0842eb02b91d1953b6c
+    object-fit: contain;
+    object-position: center;
 }
 
 .card-content {
@@ -113,7 +149,7 @@ body {
     line-height: 1.5;
     margin-bottom: 1rem;
     display: -webkit-box;
-    line-clamp: 3;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -150,6 +186,30 @@ body {
     color: white;
 }
 
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.empty-state h4 {
+    color: #2f7032;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
 /* Scrollbar personalizzata */
 .associations-container::-webkit-scrollbar {
     height: 8px;
@@ -181,6 +241,7 @@ body {
     padding: 3rem 0;
     margin-top: 3rem;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
 }
 
 .stat-card {
@@ -205,9 +266,13 @@ body {
     .hero-section h1 {
         font-size: 2rem;
     }
-    
+
     .association-card {
         min-width: 280px;
         max-width: 280px;
+    }
+
+    .admin-actions {
+        padding: 1.5rem;
     }
 }

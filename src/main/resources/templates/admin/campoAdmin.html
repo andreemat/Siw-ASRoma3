@@ -6,7 +6,7 @@
 <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
 <h1 th:text="${campo.nome}">Nome Campo</h1>
 
 <div>

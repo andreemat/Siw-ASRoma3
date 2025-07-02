@@ -37,9 +37,14 @@
                             <span>📍</span>
                             <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
                         </div>
-                        <p class="card-description" th:text="${associazione.email + ', ' + associazione.telefono}">
+
+						<p class="card-description" th:utext="'telefono: ' + ${associazione.telefono} + '<br>' + 'email : ' + ${associazione.email}">
+						    Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
+						</p>
+               <p class="card-description" th:text="${associazione.email + ', ' + associazione.telefono}">
                             email,telefono
                         </p>
+
                         <div class="card-footer">
                             <span class="founded-year" th:if="${associazione.annoFondazione}">
                                 Fondata nel <span th:text="${associazione.annoFondazione}">2020</span>
