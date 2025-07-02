@@ -5,6 +5,7 @@
     <title>ASRoma3 - Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/tema.css}" />
+	<link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
     <link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
 </head>
 <body>
@@ -36,8 +37,8 @@
                             <span>📍</span>
                             <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
                         </div>
-                        <p class="card-description" th:text="${associazione.descrizione}">
-                            Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
+                        <p class="card-description" th:text="${associazione.email + ', ' + associazione.telefono}">
+                            email,telefono
                         </p>
                         <div class="card-footer">
                             <span class="founded-year" th:if="${associazione.annoFondazione}">
@@ -64,11 +65,7 @@
     </div>
 
    
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    
 
 
 </body>
