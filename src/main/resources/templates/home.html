@@ -1,26 +1,75 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6"> <!-- Controlla se usi springsecurity5 o springsecurity6 -->
-
-
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
 <head>
-		<meta charset="UTF-8">
-		<title>ASRoma3 - Home</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-		<link rel="stylesheet" th:href="@{/css/tema.css}" />
+    <meta charset="UTF-8">
+    <title>ASRoma3 - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/tema.css}" />
+    <link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
 </head>
-	<body>
-		<div th:replace="~{fragments/navbar :: navbar}"></div>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-		<h1>Benvenuto nel portale dell' ASRoma3</h1>
-		<h2>Associazioni disponibili</h2>
-		<ul>
-		    <li th:each="associazione : ${associazioni}">
-		        <a th:href="@{'/associazione/' + ${associazione.id}}"
-		           th:text="${associazione.nome}"></a>
-		    </li>
-		</ul>
-	</body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1>Benvenuto nel portale dell'ASRoma3</h1>
+            <p>Scopri tutte le associazioni del nostro territorio</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2 class="section-title">Associazioni Disponibili</h2>
+        
+        <div class="associations-container">
+            <div class="associations-scroll">
+                <!-- Sample cards - replace with Thymeleaf iteration -->
+                <a href="#" class="association-card" th:each="associazione : ${associazioni}" th:href="@{'/associazione/' + ${associazione.id}}">
+                    <div class="card-image">
+                        <img th:if="${associazione.immagine}" th:src="@{'/image/associazione/' + ${associazione.id}}" th:alt="${associazione.nome}" />
+                        <div th:unless="${associazione.immagine}">🏢</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title" th:text="${associazione.nome}">Nome Associazione</h3>
+                        <div class="card-location">
+                            <span>📍</span>
+                            <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
+                        </div>
+                        <p class="card-description" th:text="${associazione.descrizione}">
+                            Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
+                        </p>
+                        <div class="card-footer">
+                            <span class="founded-year" th:if="${associazione.annoFondazione}">
+                                Fondata nel <span th:text="${associazione.annoFondazione}">2020</span>
+                            </span>
+                            <button class="btn-view">Scopri di più</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Fallback quando non ci sono associazioni -->
+                <div th:if="${#lists.isEmpty(associazioni)}" class="col-12 text-center">
+                    <div class="alert alert-info">
+                        <h4>Nessuna associazione trovata</h4>
+                        <p>Al momento non ci sono associazioni registrate nel sistema.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-hint" th:if="${not #lists.isEmpty(associazioni)}">
+            ← Scorri orizzontalmente per vedere tutte le associazioni →
+        </div>
+    </div>
+
+   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
 </html>
