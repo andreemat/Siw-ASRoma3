@@ -74,7 +74,7 @@ public class AuthController {
 	public String mostraHome(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
-			model.addAttribute("associazioni", associazioneService.getAllAssociazioni());
+			model.addAttribute("allAssociazioni", associazioneService.getAllAssociazioni());
 			return "home.html"; 
 		}else{
 			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -86,7 +86,6 @@ public class AuthController {
 			}
 			else {
 				User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
-				
 				model.addAttribute("associazioni", this.associazioneService.findAssociazioneByCitta(user.getCitta()));
 				model.addAttribute("allAssociazioni", this.associazioneService.getAllAssociazioni());
 				return "home.html";}

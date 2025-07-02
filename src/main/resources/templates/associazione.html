@@ -1,44 +1,151 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Dettagli Associazione</title>
+<<<<<<< HEAD
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="'Dettagli - ' + ${associazione.nome}">Dettagli Associazione</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/tema.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/associazioneStyle.css}" />
 </head>
-
 <body>
 
-    
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+   
     <h1 th:text="${associazione.nome}">Nome Associazione</h1>
 
-    <p>Nome: <span th:text="${associazione.nome}">Nome Associazione</span></p>
-    <p>Indirizzo: <span th:text="${associazione.indirizzo}">Indirizzo</span></p>
-	<p>Città: <span th:text="${associazione.citta.nome}">citta</span></p>
-    <p>Email: <span th:text="${associazione.email}">Email</span></p>
-    <p>Telefono: <span th:text="${associazione.telefono}">Telefono</span></p>
-    <p>Partita IVA: <span th:text="${associazione.partitaIVA}">Partita IVA</span></p>
-    <p>Anno di Fondazione: <span th:text="${associazione.annoFondazione}">Anno</span></p>
-    <p>Descrizione:</p>
-    <p th:text="${associazione.descrizione}">Descrizione</p>
-
-    <div>
-        Immagine:<br />
-		<img th:if="${associazione.immagine != null}"
-			th:src="@{'/image/associazione/' + ${associazione.id}}" alt="Immagine associazione" width="300"/>
-		<p th:if="${associazione.immagine == null}">Nessuna immagine disponibile</p>
+<div class="container my-5">
+    <!-- Header Section -->
+    <div class="details-header mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}" class="text-decoration-none">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Dettagli Associazione</li>
+                    </ol>
+                </nav>
+                <h1 class="display-5 fw-bold text-primary mb-0" th:text="${associazione.nome}">Nome Associazione</h1>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <button class="btn btn-outline-primary" onclick="window.history.back()">
+                    ← Torna Indietro
+                </button>
+            </div>
+        </div>
     </div>
 
-    <p>Lista Sport:</p>
-    <div th:if="${associazione.sportList == null or #lists.isEmpty(associazione.sportList)}">
-        Non ci sono sport associati a questa associazione.
-    </div>
-    <ul>
-        <li th:each="sport : ${associazione.sportList}">
-            <a th:href="@{/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
-               th:text="${sport.nome}">Nome Sport</a>
-        </li>
-    </ul>
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Image Section -->
+            <div class="image-section mb-4">
+                <div class="image-container">
+                    <img th:if="${associazione.immagine != null}"
+                         th:src="@{'/image/associazione/' + ${associazione.id}}" 
+                         th:alt="${associazione.nome}"
+                         class="association-image" />
+                    <div th:if="${associazione.immagine == null}" class="no-image-placeholder">
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">🏢</span>
+                            <p class="placeholder-text">Nessuna immagine disponibile</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    
+            <!-- Description Section -->
+            <div class="description-section">
+                <h3 class="section-title">Chi Siamo</h3>
+                <div class="description-content">
+                    <p th:text="${associazione.descrizione}" class="description-text">
+                        Descrizione dell'associazione...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sports Section -->
+            <div class="sports-section">
+                <h3 class="section-title">Sport Disponibili</h3>
+                <div th:if="${associazione.sportList == null or #lists.isEmpty(associazione.sportList)}" 
+                     class="alert alert-info">
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">ℹ️</span>
+                        <span>Non ci sono sport associati a questa associazione.</span>
+                    </div>
+                </div>
+                <div th:if="${associazione.sportList != null and not #lists.isEmpty(associazione.sportList)}" 
+                     class="sports-grid">
+                    <a th:each="sport : ${associazione.sportList}"
+                       th:href="@{/associazione/{idA}/sport/{idS}(idA=${associazione.id}, idS=${sport.id})}"
+                       class="sport-card">
+                        <div class="sport-icon">⚽</div>
+                        <span class="sport-name" th:text="${sport.nome}">Nome Sport</span>
+                        <div class="sport-arrow">→</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="info-sidebar">
+                <!-- Contact Info -->
+                <div class="info-card">
+                    <h4 class="info-title">📞 Contatti</h4>
+                    <div class="info-list">
+                        <div class="info-item" th:if="${associazione.telefono}">
+                            <span class="info-label">Telefono:</span>
+                            <a th:href="'tel:' + ${associazione.telefono}" 
+                               class="info-value contact-link" 
+                               th:text="${associazione.telefono}">Telefono</a>
+                        </div>
+                        <div class="info-item" th:if="${associazione.email}">
+                            <span class="info-label">Email:</span>
+                            <a th:href="'mailto:' + ${associazione.email}" 
+                               class="info-value contact-link" 
+                               th:text="${associazione.email}">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Info -->
+                <div class="info-card">
+                    <h4 class="info-title">📍 Dove Siamo</h4>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="info-label">Indirizzo:</span>
+                            <span class="info-value" th:text="${associazione.indirizzo}">Indirizzo</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Città:</span>
+                            <span class="info-value" th:text="${associazione.citta.nome}">Città</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="info-card">
+                    <h4 class="info-title">ℹ️ Informazioni</h4>
+                    <div class="info-list">
+                        <div class="info-item" th:if="${associazione.annoFondazione}">
+                            <span class="info-label">Fondata nel:</span>
+                            <span class="info-value founded-year" th:text="${associazione.annoFondazione}">Anno</span>
+                        </div>
+                        <div class="info-item" th:if="${associazione.partitaIVA}">
+                            <span class="info-label">P.IVA:</span>
+                            <span class="info-value" th:text="${associazione.partitaIVA}">Partita IVA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
-
 </html>

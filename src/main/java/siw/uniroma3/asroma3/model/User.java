@@ -32,6 +32,7 @@ public class User {
 	private List<Associazione> associazioni;
 	@OneToMany(mappedBy= "cliente")
 	private List<Prenotazione> prenotazioni;
+	@NotNull
 	@ManyToOne
 	Citta citta;
 	

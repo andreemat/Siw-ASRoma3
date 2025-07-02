@@ -1,0 +1,329 @@
+/* Details Page Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Section */
+.details-header {
+    background: linear-gradient(135deg, rgba(58, 145, 63, 0.1) 0%, rgba(47, 112, 50, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.text-primary {
+    color: #2f7032 !important;
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-item a {
+    color: #3a913f;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #2f7032;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d;
+}
+
+/* Image Section */
+.image-section {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center; /* centra l'immagine */
+}
+
+.image-container {
+    width: 200px; /* larghezza più contenuta per uno stemma */
+    height: 200px; /* oppure usa auto per mantenere proporzioni */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.association-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.no-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #e9ecef, #dee2e6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+
+.placeholder-content {
+    text-align: center;
+}
+
+.placeholder-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.placeholder-text {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Content Sections */
+.section-title {
+    color: #2f7032;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #3a913f;
+    display: inline-block;
+}
+
+.description-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3rem;
+}
+
+.description-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #495057;
+}
+
+.description-text {
+    margin: 0;
+}
+
+/* Sports Section */
+.sports-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.sport-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sport-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(58, 145, 63, 0.15);
+    border-color: #3a913f;
+    color: inherit;
+    text-decoration: none;
+    background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+}
+
+.sport-icon {
+    font-size: 2rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.sport-name {
+    flex: 1;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #2f7032;
+}
+
+.sport-arrow {
+    font-size: 1.2rem;
+    color: #3a913f;
+    transition: transform 0.3s ease;
+}
+
+.sport-card:hover .sport-arrow {
+    transform: translateX(5px);
+}
+
+/* Sidebar */
+.info-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+.info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #3a913f;
+}
+
+.info-title {
+    color: #2f7032;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.info-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #495057;
+    font-weight: 500;
+}
+
+.contact-link {
+    color: #3a913f;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #2f7032;
+    text-decoration: underline;
+}
+
+.founded-year {
+    background: linear-gradient(45deg, #e8f5e8, #d4edda);
+    color: #2f7032;
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Alert styles */
+.alert-info {
+    background-color: #e8f5e8;
+    border-color: #3a913f;
+    color: #2f7032;
+    border-radius: 10px;
+}
+
+/* Buttons */
+.btn-outline-primary {
+    border-color: #3a913f;
+    color: #3a913f;
+}
+
+.btn-outline-primary:hover {
+    background-color: #3a913f;
+    border-color: #3a913f;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .details-header {
+        padding: 1.5rem;
+        text-align: center;
+    }
+    
+    .details-header .row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .association-image,
+    .no-image-placeholder {
+        height: 250px;
+    }
+    
+    .description-section,
+    .sports-section,
+    .info-card {
+        padding: 1.5rem;
+    }
+    
+    .sports-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-sidebar {
+        position: static;
+        margin-top: 2rem;
+    }
+    
+    .sport-card {
+        padding: 1rem;
+    }
+    
+    .sport-name {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .details-header {
+        padding: 1rem;
+    }
+    
+    .display-5 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
+}

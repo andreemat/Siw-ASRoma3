@@ -7,6 +7,7 @@
   border: 1px solid #d1e7dd;       /* bordo verde chiaro */
 }
 
+<<<<<<< HEAD
 /* Titolo */
 .form-wrapper h2 {
   color: #198754;                  /* verde principale */
@@ -39,3 +40,40 @@
   font-size: 0.875em;
 }
 	
+=======
+       body {
+           background-color: #f8f9fa;
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       }
+       .form-container {
+           max-width: 700px;
+           margin: 3rem auto;
+	
+       }
+       .form-header {
+           text-align: center;
+           margin-bottom: 2rem;
+       }
+	   
+	   .btn-custom {
+	     background-color: #3a913f;  /* colore nuovo di sfondo */
+	          /* stesso colore per il bordo */
+	     color: white;   
+		 padding-top: 1px;            /* colore testo */
+	   }
+
+	   .btn-custom:hover, .btn-custom:focus {
+	     background-color: #2f7032; /* colore sfondo al passaggio del mouse */
+		
+	     color: white;
+	   }
+	 body{
+		background-color:rgb(234, 249, 240);
+		font-size:94%;
+	  }
+	  
+	   .mb-3 .custom-label{
+		margin-top: 10px;
+	  }
+	 
+>>>>>>> 2f1d04f4f7e5c307d4f687a3e464c5ab22b2db6a
