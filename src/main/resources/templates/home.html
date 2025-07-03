@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/tema.css}" />
 	<link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
     <link rel="stylesheet" th:href="@{/css/homeStyle.css}" />
+	<link rel="stylesheet" th:href="@{/css/formStyle.css}" />
 </head>
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -14,10 +15,23 @@
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="container">
-            <h1>Benvenuto nel portale dell'ASRoma3</h1>
-            <p>Scopri tutte le associazioni del nostro territorio</p>
+            <h1>Prenota campi sportivi in modo facile e veloce</h1>
+            <p>Scopri tutte le nostre associazioni partner</p>
         </div>
+		
+		
+		<div class="container text-center"> 
+		<form action="/associazioni/catalogo" method="get">
+		  <input class="form-control search-form" type="text" name="text" placeholder="cerca">
+		  <div class="row">
+		 <div class="col"> <button  class="btn btn-form w-100" type="submit" name="action" value="sport">Cerca per sport</button> </div>
+		   <div class="col"> <button  class="btn btn-form w-100" type="submit" name="action" value="searchNome">Cerca associazione</button> </div>
+		  </div>
+		</form>
+		</div>
     </div>
+	
+	
 
     <!-- Main Content -->
     <div  th:if="${userDetails != null}" class="container">
@@ -55,7 +69,7 @@
                 <div th:if="${#lists.isEmpty(associazioni)}" class="col-12 text-center">
                     <div class="alert alert-info">
                         <h4>Nessuna associazione trovata</h4>
-                        <p>Al momento non ci sono associazioni registrate nel sistema.</p>
+                        <p>Al momento non ci sono associazioni vicine a te.</p>
                     </div>
                 </div>
             </div>
@@ -98,6 +112,12 @@
 	                    </div>
 	                </a>	              
 	            </div>
+				<div th:if="${#lists.isEmpty(associazioni)}" class="col-12 text-center">
+				                   <div class="alert alert-info">
+				                       <h4>Nessuna associazione trovata</h4>
+				                       <p>Al momento non ci sono associazioni registrate nel sistema.</p>
+				                   </div>
+				               </div>
 	        </div>
 	        
 	        <div class="scroll-hint" th:if="${not #lists.isEmpty(associazioni)}">

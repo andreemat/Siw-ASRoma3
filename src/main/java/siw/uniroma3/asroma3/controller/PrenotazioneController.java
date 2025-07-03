@@ -69,7 +69,7 @@ public class PrenotazioneController {
 			Model model) {
 		Campo campo = campoService.getCampo(idC);
 		prenotazione.setCampo(campo);
-		this.dataPrenotazioneValidator.validate(prenotazione, bindingResult);
+		//this.dataPrenotazioneValidator.validate(prenotazione, bindingResult);
 
 			// VALIDAZIONE 1: Non puoi prenotare giorni passati
 			if (bindingResult.hasErrors()) {
@@ -81,23 +81,7 @@ public class PrenotazioneController {
 				return "formDataPrenotazione.html";
 			}
 
-			if (prenotazione.getData() != null) {
-				DayOfWeek giornoSelezionato = prenotazione.getData().getDayOfWeek();
 
-				if (campo.getGiorniDisponibili() == null || 
-						!campo.getGiorniDisponibili().contains(giornoSelezionato)) {
-
-					// Aggiungi messaggio di errore
-					model.addAttribute("erroreGiorno", "Il campo è chiuso il " + giornoSelezionato);
-					model.addAttribute("campo", campo);
-					model.addAttribute("associazione", campo.getAssociazione());
-					model.addAttribute("sport", campo.getSport());
-					model.addAttribute("prenotazione", prenotazione);
-
-					// Torna al form di selezione data
-					return "formDataPrenotazione.html";
-				}
-			}
 		
 		model.addAttribute("campo", campo);
 		model.addAttribute("associazione", campo.getAssociazione());
