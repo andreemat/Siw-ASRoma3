@@ -1,38 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Campi - [[${sport.nome}]]</title>
+	<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title>Campi - [[${sport.nome}]]</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-		  <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
-</head>
-<body>
+	<link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
+	<link rel="stylesheet" th:href="@{/css/campiStyle.css}" />
+	</head>
+	<body>
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
-    <h1 th:text="'Sport: ' + ${sport.nome}">Nome Sport</h1>
-	<div>
-		<img th:src="@{'/images/' + ${sport.immagine}}" th:alt="${sport.nome}">
+
+	<div class="sport-header">
+	    <div class="container">
+	        <h1 th:text="'Sport: ' + ${sport.nome}">Nome Sport</h1>
+	        <div class="sport-image-container">
+	            <img th:src="@{'/images/' + ${sport.immagine}}" th:alt="${sport.nome}" class="sport-image">
+	        </div>
+	    </div>
 	</div>
 
-    <h2>Campi disponibili:</h2>
+	<div class="container">
+	    <h2 class="section-title">Campi disponibili</h2>
 
-    <!-- Se la lista è vuota -->
-    <p th:if="${#lists.isEmpty(campi)}">❌ Non ci sono campi disponibili per questo sport.</p>
+	    <!-- Se la lista è vuota -->
+	    <div th:if="${#lists.isEmpty(campi)}" class="no-fields-message">
+	        <span class="emoji">⚠️</span>
+	        <p><strong>Non ci sono campi disponibili per questo sport.</strong></p>
+	        <p>Controlla più tardi o contatta l'associazione per maggiori informazioni.</p>
+	    </div>
 
-    <!-- Se ci sono campi -->
-    <ul th:if="${!#lists.isEmpty(campi)}">
-        <li th:each="campo : ${campi}">
-            <strong th:text="${campo.nome}">Nome Campo</strong><br/>
-            Capienza: <span th:text="${campo.capienza}">Numero</span><br/>
-            
-			<a th:href="@{/prenota/campo/{idC}(idC=${campo.id})}">
-			    Prenota
-			</a>
-			<a th:href="@{/associazione/{idA}/sport/{idS}/campo/{idC}(idC=${campo.id},idA=${associazione.id},idS=${sport.id})}">
-			            Visualizza
-			        </a>
-            <hr/>
-        </li>
-    </ul>
+	    <!-- Se ci sono campi -->
+	    <div th:if="${!#lists.isEmpty(campi)}" class="fields-container">
+	        <div th:each="campo : ${campi}" class="field-card">
+	            <div class="field-card-header">
+	                <h3 class="field-name" th:text="${campo.nome}">Nome Campo</h3>
+	            </div>
+	            
+	            <div class="field-card-body">
+	                <div class="field-info">
+	                    <div class="capacity-info">
+	                        <span class="capacity-icon">👥</span>
+	                        <span>Capienza: <strong th:text="${campo.capienza}">Numero</strong> persone</span>
+	                    </div>
+	                </div>
+	                
+	                <div class="field-actions">
+	                    <a th:href="@{/prenota/campo/{idC}(idC=${campo.id})}" class="btn-action btn-book">
+	                        📅 Prenota
+	                    </a>
+	                    <a th:href="@{/associazione/{idA}/sport/{idS}/campo/{idC}(idC=${campo.id},idA=${associazione.id},idS=${sport.id})}" class="btn-action btn-view">
+	                        👁️ Visualizza
+	                    </a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 
-</body>
-</html>
+	</body>
+	</html>
+  

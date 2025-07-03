@@ -7,6 +7,7 @@
   border: 1px solid #d1e7dd;       /* bordo verde chiaro */
 }
 
+
 /* Titolo */
 .form-wrapper h2 {
   color: #198754;                  /* verde principale */
@@ -65,6 +66,9 @@
 .invalid-feedback {
   font-size: 0.875em;
 }
+
+
+
        body {
            background-color: #f8f9fa;
            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -89,7 +93,13 @@
 	   .mb-3 .custom-label{
 		margin-top: 10px;
 	  }
-	 
+	  
+	  .btncheck1 {
+		background-color: green}
+	  .btn btn-outline-primary{
+		background: green;
+		color :green}
+
 	  
 	  
 	  .container-custom-login{
@@ -104,7 +114,15 @@
 	  .form-control-custom{
 		font-size:18pt
 	  }
+	  
+	  .check{border-color: #3a913f;
+		color:green;}
+	  .check1{
+		border-color: green;
+		color:green;;
+	  }
+
 	
 	  
-	  
+
 

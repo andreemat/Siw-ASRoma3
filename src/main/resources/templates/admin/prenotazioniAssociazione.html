@@ -1,90 +1,94 @@
-      
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Prenotazioni per <span th:text="${associazione.nome}">Associazione</span></title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-		  <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
+    <link rel="stylesheet" th:href="@{/css/prenotazionistyle.css}" />
 </head>
 <body>
-	<div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+	<div class="container">
     <h1>Prenotazioni per: <span th:text="${associazione.nome}">Nome Associazione</span></h1>
 
-    <!-- FORM PER I FILTRI -->
-    <form th:action="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" method="get">
-        <label for="dataFiltro">Filtra per Data:</label>
-        <input type="date" id="dataFiltro" name="dataFiltro" th:value="${dataFiltroAttuale}">
+    <!-- FORM FILTRI -->
+	<form th:action="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" method="get" class="filters-form">
 
- 
-		
-		<label for="sportFiltro">Filtra per Sport:</label>
-		       <select id="sportFiltro" name="sportIdFiltro">
-		           <option value="">-- Tutti gli sport --</option>
-		           <option th:each="sport : ${sportDellAssociazione}"
-		                   th:value="${sport.id}"
-		                   th:text="${sport.nome}"
-		                   th:selected="${sportIdFiltroAttuale != null and sport.id == sportIdFiltroAttuale}">
-		           </option>
-		       </select>
-  
-	
-		    <!-- Mostra il filtro per campo solo se ci sono campi da mostrare -->
-		    <div th:if="${campiDellAssociazione != null}">
-		        <label for="campoFiltro">Filtra per Campo:</label>
-		        <select id="campoFiltro" name="campoIdFiltro">
-		            <option value="">-- Tutti i Campi --</option>
-		            <option th:each="campo : ${campiDellAssociazione}"
-		                    th:value="${campo.id}"
-		                    th:text="${campo.nome}"
-		                    th:selected="${campoIdFiltroAttuale != null and campo.id == campoIdFiltroAttuale}">
-		            </option>
-		        </select>
-		    </div>
+	    <div class="form-group">
+	        <label for="dataFiltro" class="form-label">Filtra per Data:</label>
+	        <input type="date" id="dataFiltro" name="dataFiltro" th:value="${dataFiltroAttuale}" class="form-control" />
+	    </div>
 
-		    <button type="submit">Filtra</button>
-		    <a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}">Resetta</a>
-		</form>
-    </form>
-    <hr/>
+	    <div class="form-group">
+	        <label for="sportFiltro" class="form-label">Filtra per Sport:</label>
+	        <select id="sportFiltro" name="sportIdFiltro" class="form-control">
+	            <option value="">-- Tutti gli sport --</option>
+	            <option th:each="sport : ${sportDellAssociazione}"
+	                    th:value="${sport.id}"
+	                    th:text="${sport.nome}"
+	                    th:selected="${sportIdFiltroAttuale != null and sport.id == sportIdFiltroAttuale}">
+	            </option>
+	        </select>
+	    </div>
 
-    <!-- TABELLA DELLE PRENOTAZIONI -->
-    <table border="1">
+	    <div class="form-group" th:if="${campiDellAssociazione != null}">
+	        <label for="campoFiltro" class="form-label">Filtra per Campo:</label>
+	        <select id="campoFiltro" name="campoIdFiltro" class="form-control">
+	            <option value="">-- Tutti i Campi --</option>
+	            <option th:each="campo : ${campiDellAssociazione}"
+	                    th:value="${campo.id}"
+	                    th:text="${campo.nome}"
+	                    th:selected="${campoIdFiltroAttuale != null and campo.id == campoIdFiltroAttuale}">
+	            </option>
+	        </select>
+	    </div>
+
+	    <div class="form-group">
+	        <button type="submit" class="btn-filter">Filtra</button>
+	    </div>
+
+	    <div class="form-group">
+	        <a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" class="btn-reset">Resetta</a>
+	    </div>
+
+	</form>
+    <!-- TABELLA PRENOTAZIONI -->
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
-				<th>Dettagli</th>
+                <th>Dettagli</th>
                 <th>Data</th>
                 <th>Orario</th>
                 <th>Campo</th>
                 <th>Sport</th>
                 <th>Cliente</th>
                 <th>Nome e Cognome</th>
-				<th>Azioni</th>
+                <th>Azioni</th>
             </tr>
         </thead>
         <tbody>
             <tr th:if="${prenotazioni.isEmpty()}">
-                <td colspan="6">Nessuna prenotazione trovata con i filtri selezionati.</td>
+                <td colspan="8" class="empty-message">Nessuna prenotazione trovata con i filtri selezionati.</td>
             </tr>
             <tr th:each="prenotazione : ${prenotazioni}">
-				<td>
-				                   <a th:href="@{/admin/associazione/{idA}/prenotazioni/{idP}(idA=${associazione.id}, idP=${prenotazione.id})}">
-				                       Dettagli
-				                   </a>
+                <td>
+                    <a th:href="@{/admin/associazione/{idA}/prenotazioni/{idP}(idA=${associazione.id}, idP=${prenotazione.id})}">Dettagli</a>
+                </td>
                 <td th:text="${#temporals.format(prenotazione.data, 'dd/MM/yyyy')}"></td>
                 <td th:text="${#temporals.format(prenotazione.oraInizio, 'HH:mm')} + ' - ' + ${#temporals.format(prenotazione.oraFine, 'HH:mm')}"></td>
                 <td th:text="${prenotazione.campo.nome}"></td>
                 <td th:text="${prenotazione.campo.sport.nome}"></td>
                 <td th:text="${prenotazione.cliente.credentials.username}"></td>
                 <td th:text="${prenotazione.cliente.name} + ' ' + ${prenotazione.cliente.surname}"></td>
-				<td ><a th:href="@{/admin/associazione/{idA}/prenotazioni/cancella/{idP}(idA=${associazione.id},idP=${prenotazione.id})}">	elimina</a></td>
+                <td>
+                    <a th:href="@{/admin/associazione/{idA}/prenotazioni/cancella/{idP}(idA=${associazione.id},idP=${prenotazione.id})}" class="text-danger">Elimina</a>
+                </td>
             </tr>
         </tbody>
     </table>
-	
-    <br/>
-    <a href="/">Torna alla Home</a>
+
+    <a href="/" class="back-home">Torna alla Home</a>
+	</div>
 </body>
 </html>
-
-    
