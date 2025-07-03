@@ -1,0 +1,234 @@
+/* Field Details Page Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.field-header {
+    background: linear-gradient(45deg, rgb(0, 0, 0) 0%, #2f7032 100%);
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.field-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.field-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.field-details-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.field-image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.field-image {
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border: 3px solid white;
+    margin-bottom: 1.5rem;
+}
+
+.field-info-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.info-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3a913f;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    background: #e8f5e8;
+    transform: translateX(5px);
+}
+
+.info-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    min-width: 2rem;
+}
+
+.info-content {
+    flex: 1;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #2f7032;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 1.1rem;
+    color: #495057;
+    font-weight: 500;
+}
+
+.days-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.day-badge {
+    background: #3a913f;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.price-highlight {
+    background: linear-gradient(135deg, #3a913f, #2f7032);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 12px rgba(58, 145, 63, 0.3);
+}
+
+.price-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.price-label {
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.related-info {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3rem;
+}
+
+.related-title {
+    color: #2f7032;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.related-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.related-item:hover {
+    background: #e8f5e8;
+    transform: translateY(-3px);
+}
+
+.related-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.related-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2f7032;
+}
+
+/* Admin Actions Buttons */
+.admin-actions {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.admin-button {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: #fff;
+    background-color: #007bff;
+}
+
+.admin-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.admin-button.edit {
+    background-color: #28a745;
+}
+
+.admin-button.edit:hover {
+    background-color: #1e7e34;
+}
+
+.admin-button.image {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.admin-button.image:hover {
+    background-color: #e0a800;
+}
+
+.admin-button.home {
+    background-color: #6c757d;
+}
+
+.admin-button.home:hover {
+    background-color: #5a6268;
+}

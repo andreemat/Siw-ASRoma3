@@ -1,0 +1,206 @@
+/* Sport Fields Page Styles */
+	body {
+	    background-color: #f8f9fa;
+	    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+	.sport-header {
+	    background: linear-gradient(45deg, rgb(0, 0, 0) 0%, #2f7032 100%);
+	    color: white;
+	    padding: 3rem 0;
+	    text-align: center;
+	    margin-bottom: 3rem;
+	}
+
+	.sport-header h1 {
+	    font-size: 2.5rem;
+	    font-weight: 700;
+	    margin-bottom: 1rem;
+	}
+
+	.sport-image-container {
+	    margin-bottom: 2rem;
+	    text-align: center;
+	}
+
+	.sport-image {
+	    width: 200px;
+	    height: 200px;
+	    object-fit: cover;
+	    border-radius: 50%;
+	    border: 5px solid white;
+	    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+	}
+
+	.section-title {
+	    color: #2f7032;
+	    font-weight: 600;
+	    margin-bottom: 2rem;
+	    text-align: center;
+	    font-size: 2rem;
+	}
+
+	.no-fields-message {
+	    text-align: center;
+	    padding: 3rem;
+	    background: white;
+	    border-radius: 12px;
+	    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	    color: #6c757d;
+	    font-size: 1.1rem;
+	    margin: 2rem 0;
+	}
+
+	.no-fields-message .emoji {
+	    font-size: 3rem;
+	    margin-bottom: 1rem;
+	    display: block;
+	}
+
+	.fields-container {
+	    display: grid;
+	    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	    gap: 2rem;
+	    margin-bottom: 3rem;
+	}
+
+	.field-card {
+	    background: white;
+	    border-radius: 12px;
+	    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	    transition: all 0.3s ease;
+	    overflow: hidden;
+	    border: 2px solid transparent;
+	}
+
+	.field-card:hover {
+	    transform: translateY(-5px);
+	    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+	    border-color: #3a913f;
+	}
+
+	.field-card-header {
+	    background: linear-gradient(135deg, #3a913f, #2f7032);
+	    color: white;
+	    padding: 1.5rem;
+	    text-align: center;
+	}
+
+	.field-name {
+	    font-size: 1.5rem;
+	    font-weight: 600;
+	    margin: 0;
+	}
+
+	.field-card-body {
+	    padding: 1.5rem;
+	}
+
+	.field-info {
+	    margin-bottom: 1.5rem;
+	}
+
+	.capacity-info {
+	    display: flex;
+	    align-items: center;
+	    gap: 0.5rem;
+	    color: #495057;
+	    font-size: 1.1rem;
+	}
+
+	.capacity-icon {
+	    color: #3a913f;
+	    font-size: 1.2rem;
+	}
+
+	.field-actions {
+	    display: flex;
+	    gap: 1rem;
+	    justify-content: center;
+	}
+
+	.btn-action {
+	    flex: 1;
+	    padding: 0.75rem 1.5rem;
+	    border: none;
+	    border-radius: 8px;
+	    font-weight: 500;
+	    text-decoration: none;
+	    text-align: center;
+	    transition: all 0.3s ease;
+	    font-size: 0.95rem;
+	}
+
+	.btn-book {
+	    background-color: #3a913f;
+	    color: white;
+	}
+
+	.btn-book:hover {
+	    background-color: #2f7032;
+	    color: white;
+	    transform: translateY(-2px);
+	}
+
+	.btn-view {
+	    background-color: white;
+	    color: #3a913f;
+	    border: 2px solid #3a913f;
+	}
+
+	.btn-view:hover {
+	    background-color: #3a913f;
+	    color: white;
+	    transform: translateY(-2px);
+	}
+
+	.divider {
+	    display: none;
+	}
+
+	/* Media Queries */
+	@media (max-width: 768px) {
+	    .sport-header h1 {
+	        font-size: 2rem;
+	    }
+	    
+	    .fields-container {
+	        grid-template-columns: 1fr;
+	        gap: 1.5rem;
+	    }
+	    
+	    .field-actions {
+	        flex-direction: column;
+	    }
+	    
+	    .btn-action {
+	        flex: none;
+	    }
+	    
+	    .sport-image {
+	        width: 150px;
+	        height: 150px;
+	    }
+	}
+
+	@media (max-width: 576px) {
+	    .sport-header {
+	        padding: 2rem 0;
+	    }
+	    
+	    .sport-header h1 {
+	        font-size: 1.8rem;
+	    }
+	    
+	    .section-title {
+	        font-size: 1.5rem;
+	    }
+	    
+	    .field-card-header {
+	        padding: 1rem;
+	    }
+	    
+	    .field-name {
+	        font-size: 1.3rem;
+	    }
+	}
