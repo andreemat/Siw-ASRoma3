@@ -1,67 +1,127 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Campi </title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-		  <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
+<meta charset="UTF-8">
+<title>Gestione Campi - Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
+<link rel="stylesheet" th:href="@{/css/campiAdminStyle.css}" />
+
 </head>
 <body>
-	<div th:replace="~{fragments/navbar :: navbar}"></div>
-    <h1>Campi per: <span th:text="${associazione.nome}">Nome Associazione</span></h1>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <!-- FORM PER I FILTRI -->
-    <form th:action="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" method="get">
-        <label for="nomeCampo">Filtra per nome:</label>
-        <input type="text" id="nomeCampo" name="nomeCampo" th:value="${nomeCampoAttuale}">
+<div class="admin-header">
+    <div class="container">
+        <h1>
+            🏢 Gestione Campi - 
+            <span class="association-name" th:text="${associazione.nome}">Nome Associazione</span>
+        </h1>
+    </div>
+</div>
 
-		<label for="sportFiltro">Filtra per Sport:</label>
-		       <select id="sportFiltro" name="sportFiltro">
-		           <option value="">-- Tutti gli sport --</option>
-		           <option th:each="sport : ${sportDellAssociazione}"
-		                   th:value="${sport.id}"
-		                   th:text="${sport.nome}"
-		                   th:selected="${sportFiltroAttuale != null and sport.id == sportFiltroAttuale}">
-		           </option>
-		       </select>
+<div class="container">
+    <!-- Sezione Filtri -->
+    <div class="filters-section">
+        <h3 class="filters-title">🔍 Filtri di Ricerca</h3>
+        
+        <form class="filters-form" th:action="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" method="get">
+            <div class="form-group">
+                <label class="form-label" for="nomeCampo">Nome Campo</label>
+                <input type="text" 
+                       id="nomeCampo" 
+                       name="nomeCampo" 
+                       class="form-control"
+                       placeholder="Inserisci nome campo..."
+                       th:value="${nomeCampoAttuale}">
+            </div>
 
-        <button type="submit">Filtra</button>
-        <a th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}">Resetta</a>
-    </form>
-    <hr/>
+            <div class="form-group">
+                <label class="form-label" for="sportFiltro">Sport</label>
+                <select id="sportFiltro" name="sportFiltro" class="form-control">
+                    <option value="">-- Tutti gli sport --</option>
+                    <option th:each="sport : ${sportDellAssociazione}"
+                            th:value="${sport.id}"
+                            th:text="${sport.nome}"
+                            th:selected="${sportFiltroAttuale != null and sport.id == sportFiltroAttuale}">
+                    </option>
+                </select>
+            </div>
 
-	<div><a th:href="@{/admin/associazione/{id}/registra-campo(id=${associazione.id})}" >Aggiungi un campo</a></div>
-    <table border="1">
-		<p th:if="${errorMessage}" style="color: red;">
-		    <span th:text="${errorMessage}"></span>
-		</p>
-        <thead>
-            <tr>
-				<th>Dettagli</th>
-				<th>Cancella</th>
-				<th>Nome</th>
-				<th>Sport</th>
-                <th>Orari</th>
-                <th>Durata Slot</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:if="${campi.isEmpty()}">
-                <td colspan="6">Nessuna campo trovato con questi filtri.</td>
-            </tr>
-            <tr th:each="campo : ${campi}">
-				<td><a th:href="@{/admin/associazione/{idA}/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Dettagli</a></td>
-				<td><a th:href="@{/admin/associazione/{idA}/cancella/campo/{idC}(idA=${associazione.id},idC=${campo.id})}">Cancella</a></td>
-                <td th:text="${campo.nome}"></td>
-				<td th:text="${campo.sport.nome}"></td>
-                <td th:text="${#temporals.format(campo.oraApertura, 'HH:mm')} + ' - ' + ${#temporals.format(campo.oraChiusura, 'HH:mm')}"></td>
-                <td th:text="${campo.durataSlot}"></td>
-  
-            </tr>
-        </tbody>
-    </table>
-	
-    <br/>
-    <a href="/">Torna alla Home</a>
+            <button type="submit" class="btn-filter">🔍 Filtra</button>
+            <a th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}" class="btn-reset">↻ Resetta</a>
+        </form>
+    </div>
+
+    <!-- Sezione Azioni -->
+    <div class="actions-section">
+        <a th:href="@{/admin/associazione/{id}/registra-campo(id=${associazione.id})}" class="btn-add">
+            ➕ Aggiungi Nuovo Campo
+        </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Messaggio di errore -->
+    <div th:if="${errorMessage}" class="error-message">
+        <strong>⚠️ Errore:</strong> <span th:text="${errorMessage}"></span>
+    </div>
+
+    <!-- Tabella Campi -->
+    <div class="table-container">
+        <table class="fields-table">
+            <thead>
+                <tr>
+                    <th>Azioni</th>
+                    <th>Nome Campo</th>
+                    <th>Sport</th>
+                    <th>Orari</th>
+                    <th>Durata Slot</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${campi.isEmpty()}">
+                    <td colspan="5" class="empty-message">
+                        <span class="emoji">📭</span>
+                        <strong>Nessun campo trovato con questi filtri.</strong>
+                        <br>Prova a modificare i criteri di ricerca.
+                    </td>
+                </tr>
+                <tr th:each="campo : ${campi}">
+                    <td>
+                        <a th:href="@{/admin/associazione/{idA}/campo/{idC}(idA=${associazione.id},idC=${campo.id})}" 
+                           class="action-btn btn-details">
+                            👁️ Dettagli
+                        </a>
+                        <a th:href="@{/admin/associazione/{idA}/cancella/campo/{idC}(idA=${associazione.id},idC=${campo.id})}" 
+                           class="action-btn btn-delete"
+                           onclick="return confirm('Sei sicuro di voler eliminare questo campo?')">
+                            🗑️ Elimina
+                        </a>
+                    </td>
+                    <td>
+                        <span class="field-name" th:text="${campo.nome}">Nome Campo</span>
+                    </td>
+                    <td>
+                        <span class="sport-badge" th:text="${campo.sport.nome}">Sport</span>
+                    </td>
+                    <td>
+                        <span class="time-info" th:text="${#temporals.format(campo.oraApertura, 'HH:mm')} + ' - ' + ${#temporals.format(campo.oraChiusura, 'HH:mm')}">
+                            Orari
+                        </span>
+                    </td>
+                    <td>
+                        <span class="duration-info" th:text="${campo.durataSlot}">Durata</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/" class="back-home">
+        🏠 Torna alla Home
+    </a>
+</div>
+
 </body>
 </html>

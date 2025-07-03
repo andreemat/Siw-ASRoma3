@@ -1,0 +1,179 @@
+/* Prenotazioni Admin Styles */
+
+
+body {
+	    background-color: #f8f9fa;
+	    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	    margin: 0;
+	    padding: 0; /* 🔧 Questo risolve il problema */
+	}
+
+
+
+h1 {
+    color: #2f7032;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+form {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+form label {
+    font-weight: 600;
+    color: #3a913f;
+}
+
+form input[type="date"],
+form select {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    min-width: 150px;
+}
+
+form button, form a {
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+}
+
+form button {
+    background-color: #3a913f;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #2f7032;
+}
+
+form a {
+    background-color: #e9ecef;
+    color: #3a913f;
+    border: 1px solid #3a913f;
+    display: inline-block;
+}
+
+form a:hover {
+    background-color: #3a913f;
+    color: white;
+}
+
+/* Tabella prenotazioni */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+thead {
+    background: linear-gradient(135deg, #3a913f, #2f7032);
+    color: white;
+    text-align: left;
+}
+
+thead th {
+    padding: 1rem 1.2rem;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background-color: #e6f0df;
+}
+
+tbody td {
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid #ddd;
+    color: #495057;
+    vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+a {
+    color: #3a913f;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #2f7032;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 2rem 0;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.back-home {
+    display: block;
+    margin-top: 3rem;
+    text-align: center;
+    font-weight: 600;
+    color: #3a913f;
+    text-decoration: none;
+}
+
+.back-home:hover {
+    color: #2f7032;
+    text-decoration: underline;
+}
+.btn-filter {
+	    background: #3a913f;
+	    color: white;
+	    border: none;
+	    padding: 0.75rem 1.5rem;
+	    border-radius: 8px;
+	    font-weight: 500;
+	    cursor: pointer;
+	    transition: all 0.3s ease;
+	}
+
+	.btn-filter:hover {
+	    background: #2f7032;
+	    transform: translateY(-1px);
+	}
+
+	.btn-reset {
+	    background: #6c757d;
+	    color: white;
+	    padding: 0.75rem 1.5rem;
+	    border-radius: 8px;
+	    text-decoration: none;
+	    font-weight: 500;
+	    transition: all 0.3s ease;
+	    text-align: center;
+	    display: inline-block;
+	}
+
+	.btn-reset:hover {
+	    background: #5a6268;
+	    color: white;
+	    text-decoration: none;
+	    transform: translateY(-1px);
+	}
+	.container {
+	    max-width: 1200px; /* o qualsiasi valore preferisci */
+	    margin: 0 auto;    /* centra orizzontalmente */
+	    padding: 0 1rem;   /* un po' di padding laterale */
+	    width: 100%;       /* per farlo fluire */
+	}
+
