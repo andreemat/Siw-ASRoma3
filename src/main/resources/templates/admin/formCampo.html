@@ -63,12 +63,12 @@
 
             <div class="mb-3">
                 <label class="form-label d-block mb-2">Giorni Disponibili:</label>
-                <div class="btn-group d-flex flex-wrap" role="group" aria-label="Giorni Disponibili">
+                <div class="btn-group d-flex flex-wrap check" role="group" aria-label="Giorni Disponibili">
                     <th:block th:each="day : ${T(java.time.DayOfWeek).values()}">
-                        <input type="checkbox" class="btn-check" th:id="${'daycheck-' + day.name()}" 
+                        <input type="checkbox" class="btn-check check1" th:id="${'daycheck-' + day.name()}" 
                                name="giorniDisponibili" th:value="${day.name()}" autocomplete="off"
                                th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(day)}">
-                        <label class="btn btn-outline-primary flex-fill" th:for="${'daycheck-' + day.name()}" th:text="${#strings.capitalize(#strings.toLowerCase(day.name()))}">Day</label>
+                        <label class="btn btn-outline-primary flex-fill check1" th:for="${'daycheck-' + day.name()}" th:text="${#strings.capitalize(#strings.toLowerCase(day.name()))}">Day</label>
                     </th:block>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('sport')}" th:errors="*{sport}"></div>
             </div>
 
-            <button type="submit" class="btn btn-custom w-100">Crea Campo</button>
+            <button type="submit" class="btn btn-form w-100">Crea Campo</button>
         </form>
     </div>
 
