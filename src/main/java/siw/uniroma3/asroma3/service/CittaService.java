@@ -21,4 +21,8 @@ public class CittaService {
 		
 	}
 
+	public Citta findCittaByNome(String searchCittaNome) {
+		return this.cittaReposiory.findByNome(searchCittaNome);
+	}
+
 }

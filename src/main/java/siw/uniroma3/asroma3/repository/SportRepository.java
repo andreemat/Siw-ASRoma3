@@ -22,4 +22,7 @@ public interface SportRepository extends CrudRepository<Sport, Long> {
 	
 	@Query("SELECT DISTINCT c.sport FROM Campo c WHERE c.id IN :campoIds ORDER BY c.sport.nome ASC")
     List<Sport> findDistinctSportsByCampoIds(@Param("campoIds") List<Long> campoIds);
+
+
+	Sport findByNome(String sport);
 }

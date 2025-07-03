@@ -5,6 +5,9 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,12 +23,14 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.Valid;
 import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Citta;
+import siw.uniroma3.asroma3.model.Sport;
 import siw.uniroma3.asroma3.model.User;
 import siw.uniroma3.asroma3.repository.AssociazioneRepository;
 import siw.uniroma3.asroma3.repository.UserRepository;
 import siw.uniroma3.asroma3.service.AssociazioneService;
 import siw.uniroma3.asroma3.service.CittaService;
 import siw.uniroma3.asroma3.service.CredentialsService;
+import siw.uniroma3.asroma3.service.SportService;
 import siw.uniroma3.asroma3.service.UserService;
 import siw.uniroma3.asroma3.validator.AssociazioneValidator;
 
@@ -40,6 +45,7 @@ public class AssociazioneController {
 	@Autowired private AssociazioneValidator associazioneValidator;
 	@Autowired private MessageSource messageSource;
 	@Autowired private CittaService cittaService;
+	@Autowired private SportService sportService;
 	
 
 	@GetMapping("/associazione/{id}")
@@ -105,6 +111,52 @@ public class AssociazioneController {
 	    model.addAttribute("citta", this.cittaService.findAll());
 	    return "admin/formAssociazione.html";
 	}
+	@GetMapping("/associazioni/catalogo")
+	public String mostraCatalogoAssociazioni(
+	        Model model,
+	        @PageableDefault(page = 0, size = 2, sort = "nome") Pageable pageable,
+	        @RequestParam(name="searchNome",required = false) String searchNome,
+	        @RequestParam(name="searchCittaNome",required = false) String searchCittaNome,
+	        @RequestParam(name="sport",required = false) String sport
+	) {
+	    Page<Associazione> associazionePage;
+	    Long sportId=null;
+	    if(sport!=null&&!sport.trim().isEmpty()) {
+	    	Sport sportSearch = sportService.findSportByNome(sport);
+	    	if (sportSearch !=null)
+	    		sportId=sportSearch.getId();
+	    	}
+	    Long cittaId=null;
+	    if(searchCittaNome!=null&&!searchCittaNome.trim().isEmpty()) {
+	    	Citta cittaSearch = cittaService.findCittaByNome(searchCittaNome);
+	    	if (cittaSearch !=null)
+	    		cittaId=cittaSearch.getId();
+	    	}
+	    
+	    
+	    associazionePage= this.associazioneService.findByFilters(sportId, cittaId, searchNome, pageable);
+	    model.addAttribute("sport", sport);
+	    model.addAttribute("searchNome", searchNome);
+	    model.addAttribute("searchCittaNome", searchCittaNome);
+
+	    model.addAttribute("associazionePage", associazionePage);
+	    model.addAttribute("currentPage", associazionePage.getNumber() + 1);
+	    model.addAttribute("totalPages", associazionePage.getTotalPages());
+	    model.addAttribute("totalItems", associazionePage.getTotalElements());
+	    model.addAttribute("pageSize", pageable.getPageSize());
+
+	    String currentSortParam = "";
+	    if (pageable.getSort().isSorted()) {
+	        currentSortParam = pageable.getSort().toString()
+	                             .replace(": ", ",")
+	                             .replace(" ", "")
+	                             .toLowerCase();
+	    }
+	    model.addAttribute("currentSortParam", currentSortParam);
+
+	    return "catalogo.html";
+	}
+
 
 
 
