@@ -1,9 +1,12 @@
 package siw.uniroma3.asroma3.controller;
 import siw.uniroma3.asroma3.model.User;
+import siw.uniroma3.asroma3.model.Associazione;
 import siw.uniroma3.asroma3.model.Citta;
 import siw.uniroma3.asroma3.model.Credentials;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,9 +75,11 @@ public class AuthController {
 
 	@GetMapping("/")
 	public String mostraHome(Model model) {
+		Page<Associazione> firstPageAssociazioni = associazioneService.findAllAssociazioni(PageRequest.of(0, 2));
+	    model.addAttribute("associazioni", firstPageAssociazioni.getContent());
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
-			model.addAttribute("allAssociazioni", associazioneService.getAllAssociazioni());
+			model.addAttribute("allAssociazioni", firstPageAssociazioni.getContent());
 			return "home.html"; 
 		}else{
 			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -87,7 +92,7 @@ public class AuthController {
 			else {
 				User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 				model.addAttribute("associazioni", this.associazioneService.findAssociazioneByCitta(user.getCitta()));
-				model.addAttribute("allAssociazioni", this.associazioneService.getAllAssociazioni());
+				model.addAttribute("allAssociazioni",firstPageAssociazioni.getContent() );
 				return "home.html";}
 		}
 			

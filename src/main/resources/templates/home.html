@@ -78,6 +78,7 @@
         <div class="scroll-hint" th:if="${not #lists.isEmpty(associazioni)}">
             ← Scorri orizzontalmente per vedere tutte le associazioni →
         </div>
+		
     </div>
 	
 	
@@ -110,7 +111,14 @@
 	                            <button class="btn-view">Scopri di più</button>
 	                        </div>
 	                    </div>
-	                </a>	              
+	                </a>
+					<a th:href="@{/associazioni/catalogo}" class="association-card view-all-card">
+					                       <div class="card-content text-center d-flex flex-column justify-content-center align-items-center h-100">
+					                           <h3 class="card-title mb-3">Vedi tutte le Associazioni</h3>
+					                           <span class="view-all-icon">&#10140;</span> <!-- Freccia destra -->
+					                           <p class="text-muted mt-2">Esplora il catalogo completo</p>
+					                       </div>
+					    </a>	              
 	            </div>
 				<div th:if="${#lists.isEmpty(associazioni)}" class="col-12 text-center">
 				                   <div class="alert alert-info">
@@ -123,6 +131,8 @@
 	        <div class="scroll-hint" th:if="${not #lists.isEmpty(associazioni)}">
 	            ← Scorri orizzontalmente per vedere tutte le associazioni →
 	        </div>
+
+			
 	    </div>
 	
 	

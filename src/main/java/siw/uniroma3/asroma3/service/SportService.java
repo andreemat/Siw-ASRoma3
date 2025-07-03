@@ -36,6 +36,10 @@ public class SportService {
 	
 		return  this.sportRepository.findDistinctSportsByCampoIds(idCampiCoinvoltiPerSport);
 	}
+	public Sport findSportByNome(String sport) {
+			return this.sportRepository.findByNome(sport);
+		
+	}
 	
 
 	

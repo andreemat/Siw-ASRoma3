@@ -25,12 +25,13 @@ public class AssociazioneValidator implements Validator{
 				 &&!(associazione.getPartitaIVA().equals(associazioneDatabase.getPartitaIVA()))
 				 &&this.associazioneService.existsByNomeAndPartitaIVA(associazione.getNome(), associazione.getPartitaIVA())) {
 			 error.rejectValue("nome", "associazione.duplicate", "Questa associazione esiste già!1");
+			 System.err.println("WRONG");
 			 }
 		 }else
 		if(associazione.getNome()!=null &&associazione.getPartitaIVA()!=null
 			&&this.associazioneService.existsByNomeAndPartitaIVA(associazione.getNome(),associazione.getPartitaIVA())	
-				)
-			 error.rejectValue("nome", "associazione.duplicate", "Questa associazione esiste già!");
+				) {System.err.println("RIGHT");
+			 error.rejectValue("nome", "associazione.duplicate", "Questa associazione esiste già!");}
 		 
 	}
 
