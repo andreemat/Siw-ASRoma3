@@ -64,7 +64,7 @@ public class AuthController {
 			credentials.setUser(user);
 			credentialsService.saveCredentials(credentials);
 			model.addAttribute("user", user);
-			return "registrationSuccessful";
+			return "account.html";
 		}
 	  model.addAttribute("citta",cittaService.findAll());
 		return "formRegisterUser";

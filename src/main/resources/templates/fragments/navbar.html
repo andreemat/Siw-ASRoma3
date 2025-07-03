@@ -14,7 +14,7 @@
 
                 <!-- Se autenticato -->
                 <div th:if="${userDetails != null}" class="d-flex align-items-center gap-2 text-white">
-                    <span>👤 <b th:text="${userDetails.username}">Utente</b></span>
+                    <span>👤 <a  th:href="@{/utente/profilo}"  ><b th:text="${userDetails.username}">Utente</b>   </a></span>
 
                     <a class="btn btn-light btn-sm" th:href="@{/utente/prenotazioni}">Le mie prenotazioni</a>
                     <a class="btn btn-outline-light btn-sm" th:href="@{/logout}">Logout</a>

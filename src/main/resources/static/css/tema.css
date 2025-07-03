@@ -91,3 +91,23 @@ textarea:focus {
   border-radius: 20px;
   text-align: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+.account-card{
+	  justify-content: center; /* centro orizzontale */
+	  align-items: center;     /* centro verticale */
+	 
+}
+
+
+
+
