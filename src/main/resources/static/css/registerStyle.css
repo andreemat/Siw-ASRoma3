@@ -1,13 +1,63 @@
+/* ===== STILI SPECIFICI PER LA REGISTRAZIONE ===== */
+
+/* Container specifico per registrazione */
 .container-custom-register {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: none;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    max-width: 800px;
+    max-width: 800px; /* Più largo per contenere più campi */
 }
 
-.container-custom-register:hover {
-    transform: translateY(-5px);
+/* Stili specifici per i campi della registrazione */
+.register-form .row {
+    margin-bottom: 1.5rem;
+}
+
+.register-form .col-form-label {
+    font-weight: 600;
+    color: var(--grigio);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+/* Stili per select personalizzato */
+.form-select-custom {
+    padding: 1rem;
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--grigio-chiaro);
+}
+
+.form-select-custom:focus {
+    border-color: var(--verde-campo);
+    box-shadow: 0 0 0 0.2rem rgba(58, 145, 63, 0.25);
+    background: white;
+}
+
+/* Bottone personalizzato per registrazione */
+.btn-custom {
+    /* Eredita da .btn-form nel CSS comune */
+    background-color: var(--verde-campo);
+    color: white;
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-size: 1.1rem;
+}
+
+.btn-custom:hover {
+    background-color: white;
+    border-color: var(--verde-campo);
+    color: var(--verde-campo);
+    transform: scale(1.02);
+}
+
+/* Stili per card nella registrazione */
+.register-form .card {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 1rem;
 }
