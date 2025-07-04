@@ -5,91 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crea il Tuo Campo con Sport</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" th:href="@{/css/formStyle.css}" />
+	  <link rel="stylesheet" th:href="@{/css/navbarStyle.css}"/>
+	<link rel="stylesheet" th:href="@{/css/formStyle2.css}" />
+    <link rel="stylesheet" th:href="@{/css/campoFormStyle.css}" />
 </head>
 <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <div class="form-container mt-5"> 
-        <h1 class="form-header">Crea il Tuo Campo</h1>
-
-        <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}"
-              th:method="post" class="form-wrapper">
-              
-            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mb-3" role="alert">
-                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-            </div>
-
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome del Campo:</label>
-                <input type="text" id="nome" th:field="*{nome}" 
-                       class="form-control" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
-            </div>
-
-            <div class="mb-3">
-                <label for="durataSlot" class="form-label">Durata Slot (minuti):</label>
-                <input type="number" id="durataSlot" th:field="*{durataSlot}" 
-                       class="form-control" th:classappend="${#fields.hasErrors('durataSlot')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('durataSlot')}" th:errors="*{durataSlot}"></div>
-            </div>
-
-            <div class="mb-3">
-                <label for="capienza" class="form-label">Capienza:</label>
-                <input type="number" id="capienza" th:field="*{capienza}" 
-                       class="form-control" th:classappend="${#fields.hasErrors('capienza')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('capienza')}" th:errors="*{capienza}"></div>
-            </div>
-            
-            <div class="mb-3">
-                <label for="costoOrario" class="form-label">Costo orario:</label>
-                <input type="number" step="0.01" id="costoOrario" th:field="*{costoOrario}" 
-                       class="form-control" th:classappend="${#fields.hasErrors('costoOrario')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('costoOrario')}" th:errors="*{costoOrario}"></div>
-            </div>
-
-            <div class="mb-3">
-                <label for="oraApertura" class="form-label">Ora di Apertura:</label>
-                <input type="time" id="oraApertura" th:field="*{oraApertura}" 
-                       class="form-control" th:classappend="${#fields.hasErrors('oraApertura')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('oraApertura')}" th:errors="*{oraApertura}"></div>
-            </div>
-
-            <div class="mb-3">
-                <label for="oraChiusura" class="form-label">Ora di Chiusura:</label>
-                <input type="time" id="oraChiusura" th:field="*{oraChiusura}" 
-                       class="form-control" th:classappend="${#fields.hasErrors('oraChiusura')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('oraChiusura')}" th:errors="*{oraChiusura}"></div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label d-block mb-2">Giorni Disponibili:</label>
-                <div class="btn-group d-flex flex-wrap check" role="group" aria-label="Giorni Disponibili">
-                    <th:block th:each="day : ${T(java.time.DayOfWeek).values()}">
-                        <input type="checkbox" class="btn-check check1" th:id="${'daycheck-' + day.name()}" 
-                               name="giorniDisponibili" th:value="${day.name()}" autocomplete="off"
-                               th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(day)}">
-                        <label class="btn btn-outline-primary flex-fill check1" th:for="${'daycheck-' + day.name()}" th:text="${#strings.capitalize(#strings.toLowerCase(day.name()))}">Day</label>
-                    </th:block>
-                </div>
-            </div>
-            
-            <input type="hidden" th:field="*{id}" />
-            
-            <div class="mb-3">
-                <label for="sport-select" class="form-label">Seleziona uno sport:</label>
-                <select id="sport-select" th:field="*{sport}" 
-                        class="form-select" th:classappend="${#fields.hasErrors('sport')} ? 'is-invalid' : ''">
-                    <option value="">-- Seleziona uno sport --</option>
-                    <option th:each="sportIter : ${sports}"
-                            th:value="${sportIter.id}"
-                            th:text="${sportIter.nome}">Sport Nome</option>
-                </select>
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('sport')}" th:errors="*{sport}"></div>
-            </div>
-
-            <button type="submit" class="btn btn-form w-100">Crea Campo</button>
-        </form>
+    <div>
+        <h1 class="form-title">Crea il Tuo Campo</h1>
     </div>
 
+    <div class="container my-3 container-custom-form container-custom-field mx-auto">
+        <div class="form-header">
+            <div class="form-icon">
+                <i class="fas fa-futbol"></i>
+            </div>
+            <h2 class="mb-2">Nuovo Campo</h2>
+            <p class="form-subtitle">Inserisci i dettagli del campo</p>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <form th:object="${campo}" th:action="@{/admin/associazione/{idA}/registra-campo(idA=${idA})}" th:method="post" class="register-form">
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mb-3" role="alert">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
+
+                <div class="input-group-custom">
+                    <label for="nome" class="input-label">Nome del Campo</label>
+                    <div class="position-relative">
+                        <i class="fas fa-signature input-icon"></i>
+                        <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                    </div>
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-danger"></span>
+                </div>
+
+                <div class="input-group-custom">
+                    <label for="durataSlot" class="input-label">Durata Slot (minuti)</label>
+                    <div class="position-relative">
+                        <i class="fas fa-clock input-icon"></i>
+                        <input type="number" id="durataSlot" th:field="*{durataSlot}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('durataSlot')} ? 'is-invalid' : ''">
+                    </div>
+                    <span th:if="${#fields.hasErrors('durataSlot')}" th:errors="*{durataSlot}" class="text-danger"></span>
+                </div>
+
+                <div class="input-group-custom">
+                    <label for="capienza" class="input-label">Capienza</label>
+                    <div class="position-relative">
+                        <i class="fas fa-users input-icon"></i>
+                        <input type="number" id="capienza" th:field="*{capienza}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('capienza')} ? 'is-invalid' : ''">
+                    </div>
+                    <span th:if="${#fields.hasErrors('capienza')}" th:errors="*{capienza}" class="text-danger"></span>
+                </div>
+
+                <div class="input-group-custom">
+                    <label for="costoOrario" class="input-label">Costo orario</label>
+                    <div class="position-relative">
+                        <i class="fas fa-euro-sign input-icon"></i>
+                        <input type="number" step="0.01" id="costoOrario" th:field="*{costoOrario}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('costoOrario')} ? 'is-invalid' : ''">
+                    </div>
+                    <span th:if="${#fields.hasErrors('costoOrario')}" th:errors="*{costoOrario}" class="text-danger"></span>
+                </div>
+
+                <div class="input-group-custom">
+                    <label for="oraApertura" class="input-label">Ora di Apertura</label>
+                    <div class="position-relative">
+                        <i class="fas fa-door-open input-icon"></i>
+                        <input type="time" id="oraApertura" th:field="*{oraApertura}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('oraApertura')} ? 'is-invalid' : ''">
+                    </div>
+                    <span th:if="${#fields.hasErrors('oraApertura')}" th:errors="*{oraApertura}" class="text-danger"></span>
+                </div>
+
+                <div class="input-group-custom">
+                    <label for="oraChiusura" class="input-label">Ora di Chiusura</label>
+                    <div class="position-relative">
+                        <i class="fas fa-door-closed input-icon"></i>
+                        <input type="time" id="oraChiusura" th:field="*{oraChiusura}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('oraChiusura')} ? 'is-invalid' : ''">
+                    </div>
+                    <span th:if="${#fields.hasErrors('oraChiusura')}" th:errors="*{oraChiusura}" class="text-danger"></span>
+                </div>
+
+                <div class="input-group-custom">
+                    <label class="input-label d-block mb-2">Giorni Disponibili</label>
+                    <div class="btn-group d-flex flex-wrap check" role="group" aria-label="Giorni Disponibili">
+                        <th:block th:each="day : ${T(java.time.DayOfWeek).values()}">
+                            <input type="checkbox" class="btn-check check1" th:id="${'daycheck-' + day.name()}" name="giorniDisponibili" th:value="${day.name()}" autocomplete="off" th:checked="${campo.giorniDisponibili != null and campo.giorniDisponibili.contains(day)}">
+                            <label class="btn btn-outline-primary flex-fill check1" th:for="${'daycheck-' + day.name()}" th:text="${#strings.capitalize(#strings.toLowerCase(day.name()))}">Day</label>
+                        </th:block>
+                    </div>
+                </div>
+
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="input-group-custom">
+                    <label for="sport-select" class="input-label">Seleziona uno sport</label>
+                    <div class="position-relative">
+                        <i class="fas fa-dumbbell input-icon"></i>
+                        <select id="sport-select" th:field="*{sport}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('sport')} ? 'is-invalid' : ''">
+                            <option value="">-- Seleziona uno sport --</option>
+                            <option th:each="sportIter : ${sports}" th:value="${sportIter.id}" th:text="${sportIter.nome}">Sport Nome</option>
+                        </select>
+                    </div>
+                    <span th:if="${#fields.hasErrors('sport')}" th:errors="*{sport}" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-form w-100">
+                    <i class="fas fa-plus me-2"></i>
+                    Crea Campo
+                </button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

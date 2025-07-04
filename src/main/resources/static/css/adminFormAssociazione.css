@@ -1,0 +1,137 @@
+/* ===== STILI SPECIFICI PER FORM ADMIN ===== */
+
+/* Container specifico per form admin */
+.admin-form-container {
+    max-width: 600px;
+}
+
+/* Stili specifici per upload file */
+.form-control[type="file"] {
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 2px dashed #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-control[type="file"]:hover {
+    border-color: var(--verde-campo);
+    border-style: dashed;
+}
+
+.form-control[type="file"]:focus {
+    border-color: var(--verde-campo);
+    border-style: solid;
+    box-shadow: 0 0 0 0.2rem rgba(58, 145, 63, 0.25);
+}
+
+/* Stili per input numerici */
+.form-control[type="number"] {
+    /* Rimuove le frecce su alcuni browser */
+    -moz-appearance: textfield;
+}
+
+.form-control[type="number"]::-webkit-outer-spin-button,
+.form-control[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Stili per form lunghi */
+.admin-form-container .mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Miglioramenti per textarea */
+.admin-form-container textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+/* Stili per select multiple o complessi */
+.admin-form-container .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+}
+
+/* Stili per form con molti campi */
+.admin-form-container .form-label {
+    font-weight: 600;
+    color: var(--verde-scuro);
+    margin-bottom: 0.5rem;
+}
+
+/* Hover effects per admin forms */
+.admin-form-container .form-control:hover,
+.admin-form-container .form-select:hover {
+    border-color: var(--verde-chiaro);
+    transform: translateY(-1px);
+}
+
+/* Stili per errori nei form admin */
+.admin-form-container .invalid-feedback {
+    display: block;
+    font-size: 0.875rem;
+    color: #dc3545;
+    margin-top: 0.25rem;
+}
+
+.admin-form-container .is-invalid {
+    border-color: #dc3545;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Stili per alert di successo/errore */
+.admin-form-container .alert {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.admin-form-container .alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f1aeb5 100%);
+    color: #721c24;
+}
+
+.admin-form-container .alert-success {
+    background: linear-gradient(135deg, #d1eddb 0%, #badbcc 100%);
+    color: #155724;
+}
+
+/* Responsive per form admin */
+@media (max-width: 768px) {
+    .admin-form-container {
+        margin: 1rem;
+    }
+    
+    .admin-form-container .card-body-custom {
+        padding: 1.5rem;
+    }
+    
+    .admin-form-container h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .admin-form-container .form-control,
+    .admin-form-container .form-select {
+        font-size: 16px; /* Previene zoom su iOS */
+    }
+}
+
+/* Focus ring migliorato per accessibilità */
+.admin-form-container .form-control:focus,
+.admin-form-container .form-select:focus,
+.admin-form-container .btn:focus {
+    outline: 2px solid var(--verde-campo);
+    outline-offset: 2px;
+}
