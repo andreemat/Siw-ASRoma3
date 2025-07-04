@@ -53,9 +53,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card-title {
-  color: var(--verde-campo);
-}
 
 /* Footer */
 .footer {
@@ -91,3 +88,18 @@ textarea:focus {
   border-radius: 20px;
   text-align: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
