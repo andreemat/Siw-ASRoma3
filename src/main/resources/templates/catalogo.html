@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/tema.css}" />
     <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
     <link rel="stylesheet" th:href="@{/css/homeStyle.css}" /> <!-- Contiene gli stili per .association-card -->
-    <link rel="stylesheet" th:href="@{/css/catalogoStyle.css}" /> <!-- NUOVO LINK AL CSS SPECIFICO DEL CATALOGO -->
+    <link rel="stylesheet" th:href="@{/css/catalogoStyle.css}" /> <!-- CSS SPECIFICO DEL CATALOGO -->
 </head>
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -15,23 +15,37 @@
     <div class="container">
         <h1>Catalogo Associazioni</h1>
 
-        <!-- Form di Ricerca -->
-        <div class="search-form">
-            <form th:action="@{/associazioni/catalogo}" method="get" style="display: flex; flex-wrap: wrap; gap: 15px; width: 100%; justify-content: center;">
-                <label for="searchNome">Nome Associazione:</label>
-                <input type="text" id="searchNome" name="searchNome" th:value="${searchNome}" placeholder="Cerca per nome..." class="form-control">
+        <!-- Form di Ricerca - Ristrutturato con classi Bootstrap -->
+        <div class="search-form p-4 mb-4 border rounded shadow-sm">
+            <form th:action="@{/associazioni/catalogo}" method="get" class="row g-3 align-items-end justify-content-center">
+                
+                <!-- Campo Nome Associazione -->
+                <div class="col-md-4 col-sm-6 col-12">
+                    <label for="searchNome" class="form-label mb-1">Nome Associazione:</label>
+                    <input type="text" id="searchNome" name="searchNome" th:value="${searchNome}" placeholder="Cerca per nome..." class="form-control">
+                </div>
 
-                <label for="searchCittaNome">Nome Città:</label>
-                <input type="text" id="searchCittaNome" name="searchCittaNome" th:value="${searchCittaNome}" placeholder="Cerca per città..." class="form-control">
+                <!-- Campo Nome Città -->
+                <div class="col-md-4 col-sm-6 col-12">
+                    <label for="searchCittaNome" class="form-label mb-1">Nome Città:</label>
+                    <input type="text" id="searchCittaNome" name="searchCittaNome" th:value="${searchCittaNome}" placeholder="Cerca per città..." class="form-control">
+                </div>
 				
-				<label for="sport">Sport:</label>
-				<input type="text" id="sport" name="sport" th:value="${sport}" placeholder="Cerca per sport..." class="form-control">
+				<!-- Campo Sport -->
+				<div class="col-md-4 col-sm-6 col-12">
+					<label for="sport" class="form-label mb-1">Sport:</label>
+					<input type="text" id="sport" name="sport" th:value="${sport}" placeholder="Cerca per sport..." class="form-control">
+				</div>
 
+                <!-- Campi Hidden per paginazione e ordinamento -->
                 <input type="hidden" name="size" th:value="${pageSize}">
                 <input type="hidden" name="sort" th:value="${currentSortParam}" th:if="${currentSortParam != null and currentSortParam != ''}">
 
-                <button type="submit" class="btn btn-primary">Cerca</button>
-                <a th:href="@{/associazioni/catalogo(size=${pageSize}, sort=${currentSortParam})}" th:if="${searchNome != null and searchNome != '' or searchCittaNome != null and searchCittaNome != ''}" class="btn btn-secondary">Resetta Ricerca</a>
+                <!-- Pulsanti Cerca e Resetta -->
+                <div class="col-auto mt-3 mt-sm-0">
+                    <button type="submit" class="btn btn-primary custom-button me-2">Cerca</button>
+                    <a th:href="@{/associazioni/catalogo(size=${pageSize}, sort=${currentSortParam})}" th:if="${searchNome != null and searchNome != '' or searchCittaNome != null and searchCittaNome != '' or sport != null and sport != ''}" class="btn btn-secondary">Resetta Ricerca</a>
+                </div>
             </form>
         </div>
 
@@ -69,25 +83,33 @@
             </div>
         </div>
 
-        <!-- Controlli di Paginazione -->
-        <div class="pagination" th:if="${associazionePage.totalPages > 0}">
-            <a th:href="@{/associazioni/catalogo(page=${associazionePage.number - 1}, size=${pageSize}, sort=${currentSortParam}, searchNome=${searchNome}, searchCittaNome=${searchCittaNome})}"
-               th:classappend="${associazionePage.first ? 'disabled' : ''}"
-               th:text="Precedente"></a>
-
-            <th:block th:with="startPage=${T(java.lang.Math).max(0, associazionePage.number - 2)},
-                               endPage=${T(java.lang.Math).min(associazionePage.totalPages - 1, associazionePage.number + 2)}">
-                <span th:each="i : ${#numbers.sequence(startPage, endPage)}">
-                    <a th:href="@{/associazioni/catalogo(page=${i}, size=${pageSize}, sort=${currentSortParam}, searchNome=${searchNome}, searchCittaNome=${searchCittaNome})}"
-                       th:classappend="${i == associazionePage.number ? 'active' : ''}"
-                       th:text="${i + 1}"></a>
-                </span>
-            </th:block>
-
-            <a th:href="@{/associazioni/catalogo(page=${associazionePage.number + 1}, size=${pageSize}, sort=${currentSortParam}, searchNome=${searchNome}, searchCittaNome=${searchCittaNome})}"
-               th:classappend="${associazionePage.last ? 'disabled' : ''}"
-               th:text="Successivo"></a>
-
+        <!-- Controlli di Paginazione - FINALMENTE CORRETTI PER BOOTSTRAP -->
+        <nav aria-label="Paginazione Associazioni" th:if="${associazionePage.totalPages > 0}">
+            <ul class="pagination justify-content-center custom-pagination">
+                <!-- Link "Precedente" -->
+                <li class="page-item custom-item" th:classappend="${associazionePage.first ? 'disabled' : ''}">
+                    <a class="page-link custom-page-link" th:href="@{/associazioni/catalogo(page=${associazionePage.number - 1}, size=${pageSize}, sort=${currentSortParam}, searchNome=${searchNome}, searchCittaNome=${searchCittaNome}, sport=${sport})}"
+                       th:text="Precedente"></a>
+                </li>
+                
+                <!-- Numeri delle Pagine -->
+                <th:block th:with="startPage=${T(java.lang.Math).max(0, associazionePage.number - 2)},
+                                   endPage=${T(java.lang.Math).min(associazionePage.totalPages - 1, associazionePage.number + 2)}">
+                    <li class="page-item custom-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i == associazionePage.number ? 'active' : ''}">
+                        <a class="page-link custom-page-link" th:href="@{/associazioni/catalogo(page=${i}, size=${pageSize}, sort=${currentSortParam}, searchNome=${searchNome}, searchCittaNome=${searchCittaNome}, sport=${sport})}"
+                           th:text="${i + 1}"></a>
+                    </li>
+                </th:block>
+                
+                <!-- Link "Successivo" -->
+                <li class="page-item custom-item" th:classappend="${associazionePage.last ? 'disabled' : ''}">
+                    <a class="page-link custom-page-link" th:href="@{/associazioni/catalogo(page=${associazionePage.number + 1}, size=${pageSize}, sort=${currentSortParam}, searchNome=${searchNome}, searchCittaNome=${searchCittaNome}, sport=${sport})}"
+                       th:text="Successivo"></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Riepilogo Paginazione - SPOSTATO FUORI DALL'UL -->
+        <div class="text-center mt-3">
             <p>Pagina <strong th:text="${currentPage}">1</strong> di <strong th:text="${totalPages}">1</strong> (<strong th:text="${totalItems}">0</strong> elementi in totale)</p>
         </div>
     </div>

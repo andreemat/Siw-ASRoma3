@@ -18,53 +18,44 @@ h1 {
     margin-bottom: 30px;
     font-size: 2.5rem;
 }
+/* Stili per il form di ricerca */
 .search-form {
+    /* Rimosse le proprietà flexbox dirette dal div esterno, ora gestite dalla classe .row sul form */
     margin-bottom: 25px;
     padding: 20px;
     border: 1px solid #e0e6ed;
     background-color: #fdfdfd;
     border-radius: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
 }
-.search-form label {
+
+.search-form .form-label { /* Stile per le label all'interno del form */
     font-weight: bold;
     color: #555;
+    margin-bottom: 0.25rem; /* Spazio ridotto sotto la label */
 }
-.search-form input[type="text"] {
-    flex-grow: 1;
-    min-width: 180px;
-    padding: 10px 15px;
-    border: 1px solid #c0cddb;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-}
-.search-form input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-.search-form button {
+
+/* Stili per il pulsante "Cerca" personalizzato */
+/* Reso più specifico e con !important per garantire la sovrascrittura */
+.search-form .btn-primary.custom-button {
+    background-color: #28a745 !important; /* Verde Bootstrap 'success' con priorità alta */
+    border-color: #28a745 !important; /* Bordo dello stesso colore con priorità alta */
+    color: white; /* Testo bianco */
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s;
 }
-.search-form button:hover {
-    background-color: #0056b3;
+
+.search-form .btn-primary.custom-button:hover {
+    background-color: #218838 !important; /* Verde più scuro all'hover con priorità alta */
+    border-color: #1e7e34 !important; /* Bordo più scuro all'hover con priorità alta */
     transform: translateY(-2px);
 }
-.search-form a {
-    padding: 10px 20px;
+
+/* Stile per il pulsante "Resetta Ricerca" (btn-secondary) */
+.search-form .btn-secondary {
     background-color: #6c757d;
     color: white;
     border: none;
@@ -74,12 +65,12 @@ h1 {
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s;
 }
-.search-form a:hover {
+.search-form .btn-secondary:hover {
     background-color: #5a6268;
     transform: translateY(-2px);
 }
 
-/* Stili per la griglia delle card */
+/* Stili per la griglia delle card (invariati rispetto a homeStyle.css ma inclusi qui per completezza) */
 .associations-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* 320px è la min-width delle card */
@@ -89,16 +80,14 @@ h1 {
     justify-items: center; /* Centra le card nella griglia */
 }
 
-/* Le card stesse useranno gli stili da homeStyle.css */
-/* .association-card { ... } */
-
+/* Stili per i controlli di Paginazione */
 .pagination {
     margin-top: 30px;
     text-align: center;
     padding: 15px;
     background-color: #fdfdfd;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Ombra esistente per il contenitore della paginazione */
 }
 .pagination a, .pagination span {
     display: inline-block;
@@ -109,28 +98,80 @@ h1 {
     text-decoration: none;
     color: #007bff;
     font-weight: bold;
-    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s; /* Aggiunto box-shadow alla transizione */
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.1); /* Aggiunta ombra sottile */
 }
-.pagination a:hover { background-color: #007bff; color: white; transform: translateY(-2px); }
-.pagination a.active { background-color: #007bff; color: white; border-color: #007bff; box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3); }
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Ombra migliorata all'hover */
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3); /* Ombra esistente per lo stato attivo */
+}
 .pagination a.disabled {
     color: #b0c4de;
     border-color: #dbe4ee;
     pointer-events: none;
     cursor: default;
     background-color: #f0f4f8;
-    box-shadow: none;
+    box-shadow: none; /* Nessuna ombra per lo stato disabilitato */
 }
 .pagination p { margin-top: 20px; color: #555; font-size: 1rem; }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .container { padding: 20px; }
-    .search-form { flex-direction: column; align-items: stretch; }
-    .search-form input[type="text"] { width: 100%; margin-right: 0; }
-    .search-form button, .search-form a { width: 100%; text-align: center; }
+    .search-form form { /* Rimuove lo spazio tra i campi su mobile */
+        gap: 0;
+    }
+    .search-form .col-12 {
+        margin-bottom: 1rem; /* Spazio tra i campi quando sono in colonna */
+    }
+    .search-form .col-auto {
+        width: 100%; /* I pulsanti prendono tutta la larghezza */
+        text-align: center;
+    }
+    .search-form .me-2 { /* Rimuove il margine tra i pulsanti su mobile se non necessario */
+        margin-right: 0 !important;
+        margin-bottom: 10px; /* Spazio tra i pulsanti se stackati */
+    }
     .associations-grid {
         grid-template-columns: 1fr; /* Una colonna su schermi piccoli */
-    }
-    /* Le card responsive sono già gestite da homeStyle.css */
+    
+}
+}
+
+.custom-pagination .page-item .custom-page-link {
+    color: #2f7032; /* Colore del testo dei link normali (es. verde scuro) */
+    border-color: #2f7032; /* Colore del bordo dei link normali */
+    background-color: #e8f5e8; /* Sfondo leggero per i link normali */
+    box-shadow: 0 2px 5px rgba(47, 112, 50, 0.1); /* Ombra sottile */
+}
+
+.custom-pagination .page-item .custom-page-link:hover {
+    background-color: #3a913f; /* Sfondo più scuro all'hover */
+    color: white; /* Testo bianco all'hover */
+    border-color: #3a913f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(47, 112, 50, 0.3); /* Ombra migliorata all'hover */
+}
+
+.custom-pagination .page-item.active .custom-page-link {
+    background-color: #2f7032 !important; /* Sfondo verde scuro per la pagina attiva */
+    border-color: #2f7032 !important;
+    color: white !important; /* Testo bianco per la pagina attiva */
+    box-shadow: 0 2px 5px rgba(47, 112, 50, 0.3);
+}
+
+.custom-pagination .page-item.disabled .custom-page-link {
+    color: #a0a0a0; /* Colore testo per disabilitato */
+    border-color: #d0d0d0; /* Colore bordo per disabilitato */
+    background-color: #f0f0f0; /* Sfondo per disabilitato */
+    box-shadow: none;
+    cursor: not-allowed;
 }
