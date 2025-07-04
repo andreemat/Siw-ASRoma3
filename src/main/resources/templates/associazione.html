@@ -54,19 +54,12 @@
                 </div>
             </div>
 
-            <!-- Description Section -->
-            <div class="description-section">
-                <h3 class="section-title">Chi Siamo</h3>
-                <div class="description-content">
-                    <p th:text="${associazione.descrizione}" class="description-text">
-                        Descrizione dell'associazione...
-                    </p>
-                </div>
-            </div>
-
             <!-- Sports Section -->
             <div class="sports-section">
-                <h3 class="section-title">Sport Disponibili</h3>
+                <h3 class="section-title">Scegli lo sport per prenotare un campo</h3>
+				<p class="text-muted mb-3">
+				        Seleziona lo sport che vuoi praticare per vedere e prenotare i campi disponibili.
+				    </p>
                 <div th:if="${associazione.sportList == null or #lists.isEmpty(associazione.sportList)}" 
                      class="alert alert-info">
                     <div class="d-flex align-items-center">
@@ -85,6 +78,17 @@
                     </a>
                 </div>
             </div>
+			
+			<!-- Description Section -->
+			           <div class="description-section">
+			               <h3 class="section-title">Chi Siamo</h3>
+			               <div class="description-content">
+			                   <p th:text="${associazione.descrizione}" class="description-text">
+			                       Descrizione dell'associazione...
+			                   </p>
+			               </div>
+			           </div>
+
         </div>
 
         <!-- Sidebar -->
