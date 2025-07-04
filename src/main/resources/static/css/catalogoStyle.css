@@ -46,6 +46,7 @@ h1 {
     font-size: 1rem;
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s;
+	margin-top: 10px;
 }
 
 .search-form .btn-primary.custom-button:hover {
@@ -175,3 +176,6 @@ h1 {
     box-shadow: none;
     cursor: not-allowed;
 }
+.custom-alert {text-align:center;}
+
+
