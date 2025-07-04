@@ -2,66 +2,85 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Seleziona orari</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}" />
+    <link rel="stylesheet" th:href="@{/css/formOrariStyle.css}" /> <!-- Nuovo CSS specifico per questa pagina -->
 </head>
 <body>
-    <h3>Seleziona gli orari disponibili per il giorno: <span th:text="*{data}"></span></h3>
-	<div th:if="${erroreSlot}" class="alert alert-danger" role="alert" style="color: red; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-	    <span th:text="${erroreSlot}"></span>
-	</div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <form th:action="@{/prenota/campo/{idC}/conferma(idC=${campo.id})}"
-          th:object="${prenotazione}" method="post">
-	
-        <input type="hidden" th:field="*{data}" />
-		
-        <ul>
-            <li th:each="slot : ${slots}">
-                <label>
-                    <span th:if="${slot.disponibile}">
-                        <input type="checkbox" name="orariSelezionati"
-                               th:value="${slot.oraInizio} + '-' + ${slot.oraFine}"
-                               class="orario-checkbox"
-                               th:attr="data-ora-inizio=${slot.oraInizio}, data-ora-fine=${slot.oraFine}"> <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span>
-                    </span>
-                    <span th:unless="${slot.disponibile}" style="color: grey;">
-                        <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span> (Non disponibile)
-                    </span>
-                </label>
-            </li>
-        </ul>
+    <div class="container my-5">
+        <h3 class="text-center mb-4">Seleziona gli orari disponibili</h3>
 
-        <button type="submit">Prenota</button>
-    </form>
+        <!-- Barra di visualizzazione della data scelta - NON MODIFICABILE -->
+        <div class="date-display-bar">
+            Giorno selezionato: <span th:text="${#temporals.format(prenotazione.data, 'dd MMMM yyyy')}"></span>
+        </div>
 
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        const checkboxes = document.querySelectorAll('.orario-checkbox');
-        let lastChecked = null; // Per tenere traccia dell'ultimo checkbox selezionato
+        <div th:if="${erroreSlot}" class="alert alert-danger" role="alert">
+            <span th:text="${erroreSlot}"></span>
+        </div>
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('click', (e) => {
-                const currentChecked = e.target;
+        <form th:action="@{/prenota/campo/{idC}/conferma(idC=${campo.id})}"
+              th:object="${prenotazione}" method="post">
+        
+            <!-- Campo nascosto per passare la data al controller -->
+            <input type="hidden" th:field="*{data}" />
+            
+            <div class="btn-group-vertical w-100" role="group" aria-label="Seleziona Orario">
+                <th:block th:each="slot, stat : ${slots}">
+                    <!-- Genera un ID univoco per ogni checkbox -->
+                    <input type="checkbox" class="btn-check" name="orariSelezionati"
+                           th:id="${'slot-' + stat.index}"
+                           th:value="${slot.oraInizio} + '-' + ${slot.oraFine}"
+                           th:disabled="${!slot.disponibile}">
 
-                if (currentChecked.checked && lastChecked) {
-                    const currentId = Array.from(checkboxes).indexOf(currentChecked);
-                    const lastId = Array.from(checkboxes).indexOf(lastChecked);
+                    <label th:for="${'slot-' + stat.index}"
+                           th:classappend="${slot.disponibile ? 'btn-outline-primary' : 'btn-secondary'}"
+                           class="btn custom-slot-button">
+                        <span th:text="${slot.oraInizio} + ' – ' + ${slot.oraFine}"></span>
+                        <span th:unless="${slot.disponibile}" class="ms-2" style="font-size: 0.85em;">(Non disponibile)</span>
+                    </label>
+                </th:block>
+            </div>
 
-                    const start = Math.min(currentId, lastId);
-                    const end = Math.max(currentId, lastId);
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">Prenota</button>
+            </div>
+        </form>
 
-                    for (let i = start + 1; i < end; i++) {
-                        const intermediateCheckbox = checkboxes[i];
-                        // Se l'intermedio è disponibile (non disabilitato, non ha stile 'grey')
-                        // E non è già selezionato, lo selezioniamo
-                        if (!intermediateCheckbox.disabled && !intermediateCheckbox.parentElement.style.color) {
-                            intermediateCheckbox.checked = true;
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            const checkboxes = document.querySelectorAll('.btn-check[name="orariSelezionati"]');
+            let lastChecked = null; // Per tenere traccia dell'ultimo checkbox selezionato
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', (e) => {
+                    const currentChecked = e.target;
+
+                    if (currentChecked.checked && lastChecked) {
+                        const currentId = Array.from(checkboxes).indexOf(currentChecked);
+                        const lastId = Array.from(checkboxes).indexOf(lastChecked);
+
+                        const start = Math.min(currentId, lastId);
+                        const end = Math.max(currentId, lastId);
+
+                        for (let i = start + 1; i < end; i++) {
+                            const intermediateCheckbox = checkboxes[i];
+                            // Se l'intermedio è disponibile (non disabilitato)
+                            if (!intermediateCheckbox.disabled) {
+                                intermediateCheckbox.checked = true;
+                                // Simula il click per aggiornare lo stile del label (se necessario)
+                                // intermediateCheckbox.dispatchEvent(new Event('change'));
+                            }
                         }
                     }
-                }
-                lastChecked = currentChecked;
+                    lastChecked = currentChecked;
+                });
             });
-        });
-        /*]]>*/
-    </script>
+            /*]]>*/
+        </script>
+    </div>
 </body>
 </html>

@@ -67,14 +67,15 @@
                 </a>
 
                 <!-- Fallback quando non ci sono associazioni -->
-                <div th:if="${#lists.isEmpty(associazioni)}" class="col-12 text-center">
-                    <div class="alert alert-info">
-                        <h4>Nessuna associazione trovata</h4>
-                        <p>Al momento non ci sono associazioni vicine a te.</p>
-                    </div>
-                </div>
+                
             </div>
         </div>
+		<div th:if="${#lists.isEmpty(associazioni)}" class="col-12 text-center">
+		                    <div class="alert alert-info">
+		                        <h4>Nessuna associazione trovata</h4>
+		                        <p>Al momento non ci sono associazioni vicine a te.</p>
+		                    </div>
+		                </div>
         
         <div class="scroll-hint" th:if="${not #lists.isEmpty(associazioni)}">
             ← Scorri orizzontalmente per vedere tutte le associazioni →
@@ -119,15 +120,17 @@
 					                           <span class="view-all-icon">&#10140;</span> <!-- Freccia destra -->
 					                           <p class="text-muted mt-2">Esplora il catalogo completo</p>
 					                       </div>
-					    </a>	              
+					    </a>
+						          
 	            </div>
-				<div th:if="${#lists.isEmpty(associazioni)}" class="col-12 text-center">
-				                   <div class="alert alert-info">
-				                       <h4>Nessuna associazione trovata</h4>
-				                       <p>Al momento non ci sono associazioni registrate nel sistema.</p>
-				                   </div>
-				               </div>
+				
 	        </div>
+			<div th:if="${#lists.isEmpty(allAssociazioni)}" class="col-12 text-center">
+					                    <div class="alert alert-info">
+					                        <h4>Nessuna associazione trovata</h4>
+					                        <p>Al momento non ci sono associazioni vicine a te.</p>
+					                    </div>
+					                </div>
 	        
 	        <div class="scroll-hint" th:if="${not #lists.isEmpty(associazioni)}">
 	            ← Scorri orizzontalmente per vedere tutte le associazioni →
