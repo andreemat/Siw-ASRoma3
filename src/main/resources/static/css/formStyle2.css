@@ -1,0 +1,296 @@
+/* ===== VARIABILI CSS ===== */
+:root {
+    --verde-campo: #3a913f;
+    --verde-scuro: #2f7032;
+    --verde-chiaro: #52b755;
+    --bianco: #ffffff;
+    --grigio-chiaro: #f8f9fa;
+    --grigio: #6c757d;
+    --nero-soft: #333;
+}
+
+/* ===== STILI BASE ===== */
+body {
+    background: linear-gradient(135deg, var(--grigio-chiaro) 0%, #e9ecef 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== TITOLI DELLE PAGINE ===== */
+.form-title {
+    color: var(--verde-campo);
+    padding: 4rem 0;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== CONTAINER COMUNI ===== */
+.container-custom-form {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    max-width: 500px;
+    padding: 2rem;
+}
+
+.container-custom-form:hover {
+    transform: translateY(-5px);
+}
+
+/* ===== HEADER DEI FORM ===== */
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--verde-campo);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: white;
+    font-size: 2rem;
+}
+
+.form-subtitle {
+    color: var(--grigio);
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* ===== GRUPPI DI INPUT ===== */
+.input-group-custom {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.input-label {
+    font-weight: 600;
+    color: var(--grigio);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--verde-campo);
+    font-size: 1.1rem;
+    z-index: 2;
+}
+
+/* ===== CONTROLLI DEI FORM ===== */
+.form-control-custom {
+    padding: 1rem 1rem 1rem 3rem;
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--grigio-chiaro);
+}
+
+.form-control-custom:focus {
+    border-color: var(--verde-campo);
+    box-shadow: 0 0 0 0.2rem rgba(58, 145, 63, 0.25);
+    background: white;
+}
+
+/* Input senza icona */
+.form-control-custom.no-icon {
+    padding-left: 1rem;
+}
+
+/* ===== BOTTONI ===== */
+.btn-form {
+    background-color: var(--verde-campo);
+    color: white;
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-size: 1.1rem;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.btn-form:hover {
+    background-color: white;
+    border-color: var(--verde-campo);
+    color: var(--verde-campo);
+    transform: scale(1.02);
+}
+
+/* ===== MESSAGGI DI ERRORE ===== */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* ===== LINK AGGIUNTIVI ===== */
+.form-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.form-link a {
+    color: var(--verde-campo);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-link a:hover {
+    color: var(--verde-scuro);
+    text-decoration: underline;
+}
+
+/* ===== WRAPPER E CARD PERSONALIZZATI ===== */
+.form-wrapper {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.form-wrapper:hover {
+    transform: translateY(-5px);
+}
+
+.card-body-custom {
+    padding: 2rem;
+    background: white;
+}
+
+/* ===== FORM LABELS E CONTROLLI BOOTSTRAP ===== */
+.form-label {
+    font-weight: 600;
+    color: var(--grigio);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+/* Form controls standard Bootstrap con il nostro stile */
+.form-control:not(.form-control-custom) {
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--grigio-chiaro);
+    padding: 1rem;
+}
+
+.form-control:not(.form-control-custom):focus {
+    border-color: var(--verde-campo);
+    box-shadow: 0 0 0 0.2rem rgba(58, 145, 63, 0.25);
+    background: white;
+}
+
+.form-select {
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--grigio-chiaro);
+    padding: 1rem;
+}
+
+.form-select:focus {
+    border-color: var(--verde-campo);
+    box-shadow: 0 0 0 0.2rem rgba(58, 145, 63, 0.25);
+    background: white;
+}
+
+/* ===== TEXTAREA PERSONALIZZATO ===== */
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ===== VALIDAZIONE BOOTSTRAP ===== */
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+/* ===== TITOLI FORM ALTERNATIVI ===== */
+.form-wrapper h2 {
+    color: var(--verde-campo);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .form-title {
+        font-size: 2rem;
+        padding: 2rem 0;
+    }
+    
+    .container-custom-form {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .form-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .card-body-custom {
+        padding: 1.5rem;
+    }
+    
+    .form-wrapper h2 {
+        font-size: 1.5rem;
+    }
+}
