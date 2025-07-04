@@ -1,0 +1,13 @@
+.container-custom-register {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    max-width: 800px;
+}
+
+.container-custom-register:hover {
+    transform: translateY(-5px);
+}

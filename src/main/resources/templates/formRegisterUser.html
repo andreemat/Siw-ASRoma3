@@ -10,33 +10,30 @@
 	        xintegrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" 
 	        crossorigin="anonymous" />
 
-	<link rel="stylesheet" th:href="@{/css/formStyle.css}"/>
+	<link rel="stylesheet" th:href="@{/css/login.css}"/>
 	<link rel="stylesheet" th:href="@{/css/navbarStyle.css}"/>
+	<link rel="stylesheet" th:href="@{/css/registerStyle.css}"/>
 </head>
 
-<body class ="background-custom">
+<body>
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
-	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${user}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-
-	<div class="container my-5 container-custom" style="max-width: 1000px;">
+	<div>
+	      <h1 class="form-title">Registrazione nuovo utente</h1></div>
+	
+	<div class="container my-3 container-custom-register mx-auto ">
+		<div class="login-header">
+		        <h2 class="mb-2">Benvenuto!</h2>
+		        <p class="login-subtitle">Inserisci le tue informazioni</p>
+		    </div>
 	    <div class="card shadow-sm">
-	        <div class="card-body p-4">
-	            <h2>Registrazione nuovo utente</h2>
+	       
 	            <form th:action="@{/register}" method="POST">
 	                
 	                <!-- Campo Nome -->
-	                <div class="row mb-3">
-	                    <label for="name" class="col-sm-2 col-form-label">Nome</label>
+	                <div class="input-group-custom">
+	                    <label for="name" class="input-label">Nome</label>
 	                    <div class="col-sm-10">
-	                        <input type="text" id="name" placeholder="name" required th:field="${user.name}" class="form-control" /> 
+	                        <input type="text" id="name" placeholder="name" required th:field="${user.name}" class="form-control form-control-custom" /> 
 	                        <span th:if="${#fields.hasErrors('user.name')}" th:errors="${user.name}" class="text-danger"></span>
 	                    </div>
 	                </div>

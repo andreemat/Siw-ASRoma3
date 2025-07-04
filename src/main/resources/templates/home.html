@@ -21,13 +21,14 @@
 		
 		
 		<div class="container text-center"> 
-		<form action="/associazioni/catalogo" method="get">
-		  <input class="form-control search-form" type="text" name="text" placeholder="cerca">
-		  <div class="row">
-		 <div class="col"> <button  class="btn btn-form w-100" type="submit" name="action" value="sport">Cerca per sport</button> </div>
-		   <div class="col"> <button  class="btn btn-form w-100" type="submit" name="action" value="searchNome">Cerca associazione</button> </div>
-		  </div>
-		</form>
+			<form action="/associazioni/catalogo" method="get" class="mb-3">
+			   <!-- Un solo campo visibile, ma con due input: -->
+			   <input class="form-control search-form mb-3" type="text" name="searchNome" placeholder="Cerca..." oninput="sportInput.value=this.value">
+			     <div class="col">
+			       <button class="btn btn-form w-100" type="submit">Cerca associazione</button>
+			     </div>
+			   </div>
+			 </form>
 		</div>
     </div>
 	

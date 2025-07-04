@@ -23,6 +23,7 @@ h1 {
     /* Rimosse le proprietà flexbox dirette dal div esterno, ora gestite dalla classe .row sul form */
     margin-bottom: 25px;
     padding: 20px;
+	
     border: 1px solid #e0e6ed;
     background-color: #fdfdfd;
     border-radius: 8px;
@@ -46,6 +47,7 @@ h1 {
     font-size: 1rem;
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s;
+	margin-top: 5px;
 }
 
 .search-form .btn-primary.custom-button:hover {
