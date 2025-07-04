@@ -36,8 +36,26 @@
                 </div>
                 <div class="col-md-10">
                     <h1 class="display-5 fw-bold text-primary" th:text="${associazione.nome}">Nome Associazione</h1>
+					<!-- Pulsanti Admin -->
+												      <div class="alert-info p-4">
+												          <h5 class="mb-3">Gestione Risorse</h5>
+												          <a class="btn btn-outline-primary me-2 mb-2" th:href="@{/admin/associazione/{idA}/sports(idA=${associazione.id})}">
+												              Gestisci Sport
+												          </a>
+												          <a class="btn btn-outline-primary me-2 mb-2" th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}">
+												              Gestisci Campi
+												          </a>
+												          <a class="btn btn-outline-primary mb-2" th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}">
+												              Gestisci Prenotazioni
+												          </a>
+														<a class="btn btn-outline-primary mb-2" th:href="@{/admin/modifica/associazione/{idA}(idA=${associazione.id})}">
+														    Gestisci Associazione
+														</a>
+												      </div>
                 </div>
+				
             </div>
+			
         </div>
 
         <!-- Info Card -->
@@ -80,22 +98,7 @@
             <p class="description-text" th:text="${associazione.descrizione}">Descrizione</p>
         </div>
 
-        <!-- Pulsanti Admin -->
-        <div class="alert-info p-4">
-            <h5 class="mb-3">Gestione Risorse</h5>
-            <a class="btn btn-outline-primary me-2 mb-2" th:href="@{/admin/associazione/{idA}/sports(idA=${associazione.id})}">
-                Gestisci Sport
-            </a>
-            <a class="btn btn-outline-primary me-2 mb-2" th:href="@{/admin/associazione/{idA}/campi(idA=${associazione.id})}">
-                Gestisci Campi
-            </a>
-            <a class="btn btn-outline-primary mb-2" th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}">
-                Gestisci Prenotazioni
-            </a>
-			<a class="btn btn-outline-primary mb-2" th:href="@{/admin/modifica/associazione/{idA}(idA=${associazione.id})}">
-			    Gestisci Associazione
-			</a>
-        </div>
+      
     </div>
 </body>
 
