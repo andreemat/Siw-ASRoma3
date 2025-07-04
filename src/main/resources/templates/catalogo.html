@@ -44,7 +44,7 @@
                 <!-- Pulsanti Cerca e Resetta -->
                 <div class="col-auto mt-3 mt-sm-0">
                     <button type="submit" class="btn btn-primary custom-button me-2">Cerca</button>
-                    <a th:href="@{/associazioni/catalogo(size=${pageSize}, sort=${currentSortParam})}" th:if="${searchNome != null and searchNome != '' or searchCittaNome != null and searchCittaNome != '' or sport != null and sport != ''}" class="btn btn-secondary">Resetta Ricerca</a>
+                    <a th:href="@{/associazioni/catalogo(size=${pageSize}, sort=${currentSortParam})}" th:if="${searchNome != null and searchNome != '' or searchCittaNome != null and searchCittaNome != '' or sport != null and sport != ''}" class="btn btn-secondary">Cancella i filtri</a>
                 </div>
             </form>
         </div>
@@ -78,7 +78,7 @@
             <div th:if="${associazionePage.isEmpty()}" class="col-12 text-center">
                 <div class="alert alert-info">
                     <h4>Nessuna associazione trovata.</h4>
-                    <p>Prova a modificare i criteri di ricerca o a resettare la ricerca.</p>
+                    <p>Prova a modificare i criteri di ricerca o a cambia i filtri della ricerca.</p>
                 </div>
             </div>
         </div>
