@@ -6,4 +6,6 @@ import siw.uniroma3.asroma3.model.Citta;
 
 public interface CittaRepository extends CrudRepository<Citta, Long> {
 
+	Citta findByNome(String searchCittaNome);
+
 }
