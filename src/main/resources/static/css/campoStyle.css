@@ -232,3 +232,16 @@ body {
 .admin-button.home:hover {
     background-color: #5a6268;
 }
+.btn-home {
+    color: white; /* o un altro colore, come var(--bianco) */
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    width: 100%;
+}
+
+.btn-home:hover {
+    color: white; /* o var(--bianco), oppure un verde chiaro se vuoi effetto hover */
+    text-decoration: none;
+}
+
