@@ -11,11 +11,13 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <div class="container my-5">
-        <h3 class="text-center mb-4">Seleziona gli orari disponibili</h3>
+        <h3 class="text-center mb-4" >Seleziona gli orari disponibili</h3>
 
         <!-- Barra di visualizzazione della data scelta - NON MODIFICABILE -->
         <div class="date-display-bar">
             Giorno selezionato: <span th:text="${#temporals.format(prenotazione.data, 'dd MMMM yyyy')}"></span>
+        <div></div>
+			<span th:text="'Prezzo Orario:'+ ${campo.costoOrario}+' euro'"></span>
         </div>
 
         <div th:if="${erroreSlot}" class="alert alert-danger" role="alert">

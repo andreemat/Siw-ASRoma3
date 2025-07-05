@@ -1,6 +1,7 @@
 
 package siw.uniroma3.asroma3.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -25,7 +26,19 @@ public class Prenotazione {
 	private LocalDate data;
 	private LocalTime oraInizio;
 	private LocalTime oraFine;
-	
+	private BigDecimal totale;
+	/**
+	 * @return the totale
+	 */
+	public BigDecimal getTotale() {
+		return totale;
+	}
+	/**
+	 * @param totale the totale to set
+	 */
+	public void setTotale(BigDecimal totale) {
+		this.totale = totale;
+	}
 	@ManyToOne
 	private Campo campo;
 	

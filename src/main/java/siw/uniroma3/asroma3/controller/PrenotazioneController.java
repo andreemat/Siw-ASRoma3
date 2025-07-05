@@ -2,11 +2,13 @@ package siw.uniroma3.asroma3.controller;
 
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.Principal;
 
 import java.util.List;
@@ -120,8 +122,19 @@ public class PrenotazioneController {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 		prenotazione.setCliente(user);
-		user.addPrenotazione(prenotazione);
+		
+		LocalTime oraInizio = LocalTime.parse(inizio);
+		LocalTime oraFine = LocalTime.parse(fine);
 
+		long minuti = Duration.between(oraInizio, oraFine).toMinutes();
+
+		
+		BigDecimal ore = BigDecimal.valueOf(minuti).divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);
+
+		BigDecimal totale = campo.getCostoOrario().multiply(ore);
+
+		prenotazione.setTotale(totale);
+		user.addPrenotazione(prenotazione);
 		prenotazioneService.save(prenotazione);
 
 		return "redirect:/utente/prenotazioni";
@@ -208,6 +221,17 @@ public class PrenotazioneController {
 
 
 	}
+	
+	
+	@GetMapping("/utente/prenotazioni/{idP}")
+	public String visualizzaDettaglioPrenotazioneUtente(@PathVariable("idP") Long idP,Model model) {
+		model.addAttribute("prenotazione",prenotazioneService.getPrenotazioneByid(idP));
+		
+		return "DettaglioPrenotazione.html";
+
+
+
+	}
 
 
 
@@ -240,14 +264,23 @@ public class PrenotazioneController {
 
 	    return redirectUrl;
 	}
+	
+
 
 
 
 	@GetMapping("/admin/associazione/{idA}/prenotazioni/{idP}")
 	public String visualizzaDettaglioPrenotazione(@PathVariable("idA")Long idA,@PathVariable("idP") Long idP,Model model) {
+		Associazione associazione = this.associazioneService.getAssociazione(idA);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
+		
 		model.addAttribute("prenotazione",prenotazioneService.getPrenotazioneByid(idP));
 		model.addAttribute("associazione", associazioneService.getAssociazione(idA));
 		return "admin/DettaglioPrenotazioneAdmin.html";
+		}
+		return "redirect:/";
 
 
 
@@ -257,10 +290,12 @@ public class PrenotazioneController {
 	@GetMapping("/admin/associazione/{idA}/prenotazioni")
 	public String visualizzaPrenotazioni(@PathVariable("idA") Long idA,@RequestParam(name = "dataFiltro", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
 			@RequestParam(name = "campoIdFiltro", required = false) Long campoIdFiltro,   @RequestParam(name = "sportIdFiltro", required = false) Long sportIdFiltro, Model model) {
-		Associazione associazione = associazioneService.getAssociazione(idA);
-		if (associazione == null) {
-			return "redirect:/errore";
-		}
+	
+		Associazione associazione = this.associazioneService.getAssociazione(idA);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
+		
 
 		List<Prenotazione> prenotazioni = prenotazioneService.getAllPrenotazioneByAssociazione(idA, dataFiltro,campoIdFiltro, sportIdFiltro);
 
@@ -277,15 +312,24 @@ public class PrenotazioneController {
 		model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
 		model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
 		return "admin/prenotazioniAssociazione.html"; 
+		}
+		return "redirect:/";
 	}
 
 
 	@GetMapping("/admin/associazione/{idA}/prenotazioni/cancella/{idP}")
 	public String cancellaPrenotazioneAdmin(Model model,@PathVariable("idP") Long idP,@PathVariable("idA") Long idA) {
+		Associazione associazione = this.associazioneService.getAssociazione(idA);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
+		
 		Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
 		prenotazioneService.deletePrenotazioneById(idP);
 		model.addAttribute("associazione",this.associazioneService.getAssociazione(idA));
 		return "redirect:/admin/associazione/{idA}/prenotazioni";
+		}
+		return "redirect:/";
 
 	}
 

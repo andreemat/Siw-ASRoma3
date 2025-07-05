@@ -98,18 +98,29 @@ public class AssociazioneController {
 	@GetMapping("/admin/associazione/{idA}")
 	public String associazioneAdmin(@PathVariable("idA") Long id,Model model) {
 		Associazione associazione = this.associazioneService.getAssociazione(id);
-
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
 		model.addAttribute("sports", associazione.getSportList());
 		model.addAttribute("associazione", associazione);
 		return "admin/associazioneAdmin";
+		}
+		return "redirect:/";
+		
+		
 	}
 	
 	@GetMapping("admin/modifica/associazione/{idA}")
 	public String modificaAssociazione(@PathVariable("idA") Long idA, Model model) {
-	    Associazione associazione = this.associazioneService.getAssociazione(idA);
+		 Associazione associazione = this.associazioneService.getAssociazione(idA);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
 	    model.addAttribute("associazione", associazione);
 	    model.addAttribute("citta", this.cittaService.findAll());
-	    return "admin/formAssociazione.html";
+	    return "admin/formAssociazione.html";}
+		return "redirect:/";
 	}
 	@GetMapping("/associazioni/catalogo")
 	public String mostraCatalogoAssociazioni(
