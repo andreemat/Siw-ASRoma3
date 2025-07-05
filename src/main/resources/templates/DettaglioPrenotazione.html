@@ -100,7 +100,7 @@
         <!-- Sezione Azioni -->
 
         <div class="actions-container">
-            <form th:action="@{/utente/prenotazioni/{idP}/cancella(idP=${prenotazione.id})}" method="post" style="display:inline;">
+            <form th:action="@{/utente/prenotazioni/{idP}/cancella(idP=${prenotazione.id})}" method="get" style="display:inline;">
                 <button type="submit" class="btn-delete" onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione? L\'azione è irreversibile.');">
                     Cancella Prenotazione
                 </button>
