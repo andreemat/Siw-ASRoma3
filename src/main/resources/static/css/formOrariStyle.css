@@ -1,0 +1,108 @@
+.date-display-bar {
+    background-color: #e9f5f9; /* Un blu molto chiaro */
+    border: 1px solid #cce5ff; /* Bordo blu chiaro */
+    color: rgb(0, 128, 0); /* Testo blu scuro */
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: .5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Stili per il gruppo di bottoni degli orari */
+.custom-slot-button {
+    color: #198754;
+    font-size: 1.1em;
+    padding: 1rem 0.75rem; /* Aumentato il padding verticale per renderli più alti */
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    max-width: 300px; /* Larghezza massima per renderli più stretti */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: 2px solid #198754; /* Bordo verde */
+    background-color: white; /* Sfondo bianco di default */
+    transition: all 0.3s ease; /* Transizione fluida per l'hover */
+    outline: none !important; /* Rimuove l'outline di focus */
+    box-shadow: none !important; /* Rimuove eventuali ombre di default */
+}
+
+/* Effetto hover per i bottoni disponibili */
+.custom-slot-button:hover:not(.btn-secondary) {
+    background-color: #198754; /* Sfondo verde all'hover */
+    color: white; /* Testo bianco all'hover */
+    transform: translateY(-2px); /* Leggero effetto di sollevamento */
+    box-shadow: 0 4px 8px rgba(25, 135, 84, 0.3); /* Ombra verde */
+	border-color: green ;
+}
+
+/* Rimuove tutti gli artefatti di focus e active */
+.custom-slot-button:focus,
+.custom-slot-button:active,
+.custom-slot-button.active {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 2px solid #198754 !important;
+}
+
+/* Rimuove l'outline dai checkbox nascosti */
+.btn-check {
+    outline: none !important;
+}
+
+.btn-check:focus + .custom-slot-button {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Contenitore per centrare i bottoni e renderli più stretti */
+.btn-group-vertical {
+    max-width: 300px; /* Larghezza massima del contenitore */
+    margin: 0 auto; /* Centra il contenitore */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra tutti i bottoni */
+}
+
+/* Stile per i pulsanti disabilitati (non disponibili) */
+.btn-group-vertical .btn-secondary {
+    cursor: not-allowed;
+    opacity: 0.7;
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #6c757d;
+}
+
+/* Impedisce l'hover sui bottoni disabilitati */
+.btn-secondary:hover {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Stile per i pulsanti degli slot selezionati */
+.btn-check:checked + .custom-slot-button {
+    background-color: #198754; /* Verde scuro per lo slot selezionato */
+    border-color: #198754;
+    color: white;
+}
+
+/* Stile per i checkbox personalizzati */
+.custom-checkbox {
+    width: 50px;
+}
+
+/* Responsive: su schermi piccoli, i bottoni occupano tutta la larghezza */
+@media (max-width: 576px) {
+    .btn-group-vertical {
+        max-width: 100%;
+    }
+    
+    .custom-slot-button {
+        max-width: 100%;
+    }
+}
