@@ -6,13 +6,15 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
 	<link rel="stylesheet" th:href="@{/css/campiStyle.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	</head>
 	<body>
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 	<div class="sport-header">
 	    <div class="container">
-	        <h1 th:text="'Sport: ' + ${sport.nome}">Nome Sport</h1>
+			<h1 th:text=" ${associazione.nome}">Associazione</h1>
+	        <h1 th:text=" ${sport.nome}">Nome Sport</h1>
 	        <div class="sport-image-container">
 	            <img th:src="@{'/images/' + ${sport.immagine}}" th:alt="${sport.nome}" class="sport-image">
 	        </div>
@@ -39,9 +41,13 @@
 	            <div class="field-card-body">
 	                <div class="field-info">
 	                    <div class="capacity-info">
-	                        <span class="capacity-icon">👥</span>
-	                        <span>Capienza: <strong th:text="${campo.capienza}">Numero</strong> persone</span>
-	                    </div>
+	                        <span> <i class="fa-solid fa-money-bill"></i> </span>
+	                        <span>prezzo: <strong th:text="${campo.costoOrario}">costo</strong>  <i class="fa-solid fa-euro-sign" style="font-size: 12pt;"></i> <strong>/ ora</strong> </span>
+							
+							
+							<span class="d-inline-block text-end" style="width: 50%;">
+							     <i class="fa-solid fa-clock"></i> <span th:text="${campo.oraApertura + '-' + campo.oraChiusura}"></span>
+							</span>	                    </div>
 	                </div>
 	                
 	                <div class="field-actions">

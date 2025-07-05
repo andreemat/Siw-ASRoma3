@@ -33,8 +33,6 @@ public class Campo {
 	@NotNull
 	private Integer durataSlot;
 	@Positive
-	@NotNull
-	private Integer capienza;
 	
 	@Positive
 	@NotNull
@@ -82,12 +80,7 @@ public class Campo {
 	public void setSport(Sport sport) {
 		this.sport = sport;
 	}
-	public Integer getCapienza() {
-		return capienza;
-	}
-	public void setCapienza(Integer capienza) {
-		this.capienza = capienza;
-	}
+
 	
 	public LocalTime getOraApertura() {
 		return oraApertura;
@@ -147,7 +140,7 @@ public class Campo {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(associazione, capienza, durataSlot, giorniDisponibili, nome, oraApertura, oraChiusura,
+		return Objects.hash(associazione, durataSlot, giorniDisponibili, nome, oraApertura, oraChiusura,
 				prenotazioni, sport);
 	}
 	@Override
@@ -159,7 +152,7 @@ public class Campo {
 		if (getClass() != obj.getClass())
 			return false;
 		Campo other = (Campo) obj;
-		return Objects.equals(associazione, other.associazione) && Objects.equals(capienza, other.capienza)
+		return Objects.equals(associazione, other.associazione) 
 				&& Objects.equals(durataSlot, other.durataSlot)
 				&& Objects.equals(giorniDisponibili, other.giorniDisponibili) && Objects.equals(nome, other.nome)
 				&& Objects.equals(oraApertura, other.oraApertura) && Objects.equals(oraChiusura, other.oraChiusura)
