@@ -57,25 +57,21 @@
             </thead>
             <tbody>
                 <tr th:each="prenotazione : ${prenotazioniFuture}">
-					<td th:text="${prenotazione.campo.nome}">Dettagli</td>
                     <td th:text="${prenotazione.campo.nome}">Nome Campo</td>
                     <td th:text="${#temporals.format(prenotazione.data, 'dd/MM/yyyy')}">dd/MM/yyyy</td>
                     <td th:text="|${prenotazione.oraInizio} - ${prenotazione.oraFine}|">00:00 - 00:00</td>
                     <td>
-                        <a th:href="@{/utente/prenotazioni/cancella/{idP}(
+                       <span > <a th:href="@{/utente/prenotazioni/cancella/{idP}(
                                 idP=${prenotazione.id},
-                                associazioneId=${associazioneIdFiltro},
-                                sportId=${sportIdFiltro},
-                                dataFiltro=${dataFiltro}
                             )}">
                             Cancella
-                        </a>
-						<a th:href="@{/utente/prenotazioni/{idP}(
+                        </a> </span>
+						<span class="ms-4"><a th:href="@{/utente/prenotazioni/{idP}(
 						                                idP=${prenotazione.id},
 						                                
 						                            )}">
 						                            Dettagli
-						                        </a>
+						                        </a></span>
 						
 						
                     </td>
