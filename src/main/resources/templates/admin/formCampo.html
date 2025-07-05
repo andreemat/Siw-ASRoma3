@@ -52,14 +52,7 @@
                     <span th:if="${#fields.hasErrors('durataSlot')}" th:errors="*{durataSlot}" class="text-danger"></span>
                 </div>
 
-                <div class="input-group-custom">
-                    <label for="capienza" class="input-label">Capienza</label>
-                    <div class="position-relative">
-                        <i class="fas fa-users input-icon"></i>
-                        <input type="number" id="capienza" th:field="*{capienza}" class="form-control form-control-custom" th:classappend="${#fields.hasErrors('capienza')} ? 'is-invalid' : ''">
-                    </div>
-                    <span th:if="${#fields.hasErrors('capienza')}" th:errors="*{capienza}" class="text-danger"></span>
-                </div>
+           
 
                 <div class="input-group-custom">
                     <label for="costoOrario" class="input-label">Costo orario</label>

@@ -134,6 +134,22 @@
                           th:errors="${user.citta}" 
                           class="text-danger"></span>
                 </div>
+				
+				<!-- Campo Email -->
+				<div class="input-group-custom">
+				    <label for="email" class="input-label">età</label>
+				    <div class="position-relative">
+				        <i class="fas fa-solid fa-user input-icon"></i>
+				        <input type="eta" 
+				               id="eta" 
+				               placeholder="Inserisci la tua età" 
+				               th:field="${user.eta}" 
+				               class="form-control form-control-custom" />
+				    </div>
+				    <span th:if="${#fields.hasErrors('user.email')}" 
+				          th:errors="${user.email}" 
+				          class="text-danger"></span>
+				</div>
 
                 <!-- Bottone Registra -->
                 <button type="submit" class="btn btn-form w-100">

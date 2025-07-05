@@ -260,6 +260,7 @@ body {
 
 /* Buttons */
 .btn-outline-primary {
+	background-color: rgb(255, 255, 255);
     border-color: #3a913f;
     color: #3a913f;
 }
