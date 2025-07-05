@@ -17,7 +17,7 @@
         <h1 class="dettaglio-title">Dettaglio Prenotazione</h1>
         
         <div class="associazione-link">
-            <h4><a th:href="@{/associazione/{idA}/prenotazioni(idA=${prenotazione.campo.associazione.id})}" th:text="'per ' + ${prenotazione.campo.associazione.nome}"></a></h4>
+            <h4><a th:href="@{/associazione/{idA}(idA=${prenotazione.campo.associazione.id})}" th:text="'per ' + ${prenotazione.campo.associazione.nome}"></a></h4>
         </div>
 
         <!-- Sezione Dettagli Prenotazione -->
