@@ -116,7 +116,7 @@ public class AssociazioneController {
 		 Associazione associazione = this.associazioneService.getAssociazione(idA);
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
-		if(user.equals(associazione.getAdminAssociazione())) {
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
 	    model.addAttribute("associazione", associazione);
 	    model.addAttribute("citta", this.cittaService.findAll());
 	    return "admin/formAssociazione.html";}

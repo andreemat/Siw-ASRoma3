@@ -38,7 +38,7 @@
                       enctype="multipart/form-data">
                     
                     <input type="hidden" th:field="*{id}" />
-                    
+                    <input type="hidden" th:field="*{sportList}">
                     <!-- Errori Globali -->
                     <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
                         <i class="fas fa-exclamation-triangle me-2"></i>

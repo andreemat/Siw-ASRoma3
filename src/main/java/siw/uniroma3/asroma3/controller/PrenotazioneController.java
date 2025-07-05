@@ -271,9 +271,16 @@ public class PrenotazioneController {
 
 	@GetMapping("/admin/associazione/{idA}/prenotazioni/{idP}")
 	public String visualizzaDettaglioPrenotazione(@PathVariable("idA")Long idA,@PathVariable("idP") Long idP,Model model) {
+		Associazione associazione = this.associazioneService.getAssociazione(idA);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
+		
 		model.addAttribute("prenotazione",prenotazioneService.getPrenotazioneByid(idP));
 		model.addAttribute("associazione", associazioneService.getAssociazione(idA));
 		return "admin/DettaglioPrenotazioneAdmin.html";
+		}
+		return "redirect:/";
 
 
 
@@ -312,10 +319,17 @@ public class PrenotazioneController {
 
 	@GetMapping("/admin/associazione/{idA}/prenotazioni/cancella/{idP}")
 	public String cancellaPrenotazioneAdmin(Model model,@PathVariable("idP") Long idP,@PathVariable("idA") Long idA) {
+		Associazione associazione = this.associazioneService.getAssociazione(idA);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
+		
 		Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
 		prenotazioneService.deletePrenotazioneById(idP);
 		model.addAttribute("associazione",this.associazioneService.getAssociazione(idA));
 		return "redirect:/admin/associazione/{idA}/prenotazioni";
+		}
+		return "redirect:/";
 
 	}
 
