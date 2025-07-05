@@ -15,7 +15,7 @@
         <h1 class="dettaglio-title">Dettaglio Prenotazione</h1>
         
         <div class="associazione-link">
-            <h4><a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" th:text="'per ' + ${associazione.nome}"></a></h4>
+            <h4><a th:href="@{/associazione/{idA}/prenotazioni(idA=${prenotazione.campo.associazione.id})}" th:text="'per ' + ${prenotazione.campo.associazione.nome}"></a></h4>
         </div>
 
         <!-- Sezione Dettagli Prenotazione -->
@@ -89,12 +89,11 @@
         <!-- Sezione Azioni -->
 
         <div class="actions-container">
-            <form th:action="@{/admin/associazione/{idA}/prenotazioni/{idP}/cancella(idA=${associazione.id}, idP=${prenotazione.id})}" method="post" style="display:inline;">
+            <form th:action="@{/utente/prenotazioni/{idP}/cancella(idP=${prenotazione.id})}" method="post" style="display:inline;">
                 <button type="submit" class="btn-delete" onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione? L\'azione è irreversibile.');">
                     Cancella Prenotazione
                 </button>
             </form>
-
         </div>
     </div>
 </body>
