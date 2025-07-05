@@ -2,11 +2,13 @@ package siw.uniroma3.asroma3.controller;
 
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.Principal;
 
 import java.util.List;
@@ -120,8 +122,19 @@ public class PrenotazioneController {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 		prenotazione.setCliente(user);
-		user.addPrenotazione(prenotazione);
+		
+		LocalTime oraInizio = LocalTime.parse(inizio);
+		LocalTime oraFine = LocalTime.parse(fine);
 
+		long minuti = Duration.between(oraInizio, oraFine).toMinutes();
+
+		
+		BigDecimal ore = BigDecimal.valueOf(minuti).divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);
+
+		BigDecimal totale = campo.getCostoOrario().multiply(ore);
+
+		prenotazione.setTotale(totale);
+		user.addPrenotazione(prenotazione);
 		prenotazioneService.save(prenotazione);
 
 		return "redirect:/utente/prenotazioni";
