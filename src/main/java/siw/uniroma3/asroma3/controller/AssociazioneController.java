@@ -90,6 +90,11 @@ public class AssociazioneController {
 		associazione.setAdminAssociazione(user);
 		citta.addAssociazione(associazione);
 		this.associazioneService.addAdminAssociazione(associazione, user);
+		Associazione associazioneDatabase = this.associazioneService.getAssociazione(associazione.getId());
+		if(associazioneDatabase!=null) {
+			associazione.setSportList(associazioneDatabase.getSportList());
+			associazione.setCampi(associazioneDatabase.getCampi());
+		}
 		this.associazioneService.saveAssociazione(associazione);
 		this.cittaService.save(citta);
 		return "redirect:/";
