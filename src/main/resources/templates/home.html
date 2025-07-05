@@ -46,21 +46,20 @@
                         <img th:if="${associazione.immagine}" th:src="@{'/image/associazione/' + ${associazione.id}}" th:alt="${associazione.nome}" />
                         <div th:unless="${associazione.immagine}">🏢</div>
                     </div>
-                    <div class="card-content">
-                        <h3 class="card-title" th:text="${associazione.nome}">Nome Associazione</h3>
-                        <div class="card-location">
-                            <span>📍</span>
-                            <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
-                        </div>
-
-						<p class="card-description" th:utext="'telefono: ' + ${associazione.telefono} + '<br>' + 'email : ' + ${associazione.email}">
-						    Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
-						</p>
-
-                        <div class="card-footer">
-                            <span class="founded-year" th:if="${associazione.annoFondazione}">
-                                Fondata nel <span th:text="${associazione.annoFondazione}">2020</span>
-                            </span>
+					<div class="card-content">
+					    <h3 class="card-title" th:text="${associazione.nome}">Nome Associazione</h3>
+					        <div class="card-location">
+					              <span>📍</span>
+					             <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
+					                  </div>
+					                     <p class="card-description" 
+					                    th:utext="'📞 ' + ${associazione.telefono} + '<br>📧 ' + ${associazione.email}">
+					                        Informazioni di contatto dell'associazione...
+					                  </p>
+					                  <div class="card-footer">
+					                <span class="founded-year" th:if="${associazione.annoFondazione}">
+					                  Fondata nel <span th:text="${associazione.annoFondazione}">2020</span>
+					                     </span>
                             <button class="btn-view">Scopri di più</button>
                         </div>
                     </div>
@@ -103,9 +102,10 @@
 	                            <span>📍</span>
 	                            <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
 	                        </div>
-	                        <p class="card-description" th:text="${associazione.descrizione}">
-	                            Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
-	                        </p>
+							<p class="card-description" 
+							   th:utext="'📞 ' + ${associazione.telefono} + '<br>📧 ' + ${associazione.email}">
+							    Informazioni di contatto dell'associazione...
+							</p>
 	                        <div class="card-footer">
 	                            <span class="founded-year" th:if="${associazione.annoFondazione}">
 	                                Fondata nel <span th:text="${associazione.annoFondazione}">2020</span>

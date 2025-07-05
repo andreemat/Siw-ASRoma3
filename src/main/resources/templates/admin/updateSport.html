@@ -22,59 +22,65 @@
 	        <span th:text="${errorMessage}"></span>
 	    </div>
 
-	    <!-- Sezione sport esistenti -->
-	    <div class="sport-table-section">
-	        <h3>Sport attualmente associati</h3>
-	        <table class="sport-table">
-	            <thead>
-	                <tr>
-	                    <th>Nome</th>
-	                    <th>Azioni</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr th:if="${sports.isEmpty()}">
-	                    <td colspan="2" class="no-sport-msg">Nessuno sport aggiunto nell'associazione</td>
-	                </tr>
-	                <tr th:each="sport : ${sports}">
-	                    <td th:text="${sport.nome}"></td>
-	                    <td>
-	                        <a class="btn-remove"
-	                           th:href="@{/admin/associazione/{idA}/sports/rimuovi/{idS}(idA=${associazione.id},idS=${sport.id})}">
-	                            Elimina
-	                        </a>
-	                    </td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
+		<div class="row">
+		    <!-- Sport attualmente associati -->
+		    <div class="col-md-6">
+		        <div class="sport-table-section">
+		            <h3>Sport attualmente associati</h3>
+		            <table class="sport-table">
+		                <thead>
+		                    <tr>
+		                        <th>Nome</th>
+		                        <th>Azioni</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                    <tr th:if="${sports.isEmpty()}">
+		                        <td colspan="2" class="no-sport-msg">Nessuno sport aggiunto nell'associazione</td>
+		                    </tr>
+		                    <tr th:each="sport : ${sports}">
+		                        <td th:text="${sport.nome}"></td>
+		                        <td>
+		                            <a class="btn-remove"
+		                               th:href="@{/admin/associazione/{idA}/sports/rimuovi/{idS}(idA=${associazione.id},idS=${sport.id})}">
+		                                Elimina
+		                            </a>
+		                        </td>
+		                    </tr>
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
 
-	    <!-- Sezione altri sport -->
-	    <div class="sport-table-section">
-	        <h3>Altri sport disponibili</h3>
-	        <table class="sport-table">
-	            <thead>
-	                <tr>
-	                    <th>Nome</th>
-	                    <th>Azioni</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr th:if="${altriSport.isEmpty()}">
-	                    <td colspan="2" class="no-sport-msg">Nessuno sport trovato</td>
-	                </tr>
-	                <tr th:each="sport : ${altriSport}">
-	                    <td th:text="${sport.nome}"></td>
-	                    <td>
-	                        <a class="btn-add"
-	                           th:href="@{/admin/associazione/{idA}/sports/aggiungi/{idS}(idA=${associazione.id},idS=${sport.id})}">
-	                            Aggiungi
-	                        </a>
-	                    </td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
+		    <!-- Altri sport disponibili -->
+		    <div class="col-md-6">
+		        <div class="sport-table-section">
+		            <h3>Altri sport disponibili</h3>
+		            <table class="sport-table">
+		                <thead>
+		                    <tr>
+		                        <th>Nome</th>
+		                        <th>Azioni</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                    <tr th:if="${altriSport.isEmpty()}">
+		                        <td colspan="2" class="no-sport-msg">Nessuno sport trovato</td>
+		                    </tr>
+		                    <tr th:each="sport : ${altriSport}">
+		                        <td th:text="${sport.nome}"></td>
+		                        <td>
+		                            <a class="btn-add"
+		                               th:href="@{/admin/associazione/{idA}/sports/aggiungi/{idS}(idA=${associazione.id},idS=${sport.id})}">
+		                                Aggiungi
+		                            </a>
+		                        </td>
+		                    </tr>
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+		</div>
 
 	    <!-- Torna alla home -->
 	    <div class="text-center">

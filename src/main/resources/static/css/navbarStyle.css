@@ -183,3 +183,8 @@
 .navbar:hover {
     box-shadow: 0 6px 25px rgba(58, 145, 63, 0.4);
 }
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    border-radius: 4px; /* Se vuoi bordi arrotondati */
+}

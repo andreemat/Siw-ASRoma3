@@ -62,9 +62,10 @@
                         <span>&#128205;</span>
                         <span th:text="${associazione.citta?.nome + ', ' + associazione.indirizzo}">Città, Indirizzo</span>
                     </div>
-                    <p class="card-description" th:text="${associazione.descrizione}">
-                        Descrizione dell'associazione che mostra le attività principali e gli obiettivi...
-                    </p>
+					<p class="card-description" 
+												   th:utext="'📞 ' + ${associazione.telefono} + '<br>📧 ' + ${associazione.email}">
+												    Informazioni di contatto dell'associazione...
+												</p>
                     <div class="card-footer">
                         <span class="founded-year" th:if="${associazione.annoFondazione}">
                             Fondato nel <span th:text="${associazione.annoFondazione}">2020</span>
