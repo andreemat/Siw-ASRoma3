@@ -257,10 +257,12 @@ public class PrenotazioneController {
 	@GetMapping("/admin/associazione/{idA}/prenotazioni")
 	public String visualizzaPrenotazioni(@PathVariable("idA") Long idA,@RequestParam(name = "dataFiltro", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFiltro,
 			@RequestParam(name = "campoIdFiltro", required = false) Long campoIdFiltro,   @RequestParam(name = "sportIdFiltro", required = false) Long sportIdFiltro, Model model) {
-		Associazione associazione = associazioneService.getAssociazione(idA);
-		if (associazione == null) {
-			return "redirect:/errore";
-		}
+	
+		Associazione associazione = this.associazioneService.getAssociazione(idA);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
+		
 
 		List<Prenotazione> prenotazioni = prenotazioneService.getAllPrenotazioneByAssociazione(idA, dataFiltro,campoIdFiltro, sportIdFiltro);
 
@@ -277,6 +279,8 @@ public class PrenotazioneController {
 		model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
 		model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
 		return "admin/prenotazioniAssociazione.html"; 
+		}
+		return "redirect:/";
 	}
 
 
