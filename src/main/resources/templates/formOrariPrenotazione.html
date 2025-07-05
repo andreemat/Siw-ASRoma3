@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/navbarStyle.css}" />
     <link rel="stylesheet" th:href="@{/css/formStyle.css}" />
     <link rel="stylesheet" th:href="@{/css/formOrariStyle.css}" /> <!-- Nuovo CSS specifico per questa pagina -->
+	
 </head>
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -25,7 +26,7 @@
         </div>
 
         <form th:action="@{/prenota/campo/{idC}/conferma(idC=${campo.id})}"
-              th:object="${prenotazione}" method="post">
+              th:object="${prenotazione}" method="get">
         
             <!-- Campo nascosto per passare la data al controller -->
             <input type="hidden" th:field="*{data}" />

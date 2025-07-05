@@ -94,13 +94,13 @@ public class PrenotazioneController {
 	}
 
 	// SECONDO STEP: Conferma prenotazione
-	@PostMapping("/prenota/campo/{idC}/conferma")
+	@GetMapping("/prenota/campo/{idC}/conferma")
 	public String confermaPrenotazione(@ModelAttribute("prenotazione") Prenotazione prenotazione,
 			@PathVariable("idC") Long idC,
 			@RequestParam("orariSelezionati") List<String> orariSelezionati,Model model) {
 
 		Campo campo = campoService.getCampo(idC);
-		
+	
 		if (!prenotazioneService.sonoSlotConsecutivi(orariSelezionati, campo.getDurataSlot())) {
 			model.addAttribute("erroreSlot", "Gli slot devono essere continui");
 			model.addAttribute("campo", campo);
@@ -119,9 +119,7 @@ public class PrenotazioneController {
 		prenotazione.setOraFine(LocalTime.parse(fine));
 		prenotazione.setCampo(campo);
 
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
-		prenotazione.setCliente(user);
+		
 		
 		LocalTime oraInizio = LocalTime.parse(inizio);
 		LocalTime oraFine = LocalTime.parse(fine);
@@ -134,12 +132,24 @@ public class PrenotazioneController {
 		BigDecimal totale = campo.getCostoOrario().multiply(ore);
 
 		prenotazione.setTotale(totale);
-		user.addPrenotazione(prenotazione);
-		prenotazioneService.save(prenotazione);
+		
+		model.addAttribute("idC", idC);
+		model.addAttribute("prenotazione",prenotazione);
+		//prenotazioneService.save(prenotazione);
 
-		return "redirect:/utente/prenotazioni";
+		return "prenotazioneScontrino.html";
 	}
 
+	@PostMapping("/prenota/campo/{idC}/conferma")
+	public String salvePrenotazione(@ModelAttribute("prenotazione") Prenotazione prenotazione, @PathVariable("idC")Long idC) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
+		prenotazione.setCliente(user);
+		prenotazione.setCampo(campoService.getCampo(idC));
+		user.addPrenotazione(prenotazione);
+		this.prenotazioneService.save(prenotazione);
+		return "redirect:/utente/prenotazioni";
+	}
 
 
 
@@ -332,6 +342,8 @@ public class PrenotazioneController {
 		return "redirect:/";
 
 	}
+	
+	
 
 
 }
