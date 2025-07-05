@@ -25,7 +25,7 @@
     <div class="container">
         <!-- Titolo principale con riferimento all'associazione -->
         <h1>Dettaglio Prenotazione</h1>
-        <h4><a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" th:text="'per ' + ${associazione.nome}"></a></h4>
+        <h4><a th:href="@{/associazione/{idA}/prenotazioni(idA=${prenotazione.campo.associazione.id})}" th:text="'per ' + ${prenotazione.campo.associazione.nome}"></a></h4>
 
         <!-- Sezione Dettagli Prenotazione -->
         <h2>Riepilogo Prenotazione</h2>
@@ -78,23 +78,16 @@
         <!-- Sezione Azioni -->
         <div class="actions">
             <!-- Form per la cancellazione (più sicuro usare POST) -->
-            <form th:action="@{/associazione/{idA}/prenotazioni/{idP}/cancella(idA=${associazione.id}, idP=${prenotazione.id})}" method="post" style="display:inline;">
+            <form th:action="@{/utente/prenotazioni/cancella/{idP}(idP=${prenotazione.id})}" method="get" style="display:inline;">
                 <!-- Potresti aggiungere un alert di conferma con JavaScript -->
                 <button type="submit" class="btn-delete">
                     Cancella Prenotazione
                 </button>
-            </form>
-]						<div sec:authorize="hasRole('ADMIN')"> 
-			    <a th:href="@{/admin/associazione/{idA}/prenotazioni(idA=${associazione.id})}" class="btn-back">
-			        Torna a tutte le prenotazioni
-			    </a>
-			</div>
-
-			<div sec:authorize="!hasRole('ADMIN')"> 
+            </form>				
 			    <a th:href="@{/utente/prenotazioni}" class="btn-back">
 			        Torna a tutte le prenotazioni
 			    </a>
-			</div>
+
         </div>
     </div>
 </body>

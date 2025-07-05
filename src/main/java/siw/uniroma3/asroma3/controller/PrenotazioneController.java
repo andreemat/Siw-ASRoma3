@@ -208,6 +208,17 @@ public class PrenotazioneController {
 
 
 	}
+	
+	
+	@GetMapping("/utente/prenotazioni/{idP}")
+	public String visualizzaDettaglioPrenotazioneUtente(@PathVariable("idP") Long idP,Model model) {
+		model.addAttribute("prenotazione",prenotazioneService.getPrenotazioneByid(idP));
+		
+		return "DettaglioPrenotazione.html";
+
+
+
+	}
 
 
 
@@ -240,6 +251,8 @@ public class PrenotazioneController {
 
 	    return redirectUrl;
 	}
+	
+
 
 
 
