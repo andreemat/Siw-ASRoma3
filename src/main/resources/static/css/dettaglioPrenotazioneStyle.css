@@ -1,0 +1,201 @@
+ :root {
+            --verde-campo: #3a913f;
+            --verde-scuro: #2f7032;
+            --verde-chiaro: #52b755;
+            --bianco: #ffffff;
+            --grigio-chiaro: #f8f9fa;
+            --grigio: #6c757d;
+            --nero-soft: #333;
+        }
+
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            background-color: var(--grigio-chiaro);
+            color: var(--nero-soft);
+        }
+
+        .dettaglio-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .dettaglio-title {
+            color: var(--verde-campo);
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .associazione-link {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .associazione-link a {
+            color: var(--verde-scuro);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .associazione-link a:hover {
+            color: var(--verde-campo);
+        }
+
+        .dettaglio-card {
+            background: var(--bianco);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            margin-bottom: 2rem;
+            padding: 2rem;
+        }
+
+        .dettaglio-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            color: var(--verde-campo);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--grigio-chiaro);
+        }
+
+        .dettaglio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .dettaglio-item {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            background: var(--grigio-chiaro);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .dettaglio-item:hover {
+            background: #e8f5e8;
+            border-left-color: var(--verde-campo);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dettaglio-label {
+            font-weight: 600;
+            color: var(--grigio);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .dettaglio-value {
+            font-size: 1.1rem;
+            color: var(--nero-soft);
+            font-weight: 600;
+        }
+
+        .actions-container {
+            background: var(--bianco);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .btn-dettaglio {
+            background-color: var(--verde-campo);
+            color: var(--bianco);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn-dettaglio:hover {
+            border-color: var(--verde-scuro);
+            color: var(--verde-campo);
+            background-color: var(--bianco);
+            transform: scale(1.05);
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: var(--bianco);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            border-color: #c82333;
+            color: #dc3545;
+            background-color: var(--bianco);
+            transform: scale(1.05);
+        }
+
+        .btn-back {
+            background-color: var(--grigio);
+            color: var(--bianco);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            border-color: #5a6268;
+            color: var(--grigio);
+            background-color: var(--bianco);
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 768px) {
+            .dettaglio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .dettaglio-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
