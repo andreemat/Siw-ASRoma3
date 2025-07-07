@@ -10,116 +10,94 @@
 <body>
 
     <!-- Navbar -->
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <!-- Header -->
-    <div class="field-header">
-        <div class="container">
-            <h1 th:text="${campo.nome}">Nome Campo</h1>
-        </div>
-    </div>
-	
+	<div class="field-header">
+	<div class="container">
+	<h1 th:text="${campo.nome}">Nome Campo</h1>
+	</div>
+	</div>
+
 	<!-- Azioni Amministratore -->
-	       <div class="admin-actions">
-			<a class="admin-button edit"
-			   th:href="@{/admin/associazione/{idA}/modifica/campo/{idC}(idA=${campo.associazione.id},idC=${campo.id})}">
-			    ✏️ Modifica Campo
-			</a>
+	<div class="admin-actions">
+	    <a class="admin-button edit"
+	       th:href="@{/admin/associazione/{idA}/modifica/campo/{idC}(idA=${campo.associazione.id},idC=${campo.id})}">
+	        ✏️ Modifica Campo
+	    </a>
 
-			<a class="admin-button image"
-			   th:href="@{/admin/upload/campo/{idC}(idC=${campo.id})}">
-			    🖼️ Modifica Immagine
-			</a>
+	    <a class="admin-button image"
+	       th:href="@{/admin/upload/campo/{idC}(idC=${campo.id})}">
+	        🖼️ Modifica Immagine
+	    </a>
 
-			<a class="admin-button home"
-			   th:href="@{/}">
-			    🏠 Torna alla Home
-			</a>
+	    <a class="admin-button home"
+	       th:href="@{/}">
+	        🏠 Torna alla Home
+	    </a>
+	</div>
 
-	       </div>
-	   </div>
+	<div class="field-content">
+	<div class="field-details-container">
+	    <div class="field-image-section">
+	        <img th:src="@{'/image/campo/' + ${campo.id}}" alt="Immagine campo" class="field-image"/>
+			<div class="field-meta">
+			            <div class="meta-item">
+			                <span class="meta-icon">⚽</span>
+			                <span class="meta-text" th:text="${campo.sport.nome}">Sport</span>
+			            </div>
+			            <div class="meta-item">
+			                <span class="meta-icon">🏢</span>
+			                <span class="meta-text" th:text="${campo.associazione.nome}">Associazione</span>
+			            </div>
+			        </div>
+	    </div>
 
-    <!-- Contenuto Campo -->
-    <div class="field-content">
-        <div class="field-details-container">
+	    <!-- Sezione Informazioni (Destra) -->
+	    <div class="field-info-section">
+	        <div class="info-grid">
+	            <div class="info-item">
+	                <div class="info-icon">⏱️</div>
+	                <div class="info-content">
+	                    <div class="info-label">Durata Slot</div>
+	                    <div class="info-value" th:text="${campo.durataSlot} + ' minuti'">0 minuti</div>
+	                </div>
+	            </div>
 
-            <!-- Immagine Campo -->
-            <div class="field-image-section">
-                <img th:src="@{'/image/campo/' + ${campo.id}}" alt="Immagine campo" class="field-image"/>
-            </div>
-			
-            <!-- Info Campo -->
-            <div class="field-info-section">
-                <div class="info-grid">
+	            <div class="info-item">
+	                <div class="info-icon">🕐</div>
+	                <div class="info-content">
+	                    <div class="info-label">Orario di Apertura</div>
+	                    <div class="info-value" th:text="${campo.oraApertura}">--:--</div>
+	                </div>
+	            </div>
 
-                    <div class="info-item">
-                        <div class="info-icon">👥</div>
-                        <div class="info-content">
-                            <div class="info-label">Capienza</div>
-                            <div class="info-value" th:text="${campo.capienza} + ' persone'">0 persone</div>
-                        </div>
-                    </div>
+	            <div class="info-item">
+	                <div class="info-icon">🕕</div>
+	                <div class="info-content">
+	                    <div class="info-label">Orario di Chiusura</div>
+	                    <div class="info-value" th:text="${campo.oraChiusura}">--:--</div>
+	                </div>
+	            </div>
 
-                    <div class="info-item">
-                        <div class="info-icon">⏱️</div>
-                        <div class="info-content">
-                            <div class="info-label">Durata Slot</div>
-                            <div class="info-value" th:text="${campo.durataSlot} + ' minuti'">0 minuti</div>
-                        </div>
-                    </div>
+	            <div class="info-item">
+	                <div class="info-icon">📅</div>
+	                <div class="info-content">
+	                    <div class="info-label">Giorni Disponibili</div>
+	                    <div class="days-container">
+	                        <span th:each="giorno : ${campo.giorniDisponibili}"
+	                              th:text="${giorno}"
+	                              class="day-badge">Giorno</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
 
-                    <div class="info-item">
-                        <div class="info-icon">🕐</div>
-                        <div class="info-content">
-                            <div class="info-label">Orario di Apertura</div>
-                            <div class="info-value" th:text="${campo.oraApertura}">--:--</div>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <div class="info-icon">🕕</div>
-                        <div class="info-content">
-                            <div class="info-label">Orario di Chiusura</div>
-                            <div class="info-value" th:text="${campo.oraChiusura}">--:--</div>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <div class="info-icon">📅</div>
-                        <div class="info-content">
-                            <div class="info-label">Giorni Disponibili</div>
-                            <div class="days-container">
-                                <span th:each="giorno : ${campo.giorniDisponibili}" 
-                                      th:text="${giorno}" 
-                                      class="day-badge">Giorno</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="price-highlight">
-                    <div class="price-value" th:text="'€' + ${campo.costoOrario}">€--</div>
-                    <div class="price-label">Costo orario</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Info Correlate -->
-        <div class="related-info">
-            <h3 class="related-title">Informazioni Aggiuntive</h3>
-            <div class="related-grid">
-                <div class="related-item">
-                    <div class="related-icon">🏃</div>
-                    <div class="related-name" th:text="${campo.sport.nome}">Sport</div>
-                </div>
-                <div class="related-item">
-                    <div class="related-icon">🏢</div>
-                    <div class="related-name" th:text="${campo.associazione.nome}">Associazione</div>
-                </div>
-            </div>
-        </div>
-
-       
+	        <div class="price-highlight">
+	            <div class="price-value" th:text="'€' + ${campo.costoOrario}">€--</div>
+	            <div class="price-label">Costo orario</div>
+	        </div>
+	    </div>
+	</div>
 
 </body>
 </html>

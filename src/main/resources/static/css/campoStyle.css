@@ -29,12 +29,15 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     margin-bottom: 3rem;
+    align-items: start;
 }
 
 .field-image-section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .field-image {
@@ -46,6 +49,36 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     border: 3px solid white;
     margin-bottom: 1.5rem;
+}
+
+.field-meta {
+    margin-top: 1rem;
+    text-align: center;
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: #2f7032;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.meta-icon {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.meta-text {
+    font-size: 1rem;
 }
 
 .field-info-section {
@@ -138,50 +171,17 @@ body {
     font-size: 0.9rem;
 }
 
-.related-info {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-bottom: 3rem;
-}
-
-.related-title {
-    color: #2f7032;
+.btn-home {
+    color: white;
+    text-decoration: none;
     font-weight: 600;
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
-    text-align: center;
+    display: inline-block;
+    width: 100%;
 }
 
-.related-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.related-item {
-    text-align: center;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.related-item:hover {
-    background: #e8f5e8;
-    transform: translateY(-3px);
-}
-
-.related-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.related-name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #2f7032;
+.btn-home:hover {
+    color: white;
+    text-decoration: none;
 }
 
 /* Admin Actions Buttons */
@@ -232,16 +232,20 @@ body {
 .admin-button.home:hover {
     background-color: #5a6268;
 }
-.btn-home {
-    color: white; /* o un altro colore, come var(--bianco) */
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-block;
-    width: 100%;
-}
 
-.btn-home:hover {
-    color: white; /* o var(--bianco), oppure un verde chiaro se vuoi effetto hover */
-    text-decoration: none;
-}
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    .field-details-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .field-header h1 {
+        font-size: 2rem;
+    }
+    
+    .field-image {
+        max-width: 100%;
+    }
+}
