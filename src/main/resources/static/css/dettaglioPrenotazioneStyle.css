@@ -199,3 +199,101 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+		
+		.price-section {
+		            background: linear-gradient(135deg, #28a745, #20c997);
+		            color: white;
+		            padding: 2rem;
+		            border-radius: 15px;
+		            text-align: center;
+		            margin: 2rem 0;
+		            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+		        }
+
+		        .price-label {
+		            font-size: 1.3rem;
+		            font-weight: 600;
+		            margin-bottom: 1rem;
+		            opacity: 0.9;
+		            text-transform: uppercase;
+		            letter-spacing: 1px;
+		        }
+
+		        .price-value {
+		            font-size: 3.5rem;
+		            font-weight: 700;
+		            margin: 0;
+		            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+		        }
+
+		        .price-euro {
+		            font-size: 2.5rem;
+		            margin-left: 0.5rem;
+		            vertical-align: middle;
+		        }
+
+		        /* Stili per i bottoni di azione */
+		        .btn-confirm {
+		            background: linear-gradient(135deg, #28a745, #20c997);
+		            color: white;
+		            padding: 1rem 2rem;
+		            border: none;
+		            border-radius: 50px;
+		            font-weight: 600;
+		            font-size: 1.1rem;
+		            transition: all 0.3s ease;
+		            min-width: 200px;
+		            text-transform: uppercase;
+		            letter-spacing: 0.5px;
+		            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+		        }
+
+		        .btn-confirm:hover {
+		            transform: translateY(-2px);
+		            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+		            color: white;
+		        }
+
+		        .btn-cancel {
+		            background: linear-gradient(135deg, #dc3545, #c82333);
+		            color: white;
+		            padding: 1rem 2rem;
+		            border: none;
+		            border-radius: 50px;
+		            font-weight: 600;
+		            font-size: 1.1rem;
+		            transition: all 0.3s ease;
+		            min-width: 200px;
+		            text-transform: uppercase;
+		            letter-spacing: 0.5px;
+		            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+		        }
+
+		        .btn-cancel:hover {
+		            transform: translateY(-2px);
+		            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+		            color: white;
+		        }
+
+		        .actions-container {
+		            display: flex;
+		            gap: 1.5rem;
+		            justify-content: center;
+		            margin-top: 2rem;
+		        }
+
+		        @media (max-width: 768px) {
+		            .actions-container {
+		                flex-direction: column;
+		                align-items: center;
+		            }
+		            
+		            .btn-confirm, .btn-cancel {
+		                width: 100%;
+		                max-width: 300px;
+		            }
+		            
+		            .price-value {
+		                font-size: 2.8rem;
+		            }
+		        }

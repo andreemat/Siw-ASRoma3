@@ -90,6 +90,7 @@ public class AssociazioneController {
 		associazione.setAdminAssociazione(user);
 		citta.addAssociazione(associazione);
 		this.associazioneService.addAdminAssociazione(associazione, user);
+
 		if(associazione.getId()!=null) {
 			Associazione associazioneDatabase = this.associazioneService.getAssociazione(associazione.getId());
 			if(associazioneDatabase!=null) {
