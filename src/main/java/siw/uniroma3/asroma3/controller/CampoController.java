@@ -176,7 +176,7 @@ public class CampoController {
 			return "redirect:/admin/associazione/"+idA+"/campi";
 		}
 		model.addAttribute("campo", campo);
-		return "/admin/campoAdmin";
+		return "admin/campoAdmin";
 		}
 		return "redirect:/";
 	}
