@@ -133,7 +133,7 @@ public class AssociazioneController {
 	@GetMapping("/associazioni/catalogo")
 	public String mostraCatalogoAssociazioni(
 	        Model model,
-	        @PageableDefault(page = 0, size = 2, sort = "nome") Pageable pageable,
+	        @PageableDefault(page = 0, size = 6, sort = "nome") Pageable pageable,
 	        @RequestParam(name="searchNome",required = false) String searchNome,
 	        @RequestParam(name="searchCittaNome",required = false) String searchCittaNome,
 	        @RequestParam(name="sport",required = false) String sport
