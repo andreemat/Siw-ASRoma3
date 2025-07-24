@@ -49,7 +49,7 @@ public class SportController {
 		List<Sport> altriSport=allSport;
 		model.addAttribute("associazione",associazione);
 		model.addAttribute("sports",sportAssociazione);
-		model.addAttribute("altriSport",altriSport);
+		model.addAttribute("altriSport",allSport);
 		
 		return "admin/updateSport.html";}
 		return "redirect:/";
