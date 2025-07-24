@@ -19,7 +19,9 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import siw.uniroma3.asroma3.model.Credentials;
+
 
 
 @Configuration
@@ -33,7 +35,7 @@ public class AuthConfiguration {
 	@Bean
     public UserDetailsManager userDetailsService() {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
-        manager.setUsersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
+        manager.setUsersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentiasl WHERE username=?");
         manager.setAuthoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?");
         return manager;
     }

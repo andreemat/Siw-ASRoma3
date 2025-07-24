@@ -81,7 +81,7 @@
                 </button>
             </form>
             
-            <form th:action="@{/utente/prenotazioni/cancella/{idP}(idP=${prenotazione.id})}" method="post" style="display:inline;">
+            <form th:action="@{/}" method="get" style="display:inline;">
                 <input type="hidden" name="prenotazioneId" th:value="${prenotazione.id}"/>
 
                 <button type="submit" class="btn-cancel" onclick="return confirm('Sei sicuro di voler annullare questa prenotazione?');">

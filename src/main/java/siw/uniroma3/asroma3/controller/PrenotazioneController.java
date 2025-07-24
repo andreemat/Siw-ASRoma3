@@ -71,9 +71,9 @@ public class PrenotazioneController {
 			Model model) {
 		Campo campo = campoService.getCampo(idC);
 		prenotazione.setCampo(campo);
-		//this.dataPrenotazioneValidator.validate(prenotazione, bindingResult);
+		this.dataPrenotazioneValidator.validate(prenotazione, bindingResult);
 
-			// VALIDAZIONE 1: Non puoi prenotare giorni passati
+			
 			if (bindingResult.hasErrors()) {
 			
 				model.addAttribute("campo", campo);
@@ -264,7 +264,6 @@ public class PrenotazioneController {
 	        prenotazioneService.deletePrenotazioneById(idP);
 	    }
 
-	    // 🔁 Reindirizza alla pagina prenotazioni, mantenendo i filtri
 	    String redirectUrl = String.format(
 	        "redirect:/utente/prenotazioni?associazioneId=%s&campoId=%s&dataFiltro=%s",
 	        associazioneId != null ? associazioneId : "",
@@ -317,7 +316,6 @@ public class PrenotazioneController {
 				? this.campoService.getCampiBySport(idA,sportIdFiltro)
 						: null);
 
-		// Sempre settare tutti i filtri, anche se null
 		model.addAttribute("dataFiltroAttuale", dataFiltro);
 		model.addAttribute("sportIdFiltroAttuale", sportIdFiltro);
 		model.addAttribute("campoIdFiltroAttuale", campoIdFiltro);
@@ -334,7 +332,6 @@ public class PrenotazioneController {
 		User user = credentialsService.getCredentials(userDetails.getUsername()).getUser();
 		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
 		
-		Prenotazione prenotazione = prenotazioneService.getPrenotazioneByid(idP);
 		prenotazioneService.deletePrenotazioneById(idP);
 		model.addAttribute("associazione",this.associazioneService.getAssociazione(idA));
 		return "redirect:/admin/associazione/{idA}/prenotazioni";
