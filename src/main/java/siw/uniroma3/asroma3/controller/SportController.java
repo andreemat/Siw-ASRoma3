@@ -46,7 +46,6 @@ public class SportController {
 		
 		List<Sport> allSport = new ArrayList<>(this.sportService.getAllSport());
 		allSport.removeAll(sportAssociazione);
-		List<Sport> altriSport=allSport;
 		model.addAttribute("associazione",associazione);
 		model.addAttribute("sports",sportAssociazione);
 		model.addAttribute("altriSport",allSport);
