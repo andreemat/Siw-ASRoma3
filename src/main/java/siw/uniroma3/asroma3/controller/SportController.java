@@ -1,5 +1,6 @@
 package siw.uniroma3.asroma3.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class SportController {
 		if(associazione!=null&&user.equals(associazione.getAdminAssociazione())) {
 		List<Sport> sportAssociazione = associazione.getSportList();
 		
-		List<Sport> allSport=this.sportService.getAllSport();
+		List<Sport> allSport = new ArrayList<>(this.sportService.getAllSport());
 		allSport.removeAll(sportAssociazione);
 		List<Sport> altriSport=allSport;
 		model.addAttribute("associazione",associazione);
