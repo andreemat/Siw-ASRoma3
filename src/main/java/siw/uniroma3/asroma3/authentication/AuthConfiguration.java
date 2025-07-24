@@ -35,7 +35,7 @@ public class AuthConfiguration {
 	@Bean
     public UserDetailsManager userDetailsService() {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
-        manager.setUsersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentiasl WHERE username=?");
+        manager.setUsersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
         manager.setAuthoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?");
         return manager;
     }
