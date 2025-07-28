@@ -87,17 +87,13 @@
 																		</span>
 				                </div>
 
-                <div class="dettaglio-item">
-                    <span class="dettaglio-label">Capienza</span>
-                    <span class="dettaglio-value" th:text="${prenotazione.campo?.capienza}">Non disponibile</span>
-                </div>
             </div>
         </div>
         
         <!-- Sezione Azioni -->
 
         <div class="actions-container">
-            <form th:action="@{/admin/associazione/{idA}/prenotazioni/{idP}/cancella(idA=${associazione.id}, idP=${prenotazione.id})}" method="get" style="display:inline;">
+            <form th:action="@{/admin/associazione/{idA}/prenotazioni/cancella/{idP}(idA=${associazione.id}, idP=${prenotazione.id})}" method="get" style="display:inline;">
                 <button type="submit" class="btn-delete" onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione? L\'azione è irreversibile.');">
                     Cancella Prenotazione
                 </button>

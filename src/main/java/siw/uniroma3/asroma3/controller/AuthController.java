@@ -75,7 +75,7 @@ public class AuthController {
 
 	@GetMapping("/")
 	public String mostraHome(Model model) {
-		Page<Associazione> firstPageAssociazioni = associazioneService.findAllAssociazioni(PageRequest.of(0, 2));
+		Page<Associazione> firstPageAssociazioni = associazioneService.findAllAssociazioni(PageRequest.of(0, 5));
 	    model.addAttribute("associazioni", firstPageAssociazioni.getContent());
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
